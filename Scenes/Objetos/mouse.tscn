@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://tqpd8hjidbqi"]
+
+[ext_resource type="Texture2D" uid="uid://cfgisrc24cg16" path="res://Sprites/Entes/d_player_strip4.png" id="1_b0fxi"]
+
+[node name="Mouse" type="Node2D" groups=["mouses"]]
+metadata/_edit_lock_ = true
+
+[node name="Imagen" type="Sprite2D" parent="."]
+position = Vector2(4, -98)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("1_b0fxi")
+hframes = 4
+frame = 3
+metadata/_edit_lock_ = true

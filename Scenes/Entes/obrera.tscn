@@ -1,0 +1,108 @@
+[gd_scene load_steps=13 format=3 uid="uid://c6dvitqse44e7"]
+
+[ext_resource type="Script" uid="uid://bw16pwdyolf8e" path="res://Scripts/Tools/imagen.gd" id="1_eeroj"]
+[ext_resource type="Texture2D" uid="uid://dgc4pg2bqr06b" path="res://Sprites/Entes/d_pies_strip12.png" id="1_ocluk"]
+[ext_resource type="Script" uid="uid://b1bmf164bfrcw" path="res://Scripts/Entes/obrera.gd" id="1_tf4pl"]
+[ext_resource type="Texture2D" uid="uid://cudpblcjwc20s" path="res://Sprites/Entes/d_cuerpo_strip44.png" id="2_8s2bn"]
+[ext_resource type="Texture2D" uid="uid://bcpqm6locv2hf" path="res://Sprites/Entes/d_cabeza_strip44.png" id="3_ox8ov"]
+[ext_resource type="Texture2D" uid="uid://bgxx54sgo0x8h" path="res://Sprites/Entes/d_bolsa_strip6.png" id="5_5u17u"]
+[ext_resource type="Texture2D" uid="uid://crrn74n16qvhm" path="res://Sprites/Entes/d_huevo_strip4.png" id="9_f2slp"]
+[ext_resource type="Texture2D" uid="uid://dtbo8a4wnnsrc" path="res://Sprites/Entes/d_alimento_strip2.png" id="10_0vj8k"]
+[ext_resource type="Texture2D" uid="uid://cirkjvs0fqm6" path="res://Sprites/Entes/d_charla.png" id="11_cyhx1"]
+[ext_resource type="FontFile" uid="uid://dfhfupgu7dfr2" path="res://Sprites/General/comic_sana.ttf" id="12_m4o04"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bjll6"]
+radius = 26.4764
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n3j5c"]
+
+[node name="Obrera" type="CharacterBody2D" groups=["entes", "humans", "obreras"]]
+collision_layer = 8
+collision_mask = 15
+motion_mode = 1
+wall_min_slide_angle = 1.0472
+platform_on_leave = 2
+script = ExtResource("1_tf4pl")
+metadata/_edit_lock_ = true
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bjll6")
+metadata/_edit_lock_ = true
+
+[node name="Imagen" type="Node2D" parent="."]
+script = ExtResource("1_eeroj")
+name_nodos_respiran = Array[String](["Cuerpo", "Cabeza", "Bolsa", "Huevo", "Alimento"])
+metadata/_edit_lock_ = true
+
+[node name="PieD" type="Sprite2D" parent="Imagen"]
+position = Vector2(19, -14)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_ocluk")
+hframes = 12
+metadata/_edit_lock_ = true
+
+[node name="PieI" type="Sprite2D" parent="Imagen"]
+position = Vector2(-18, -15)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_ocluk")
+flip_h = true
+hframes = 12
+metadata/_edit_lock_ = true
+
+[node name="Cuerpo" type="Sprite2D" parent="Imagen"]
+position = Vector2(1, -80)
+texture = ExtResource("2_8s2bn")
+hframes = 44
+frame = 3
+metadata/_edit_lock_ = true
+
+[node name="Cabeza" type="Sprite2D" parent="Imagen"]
+position = Vector2(0, -157)
+texture = ExtResource("3_ox8ov")
+hframes = 44
+metadata/_edit_lock_ = true
+
+[node name="Bolsa" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(-46, -74)
+texture = ExtResource("5_5u17u")
+hframes = 6
+metadata/_edit_lock_ = true
+
+[node name="Huevo" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(43, -110)
+texture = ExtResource("9_f2slp")
+hframes = 4
+metadata/_edit_lock_ = true
+
+[node name="Alimento" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(35, -101)
+texture = ExtResource("10_0vj8k")
+hframes = 2
+metadata/_edit_lock_ = true
+
+[node name="Charla" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(10, -166)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("11_cyhx1")
+offset = Vector2(8, -130)
+metadata/_edit_lock_ = true
+
+[node name="Texto" type="Label" parent="Imagen/Charla"]
+offset_left = -223.0
+offset_top = -267.0
+offset_right = 233.0
+offset_bottom = -44.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("12_m4o04")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_n3j5c")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true

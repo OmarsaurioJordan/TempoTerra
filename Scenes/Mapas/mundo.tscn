@@ -1,0 +1,42 @@
+[gd_scene load_steps=11 format=3 uid="uid://dm8eya16td43f"]
+
+[ext_resource type="PackedScene" uid="uid://dqw1tlaf3iaga" path="res://Scenes/Mapas/mundo_formacion.tscn" id="1_550vs"]
+[ext_resource type="Script" uid="uid://brsv7ov37w77s" path="res://Scripts/Mapas/mundo.gd" id="1_bu85d"]
+[ext_resource type="PackedScene" uid="uid://cslp7mi0dfusl" path="res://Scenes/Mapas/mundo_prehistoria.tscn" id="2_ghrgv"]
+[ext_resource type="PackedScene" uid="uid://dapiitre6wcef" path="res://Scenes/Mapas/mundo_antiguo.tscn" id="3_bu85d"]
+[ext_resource type="PackedScene" uid="uid://b8i1jm234q42r" path="res://Scenes/Mapas/mundo_imperial.tscn" id="4_x5pk0"]
+[ext_resource type="PackedScene" uid="uid://b1fa1kiycbp55" path="res://Scenes/Mapas/mundo_medieval.tscn" id="5_vquj8"]
+[ext_resource type="PackedScene" uid="uid://d2bumcr4ao6pl" path="res://Scenes/Mapas/mundo_industrial.tscn" id="6_coubq"]
+[ext_resource type="PackedScene" uid="uid://dootklixuc7sv" path="res://Scenes/Mapas/mundo_moderno.tscn" id="7_ha0ry"]
+[ext_resource type="PackedScene" uid="uid://d0kf6oyy50lea" path="res://Scenes/Mapas/mundo_avanzado.tscn" id="8_fbh3e"]
+[ext_resource type="PackedScene" uid="uid://dr16rpqt1d5ce" path="res://Scenes/Mapas/mundo_apocaliptico.tscn" id="9_5fehv"]
+
+[node name="Mundo" type="Node2D"]
+script = ExtResource("1_bu85d")
+metadata/_edit_lock_ = true
+
+[node name="MundoFormacion" parent="." instance=ExtResource("1_550vs")]
+position = Vector2(-10920, -7630)
+
+[node name="MundoPrehistoria" parent="." instance=ExtResource("2_ghrgv")]
+position = Vector2(0, -7630)
+
+[node name="MundoAntiguo" parent="." instance=ExtResource("3_bu85d")]
+position = Vector2(10920, -7630)
+
+[node name="MundoImperial" parent="." instance=ExtResource("4_x5pk0")]
+position = Vector2(-10920, 0)
+
+[node name="MundoMedieval" parent="." instance=ExtResource("5_vquj8")]
+
+[node name="MundoIndustrial" parent="." instance=ExtResource("6_coubq")]
+position = Vector2(10920, 0)
+
+[node name="MundoModerno" parent="." instance=ExtResource("7_ha0ry")]
+position = Vector2(-10920, 7630)
+
+[node name="MundoAvanzado" parent="." instance=ExtResource("8_fbh3e")]
+position = Vector2(0, 7630)
+
+[node name="MundoApocaliptico" parent="." instance=ExtResource("9_5fehv")]
+position = Vector2(10920, 7630)

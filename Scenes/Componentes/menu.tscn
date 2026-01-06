@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpqap5t10k7f"]
+
+[ext_resource type="Texture2D" uid="uid://c7ghmo6nb7n4b" path="res://Sprites/General/d_portada.png" id="1_gotn4"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Portada" type="Sprite2D" parent="."]
+position = Vector2(237, 339)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("1_gotn4")
+metadata/_edit_lock_ = true

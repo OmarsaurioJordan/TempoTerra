@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddojl24bn7c2g"]
+
+[ext_resource type="Texture2D" uid="uid://c7ljn42hiwuf4" path="res://Sprites/Entes/d_entidad_strip8.png" id="2_3ag22"]
+[ext_resource type="Texture2D" uid="uid://bgxx54sgo0x8h" path="res://Sprites/Entes/d_bolsa_strip6.png" id="6_3vc3m"]
+[ext_resource type="Texture2D" uid="uid://dtbo8a4wnnsrc" path="res://Sprites/Entes/d_alimento_strip2.png" id="11_0qotq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bjll6"]
+radius = 26.4764
+
+[node name="Alien" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 15
+motion_mode = 1
+wall_min_slide_angle = 1.0472
+platform_on_leave = 2
+metadata/_edit_lock_ = true
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bjll6")
+metadata/_edit_lock_ = true
+
+[node name="Imagen" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="PieI" type="Sprite2D" parent="Imagen"]
+position = Vector2(-18, -78)
+texture = ExtResource("2_3ag22")
+hframes = 8
+frame = 5
+metadata/_edit_lock_ = true
+
+[node name="PieD" type="Sprite2D" parent="Imagen"]
+position = Vector2(17, -78)
+texture = ExtResource("2_3ag22")
+flip_h = true
+hframes = 8
+frame = 5
+metadata/_edit_lock_ = true
+
+[node name="Cuerpo" type="Sprite2D" parent="Imagen"]
+position = Vector2(1, -136)
+texture = ExtResource("2_3ag22")
+hframes = 8
+frame = 4
+metadata/_edit_lock_ = true
+
+[node name="Bolsa" type="Sprite2D" parent="Imagen"]
+position = Vector2(-41, -81)
+texture = ExtResource("6_3vc3m")
+hframes = 6
+frame = 5
+metadata/_edit_lock_ = true
+
+[node name="Alimento" type="Sprite2D" parent="Imagen"]
+position = Vector2(40, -91)
+texture = ExtResource("11_0qotq")
+hframes = 2
+metadata/_edit_lock_ = true

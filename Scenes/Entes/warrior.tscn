@@ -1,0 +1,150 @@
+[gd_scene load_steps=15 format=3 uid="uid://iei3wam7xaxm"]
+
+[ext_resource type="Texture2D" uid="uid://dunep3yumw4lg" path="res://Sprites/Entes/d_golpe_strip2.png" id="1_6e6mr"]
+[ext_resource type="Script" uid="uid://bw16pwdyolf8e" path="res://Scripts/Tools/imagen.gd" id="1_ev13i"]
+[ext_resource type="Script" uid="uid://dx47wra7le8s2" path="res://Scripts/Entes/warrior.gd" id="1_it582"]
+[ext_resource type="Texture2D" uid="uid://dgc4pg2bqr06b" path="res://Sprites/Entes/d_pies_strip12.png" id="2_gpjr2"]
+[ext_resource type="Texture2D" uid="uid://cudpblcjwc20s" path="res://Sprites/Entes/d_cuerpo_strip44.png" id="3_pr3kn"]
+[ext_resource type="Texture2D" uid="uid://bcpqm6locv2hf" path="res://Sprites/Entes/d_cabeza_strip44.png" id="4_203qf"]
+[ext_resource type="Texture2D" uid="uid://dxy3eeidmweif" path="res://Sprites/Entes/d_escudo_strip22.png" id="5_5w8pn"]
+[ext_resource type="Texture2D" uid="uid://cl74su0pkyhdh" path="res://Sprites/Entes/d_distancia_strip10.png" id="7_2o6qo"]
+[ext_resource type="Texture2D" uid="uid://dd0nvr88qpjmr" path="res://Sprites/Entes/d_secundaria_strip3.png" id="8_no5jd"]
+[ext_resource type="Texture2D" uid="uid://dkubspuc1unir" path="res://Sprites/Entes/d_mele_strip22.png" id="9_1qvrk"]
+[ext_resource type="Texture2D" uid="uid://cirkjvs0fqm6" path="res://Sprites/Entes/d_charla.png" id="12_f8yok"]
+[ext_resource type="FontFile" uid="uid://dfhfupgu7dfr2" path="res://Sprites/General/comic_sana.ttf" id="13_ajjnv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bjll6"]
+radius = 26.4764
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n3j5c"]
+
+[node name="Warrior" type="CharacterBody2D" groups=["entes", "humans", "warriors"]]
+collision_layer = 8
+collision_mask = 15
+motion_mode = 1
+wall_min_slide_angle = 1.0472
+platform_on_leave = 2
+script = ExtResource("1_it582")
+metadata/_edit_lock_ = true
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bjll6")
+metadata/_edit_lock_ = true
+
+[node name="Imagen" type="Node2D" parent="."]
+script = ExtResource("1_ev13i")
+name_nodos_respiran = Array[String](["Cuerpo", "Cabeza", "Escudo", "Municion", "Secundaria", "Arma", "Distancia"])
+metadata/_edit_lock_ = true
+
+[node name="GolpeA" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(-3, -110)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("1_6e6mr")
+hframes = 2
+metadata/_edit_lock_ = true
+
+[node name="PieD" type="Sprite2D" parent="Imagen"]
+position = Vector2(19, -14)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_gpjr2")
+hframes = 12
+metadata/_edit_lock_ = true
+
+[node name="PieI" type="Sprite2D" parent="Imagen"]
+position = Vector2(-18, -15)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_gpjr2")
+flip_h = true
+hframes = 12
+metadata/_edit_lock_ = true
+
+[node name="Cuerpo" type="Sprite2D" parent="Imagen"]
+position = Vector2(1, -80)
+texture = ExtResource("3_pr3kn")
+hframes = 44
+frame = 2
+metadata/_edit_lock_ = true
+
+[node name="Cabeza" type="Sprite2D" parent="Imagen"]
+position = Vector2(0, -157)
+texture = ExtResource("4_203qf")
+hframes = 44
+metadata/_edit_lock_ = true
+
+[node name="Escudo" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(-41, -95)
+texture = ExtResource("5_5w8pn")
+hframes = 22
+frame = 7
+metadata/_edit_lock_ = true
+
+[node name="Municion" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(-23, -76)
+texture = ExtResource("7_2o6qo")
+offset = Vector2(-10, -70)
+hframes = 10
+frame = 1
+metadata/_edit_lock_ = true
+
+[node name="Secundaria" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(-32, -79)
+rotation = -0.127409
+texture = ExtResource("8_no5jd")
+offset = Vector2(-5, -20)
+hframes = 3
+metadata/_edit_lock_ = true
+
+[node name="Arma" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(28, -88)
+rotation = 0.261799
+texture = ExtResource("9_1qvrk")
+offset = Vector2(20, -55)
+hframes = 22
+frame = 1
+metadata/_edit_lock_ = true
+
+[node name="Distancia" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(50, -78)
+texture = ExtResource("7_2o6qo")
+offset = Vector2(-10, -70)
+hframes = 10
+metadata/_edit_lock_ = true
+
+[node name="GolpeB" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(-3, -110)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("1_6e6mr")
+hframes = 2
+frame = 1
+metadata/_edit_lock_ = true
+
+[node name="Charla" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(10, -166)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("12_f8yok")
+offset = Vector2(8, -130)
+metadata/_edit_lock_ = true
+
+[node name="Texto" type="Label" parent="Imagen/Charla"]
+offset_left = -223.0
+offset_top = -267.0
+offset_right = 233.0
+offset_bottom = -44.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("13_ajjnv")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_n3j5c")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true

@@ -1,0 +1,228 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvign1huifj07"]
+
+[ext_resource type="Texture2D" uid="uid://b1cktowpx74r7" path="res://Sprites/General/d_mapa_strip8.png" id="1_1gchw"]
+[ext_resource type="Texture2D" uid="uid://bseu44jn5acbr" path="res://Sprites/General/d_proyectil_strip4.png" id="2_bbdao"]
+[ext_resource type="Script" uid="uid://bwskf2xujtgfc" path="res://Scripts/Tools/calle.gd" id="3_w5vi5"]
+
+[node name="Limites" type="StaticBody2D"]
+metadata/_edit_lock_ = true
+
+[node name="Silueta" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0.392157)
+scale = Vector2(37.9167, 51.5541)
+texture = ExtResource("1_1gchw")
+centered = false
+hframes = 8
+metadata/_edit_lock_ = true
+
+[node name="Coli1" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(2084, 3704, 2065, 3950, 2252, 4088, 2587, 4196, 2813, 4413, 2872, 4679, 2872, 5014, 2931, 5349, 3276, 5851, 3572, 5959, 3847, 5871, 4064, 5634, 4123, 5408, 4015, 5132, 3808, 4837, 3729, 4541, 3729, 4108, 3926, 3802, 4241, 3694, 4537, 3684, 4754, 3861, 4961, 3812, 5295, 3930, 5581, 3852, 5758, 3576, 5709, 3261, 5502, 3073, 5226, 3044, 4980, 3172, 4764, 3349, 4478, 3320, 4310, 3113, 4182, 2876, 4153, 2551, 4123, 2315, 3877, 2187, 3680, 2276, 3394, 2286, 3355, 2670, 3306, 2975, 3227, 3310, 3020, 3458, 2734, 3527, 2469, 3438, 2242, 3497)
+metadata/_edit_lock_ = true
+
+[node name="Coli2" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(7750, 4114, 7566, 4050, 7437, 3912, 7267, 3939, 7143, 4105, 7088, 4312, 7024, 4482, 6909, 4684, 6757, 4863, 6665, 5015, 6596, 5208, 6546, 5396, 6592, 5561, 6757, 5575, 6959, 5506, 7102, 5571, 7212, 5676, 7391, 5662, 7469, 5469, 7538, 5276, 7626, 5038, 7731, 4927, 7828, 4762, 8044, 4748, 8209, 4863, 8416, 4849, 8531, 4693, 8554, 4413, 8471, 4187, 8333, 3999, 8085, 3967, 7938, 4082)
+metadata/_edit_lock_ = true
+
+[node name="Coli3" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(580, 817, 797, 644, 1080, 633, 1258, 694, 1436, 667, 1598, 455, 1775, 338, 2037, 411, 2309, 616, 2565, 683, 2849, 555, 3132, 572, 3327, 717, 3393, 1067, 3549, 1256, 3594, 1534, 3783, 1551, 3972, 1456, 4155, 1478, 4366, 1612, 4539, 1506, 4539, 794, 4650, 605, 4956, 578, 5317, 728, 5545, 778, 5767, 622, 6012, 477, 6323, 494, 6457, 628, 6551, 778, 6718, 767, 6991, 572, 7508, 583, 7619, 755, 7658, 1006, 7624, 1256, 7541, 1528, 7574, 1723, 7725, 1856, 7964, 1801, 8164, 1534, 8231, 1145, 8375, 817, 8625, 561, 9048, 555, 9337, 772, 9482, 744, 9732, 572, 10104, 589, 10443, 989, 10949, 1017, 10949, -67, -159, -79, -120, 794)
+metadata/_edit_lock_ = true
+
+[node name="Coli4" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(10964, 946, 10459, 979, 10451, 1524, 10313, 1866, 10459, 2191, 10468, 2639, 10313, 2908, 10175, 3136, 10158, 3412, 10191, 3885, 9971, 4104, 9694, 4161, 9491, 3990, 9352, 3681, 9181, 3575, 8929, 3649, 8807, 3942, 8831, 4202, 9043, 4389, 9401, 4528, 9686, 4658, 9922, 5041, 9930, 5423, 9833, 5732, 9784, 5936, 9890, 6001, 9890, 6587, 9719, 6701, 9442, 6693, 9312, 6929, 9157, 7076, 9141, 7645, 10948, 7686)
+metadata/_edit_lock_ = true
+
+[node name="Coli5" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(9190, 7670, 9181, 7084, 8652, 7100, 8449, 6880, 8164, 6888, 7920, 7027, 7651, 6848, 7374, 6498, 7057, 6270, 6772, 6286, 6471, 6522, 6357, 6742, 6210, 7100, 5966, 7361, 5616, 7369, 5225, 7181, 4810, 7190, 4419, 7190, 4061, 6840, 3784, 6538, 3443, 6579, 3320, 6848, 3141, 7149, 2840, 7222, 2335, 7092, 1806, 7043, 1562, 6872, 1318, 6677, 984, 6628, -41, 6628, -50, 7694)
+metadata/_edit_lock_ = true
+
+[node name="Coli6" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-102, 739, -111, 6708, 982, 6659, 736, 6334, 558, 5821, 489, 5290, 539, 4876, 755, 4433, 1090, 4265, 1337, 4048, 1376, 3802, 1110, 3536, 716, 3536, 480, 3192, 420, 2748, 519, 2423, 608, 2098, 519, 1842, 371, 1527, 440, 1123, 608, 788)
+metadata/_edit_lock_ = true
+
+[node name="Limite" type="Node2D" parent="."]
+position = Vector2(10920, 7630)
+metadata/_edit_lock_ = true
+
+[node name="Navegacion" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Calle1" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(1693, 3836)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle11"), NodePath("../Calle10")]
+metadata/_edit_lock_ = true
+
+[node name="Calle2" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(8645, 4194)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle3"), NodePath("../Calle15")]
+metadata/_edit_lock_ = true
+
+[node name="Calle3" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(9190, 5391)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle2"), NodePath("../Calle5")]
+metadata/_edit_lock_ = true
+
+[node name="Calle4" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(6960, 5945)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle18"), NodePath("../Calle5")]
+metadata/_edit_lock_ = true
+
+[node name="Calle5" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(8425, 6010)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle4"), NodePath("../Calle3")]
+metadata/_edit_lock_ = true
+
+[node name="Calle6" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(3573, 6214)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle9"), NodePath("../Calle18")]
+metadata/_edit_lock_ = true
+
+[node name="Calle7" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(3874, 1875)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle12"), NodePath("../Calle13")]
+metadata/_edit_lock_ = true
+
+[node name="Calle8" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(6332, 4032)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle14"), NodePath("../Calle17")]
+metadata/_edit_lock_ = true
+
+[node name="Calle9" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(2384, 6376)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle10"), NodePath("../Calle6")]
+metadata/_edit_lock_ = true
+
+[node name="Calle10" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(1684, 5261)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle1"), NodePath("../Calle9")]
+metadata/_edit_lock_ = true
+
+[node name="Calle11" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(1717, 2518)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle1"), NodePath("../Calle12")]
+metadata/_edit_lock_ = true
+
+[node name="Calle12" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(2523, 1745)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle11"), NodePath("../Calle7")]
+metadata/_edit_lock_ = true
+
+[node name="Calle13" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(5291, 1957)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle7"), NodePath("../Calle14")]
+metadata/_edit_lock_ = true
+
+[node name="Calle14" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(6642, 2421)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle13"), NodePath("../Calle15"), NodePath("../Calle8")]
+metadata/_edit_lock_ = true
+
+[node name="Calle15" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(8091, 2901)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle2"), NodePath("../Calle14")]
+metadata/_edit_lock_ = true
+
+[node name="Calle16" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(9475, 1973)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle15")]
+metadata/_edit_lock_ = true
+
+[node name="Calle17" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(5632, 5042)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle8"), NodePath("../Calle18")]
+metadata/_edit_lock_ = true
+
+[node name="Calle18" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+position = Vector2(5233, 6076)
+scale = Vector2(3, 3)
+texture = ExtResource("2_bbdao")
+offset = Vector2(-95, 0)
+hframes = 4
+script = ExtResource("3_w5vi5")
+conexion = [NodePath("../Calle17"), NodePath("../Calle4"), NodePath("../Calle6")]
+metadata/_edit_lock_ = true

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4ibgr4ap4s76"]
+
+[ext_resource type="Texture2D" uid="uid://wrrjcji30p5f" path="res://Sprites/General/d_natural_strip12.png" id="1_vedn7"]
+
+[node name="Arbusto" type="Sprite2D"]
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("1_vedn7")
+offset = Vector2(3, -115)
+hframes = 12
+frame = 5

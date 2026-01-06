@@ -1,0 +1,17 @@
+extends Node2D
+
+func _ready() -> void:
+	randomize()
+	call_deferred("initialize")
+
+func initialize() -> void:
+	var pareja = [load("res://Scenes/Entes/warrior.tscn"), load("res://Scenes/Entes/obrera.tscn")]
+	for ca in get_tree().get_nodes_in_group("casas"):
+		for par in pareja:
+			var aux = par.instantiate()
+			ca.get_parent().add_child(aux)
+			aux.position = ca.position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
+	var bases = get_tree().get_nodes_in_group("bases")
+	for ent in get_tree().get_nodes_in_group("humans"):
+		var near = Data.get_nearest(ent, bases)
+		ent.initialize(near.get_grupo())

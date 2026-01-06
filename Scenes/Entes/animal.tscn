@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://daspbt8hvwmpu"]
+
+[ext_resource type="Texture2D" uid="uid://c7ljn42hiwuf4" path="res://Sprites/Entes/d_entidad_strip8.png" id="2_57ttb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bjll6"]
+radius = 26.4764
+
+[node name="Animal" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 15
+motion_mode = 1
+wall_min_slide_angle = 1.0472
+platform_on_leave = 2
+metadata/_edit_lock_ = true
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bjll6")
+metadata/_edit_lock_ = true
+
+[node name="Imagen" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="PieI" type="Sprite2D" parent="Imagen"]
+position = Vector2(-24, -85)
+texture = ExtResource("2_57ttb")
+hframes = 8
+frame = 3
+metadata/_edit_lock_ = true
+
+[node name="PieD" type="Sprite2D" parent="Imagen"]
+position = Vector2(25, -86)
+texture = ExtResource("2_57ttb")
+flip_h = true
+hframes = 8
+frame = 3
+metadata/_edit_lock_ = true
+
+[node name="Cuerpo" type="Sprite2D" parent="Imagen"]
+position = Vector2(3, -127)
+texture = ExtResource("2_57ttb")
+hframes = 8
+frame = 2
+metadata/_edit_lock_ = true

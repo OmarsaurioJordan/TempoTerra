@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3nxgn1p73mvb"]
+
+[ext_resource type="Script" uid="uid://biggxso1tkjpr" path="res://Scripts/Objetos/casa.gd" id="1_7is38"]
+[ext_resource type="Texture2D" uid="uid://chp8dipyj7430" path="res://Sprites/General/d_casa_strip6.png" id="1_idhvn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d0dy4"]
+radius = 79.0253
+
+[node name="Casa" type="StaticBody2D" groups=["buildings", "casas"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_7is38")
+metadata/_edit_lock_ = true
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_d0dy4")
+metadata/_edit_lock_ = true
+
+[node name="Imagen" type="Sprite2D" parent="."]
+position = Vector2(4, -112)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("1_idhvn")
+hframes = 6
+metadata/_edit_lock_ = true
