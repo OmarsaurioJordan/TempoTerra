@@ -20,13 +20,20 @@ radius = 26.4764
 collision_layer = 8
 collision_mask = 15
 motion_mode = 1
-wall_min_slide_angle = 1.0472
+wall_min_slide_angle = 0.174533
 platform_on_leave = 2
+safe_margin = 3.0
 script = ExtResource("1_tf4pl")
 metadata/_edit_lock_ = true
 
 [node name="Coli" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bjll6")
+metadata/_edit_lock_ = true
+
+[node name="RayCalles" type="RayCast2D" parent="."]
+enabled = false
+exclude_parent = false
+target_position = Vector2(100, 0)
 metadata/_edit_lock_ = true
 
 [node name="Imagen" type="Node2D" parent="."]
@@ -106,3 +113,16 @@ vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 metadata/_edit_lock_ = true
+
+[node name="TimPausa" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="TimErrar" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="TimEstado" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="TimErrar" to="." method="_on_tim_errar_timeout"]

@@ -12,6 +12,7 @@ func initialize() -> void:
 			ca.get_parent().add_child(aux)
 			aux.position = ca.position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
 	var bases = get_tree().get_nodes_in_group("bases")
+	var casas = get_tree().get_nodes_in_group("casas")
 	for ent in get_tree().get_nodes_in_group("humans"):
 		var near = Data.get_nearest(ent, bases)
-		ent.initialize(near.get_grupo())
+		ent.initialize(near.get_grupo(), Data.get_nearest(ent, casas))

@@ -64,13 +64,15 @@
 
 ## Obrera
 
-- recolectar comida
-- convertir a comida procesada
-- curar aliado cercano
-- generar nuevo aliado
+- si no hay obreras en mundo, crear una lejos del player
+- si hay exceso de obreras para las casas, eliminarlas, ver original vs otra tirbu vs visita
+- x recolectar comida
+- x convertir a comida procesada
+- x curar aliado cercano
+- generar nuevo aliado dependiendo de hogar no de grupo origen
 - charlar con otra obrera
 - caminar errando por su casa
-- seguir a warrior para cambio de grupo
+- seguir a warrior para cambio de grupo, si no hay quien la proteja, ni dejar la base sola
 - enviar robot a recolectar lejos
 
 ## Warrior
@@ -82,9 +84,9 @@
 - atacar con dron a enemigo lejano
 - explorar libremente el mundo
 - ir masivamente a atacar a punto
-- conquistar obrera para llevarla a su grupo
+- conquistar obrera para llevarla a su grupo, prioridad mismo origen sobre otras (rescate)
 - asociarse a grupo si no tiene el suyo (viaje tiempo)
-- volver a casa por munición de distancia, explosivo o dron
+- volver a casa por munición de distancia, explosivo, curacion o dron
 - huir si superado en número al atacar
 
 # Alien

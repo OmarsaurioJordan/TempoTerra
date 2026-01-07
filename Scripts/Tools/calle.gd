@@ -48,3 +48,9 @@ func find_dest(dest: Node) -> Array:
 		if t[TABLA.DEST] == dest:
 			return t
 	return []
+
+func get_next_calle(dest: Node) -> Node:
+	var nxt = find_dest(dest)
+	if not nxt.is_empty():
+		return nxt[TABLA.NEXT]
+	return null

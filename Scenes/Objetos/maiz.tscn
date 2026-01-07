@@ -1,10 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://lqo4q372q7wp"]
+[gd_scene load_steps=3 format=3 uid="uid://lqo4q372q7wp"]
 
 [ext_resource type="Texture2D" uid="uid://wrrjcji30p5f" path="res://Sprites/General/d_natural_strip12.png" id="1_1nlg3"]
+[ext_resource type="Script" uid="uid://bhq150kgldq0j" path="res://Scripts/Objetos/maiz.gd" id="2_3ugr2"]
 
-[node name="Maiz" type="Sprite2D"]
+[node name="Maiz" type="Sprite2D" groups=["maicez"]]
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("1_1nlg3")
 offset = Vector2(3, -115)
 hframes = 12
 frame = 10
+script = ExtResource("2_3ugr2")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

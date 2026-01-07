@@ -1,20 +1,35 @@
 extends CharacterBody2D
 
-const SPEED = 300.0
-
+const VIDA: int = 200
+const SPEED: float = 300
+const ALIMENTO: int = 20
 const GRUPO: Data.GRUPO = Data.GRUPO.CYBORG
+
+var vida: int = VIDA
+var hogar: Node = null
 
 func _ready() -> void:
 	call_deferred("set_camara_mundo")
 
-func initialize(_grp=0) -> void:
+func initialize(_grp=0, _csa=null) -> void:
 	$Imagen.initialize_obrera(GRUPO)
 	$Imagen.initialize_warrior(GRUPO)
 
 func get_grupo() -> Data.GRUPO:
 	return GRUPO
 
-func _physics_process(delta: float) -> void:
+func get_hogar_grupo() -> Data.GRUPO:
+	if hogar != null:
+		return hogar.grupo
+	return Data.GRUPO.SALVAJE
+
+func alimentar() -> void:
+	vida = min(vida + ALIMENTO, VIDA)
+
+func is_alimentable() -> bool:
+	return vida < VIDA
+
+func _physics_process(_delta: float) -> void:
 	# cambiar de linea temporal
 	if Input.is_action_just_pressed("ui_futuro"):
 		set_tiempo(Data.get_next_mundo(self, get_tree().get_nodes_in_group("mundos")))

@@ -47,7 +47,7 @@ metadata/_edit_lock_ = true
 [node name="Navegacion" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
 
-[node name="Calle1" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle1" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(1693, 3836)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -57,7 +57,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle11"), NodePath("../Calle10")]
 metadata/_edit_lock_ = true
 
-[node name="Calle2" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle2" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(8645, 4194)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -67,7 +67,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle3"), NodePath("../Calle15")]
 metadata/_edit_lock_ = true
 
-[node name="Calle3" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle3" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(9190, 5391)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -77,7 +77,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle2"), NodePath("../Calle5")]
 metadata/_edit_lock_ = true
 
-[node name="Calle4" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle4" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(6960, 5945)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -87,7 +87,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle18"), NodePath("../Calle5")]
 metadata/_edit_lock_ = true
 
-[node name="Calle5" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle5" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(8425, 6010)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -97,7 +97,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle4"), NodePath("../Calle3")]
 metadata/_edit_lock_ = true
 
-[node name="Calle6" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle6" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(3573, 6214)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -107,7 +107,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle9"), NodePath("../Calle18")]
 metadata/_edit_lock_ = true
 
-[node name="Calle7" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle7" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(3874, 1875)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -117,7 +117,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle12"), NodePath("../Calle13")]
 metadata/_edit_lock_ = true
 
-[node name="Calle8" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle8" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(6332, 4032)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -127,7 +127,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle14"), NodePath("../Calle17")]
 metadata/_edit_lock_ = true
 
-[node name="Calle9" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle9" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(2384, 6376)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -137,7 +137,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle10"), NodePath("../Calle6")]
 metadata/_edit_lock_ = true
 
-[node name="Calle10" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle10" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(1684, 5261)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -147,7 +147,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle1"), NodePath("../Calle9")]
 metadata/_edit_lock_ = true
 
-[node name="Calle11" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle11" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(1717, 2518)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -157,7 +157,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle1"), NodePath("../Calle12")]
 metadata/_edit_lock_ = true
 
-[node name="Calle12" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle12" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(2523, 1745)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -167,7 +167,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle11"), NodePath("../Calle7")]
 metadata/_edit_lock_ = true
 
-[node name="Calle13" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle13" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(5291, 1957)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -177,7 +177,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle7"), NodePath("../Calle14")]
 metadata/_edit_lock_ = true
 
-[node name="Calle14" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle14" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(6642, 2421)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -187,7 +187,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle13"), NodePath("../Calle15"), NodePath("../Calle8")]
 metadata/_edit_lock_ = true
 
-[node name="Calle15" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle15" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(8091, 2901)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -197,7 +197,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle2"), NodePath("../Calle14")]
 metadata/_edit_lock_ = true
 
-[node name="Calle16" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle16" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(9475, 1973)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -207,7 +207,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle15")]
 metadata/_edit_lock_ = true
 
-[node name="Calle17" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle17" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(5632, 5042)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
@@ -217,7 +217,7 @@ script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle8"), NodePath("../Calle18")]
 metadata/_edit_lock_ = true
 
-[node name="Calle18" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion") groups=["calles"]]
+[node name="Calle18" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
 position = Vector2(5233, 6076)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")

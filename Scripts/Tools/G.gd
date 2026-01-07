@@ -1,6 +1,11 @@
 extends Node
 class_name Data
 
+const ESTOCASTICO: float = 0.5 # 0 calculo continuo - 1 extremadamente lento desperdicio loop
+const RADIO_CALLE: float = 64 # para detectar cuando llego a una calle
+
+enum RES_MOVE { LLEGO, FALTA, NULO }
+
 enum GRUPO {
 	SALVAJE,
 	TIGRE, AGUILA, PEZ, TORO, SERPIENTE, INSECTO,
@@ -22,6 +27,8 @@ enum ERA {
 	AVANZADO,
 	APOCALIPTICO
 }
+
+# conversiones entre grupos, eras y constantes
 
 static func grupo_to_era(grupo: GRUPO) -> ERA:
 	match grupo:
@@ -99,11 +106,11 @@ static func grupo_to_distancia(grupo: GRUPO) -> Array:
 			return [9, false, 0]
 	return [0, false, 0]
 
-# funciones de proposito general
+# funciones de busqueda espacial
 
 static func get_nearest(nodo: Node, otros: Array, vision: float = 1000000) -> Node:
 	var mundillo = nodo.get_parent()
-	var mejor = null
+	var mejor: Node = null
 	for ot in otros:
 		if ot.get_parent() != mundillo:
 			continue
@@ -115,8 +122,8 @@ static func get_nearest(nodo: Node, otros: Array, vision: float = 1000000) -> No
 
 static func get_farest(nodo: Node, otros: Array, vision: float = 1000000) -> Node:
 	var mundillo = nodo.get_parent()
-	var mejor = null
-	var dismin = 0.0
+	var mejor: Node = null
+	var dismin: float = 0
 	for ot in otros:
 		if ot.get_parent() != mundillo:
 			continue
@@ -125,6 +132,19 @@ static func get_farest(nodo: Node, otros: Array, vision: float = 1000000) -> Nod
 			dismin = d
 			mejor = ot
 	return mejor
+
+static func get_envista(nodo: Node, otros: Array, vision: float = 1000000) -> Array:
+	var mundillo = nodo.get_parent()
+	var res: Array = []
+	for ot in otros:
+		if ot.get_parent() != mundillo:
+			continue
+		var d = ot.global_position.distance_to(nodo.global_position)
+		if d < vision:
+			res.append(ot)
+	return res
+
+# funciones de obtencion de informacion de la era y mundo
 
 static func get_era(nodo: Node) -> ERA:
 	var nombre = nodo.get_parent().get_parent().name
@@ -150,7 +170,7 @@ static func get_era_from_name(nombre: String) -> ERA:
 			return ERA.AVANZADO
 		"MundoApocaliptico":
 			return ERA.APOCALIPTICO
-	return -1
+	return ERA.FORMACION
 
 static func get_next_mundo(nodo: Node, mundos: Array) -> String:
 	var era = get_era(nodo)
@@ -169,3 +189,74 @@ static func get_prev_mundo(nodo: Node, mundos: Array) -> String:
 		if get_era_from_name(mun.name) == era - 1:
 			return mun.name
 	return ""
+
+# movimiento inteligente de entes
+
+static func mover_hacia_punto(nodo: Node, meta: Vector2, radio: float) -> RES_MOVE:
+	# comportamiento estocastico para no consumir tantos ciclos de main loop
+	if randf() < ESTOCASTICO:
+		return RES_MOVE.FALTA
+	# en caso de no existir una proxima calle a la cual ir, ira al objetivo directamente
+	if nodo.next_calle == null:
+		# moverse hacia el objetivo
+		nodo.velocity = nodo.global_position.direction_to(meta) * nodo.SPEED
+		# verificar si llego al objetivo
+		if nodo.global_position.distance_to(meta) < radio:
+			return RES_MOVE.LLEGO
+		# cada tanto verificar si el camino directo al objetivo esta libre
+		if randf() < ESTOCASTICO:
+			var rayo = nodo.get_node("RayCalles")
+			if Data.is_colision_orillas(nodo.global_position, rayo, meta):
+				# como no esta libre, buscar calles para llegar hasta el objetivo
+				var mundo = nodo.get_parent().get_parent()
+				nodo.obj_calle = Data.get_near_calle(mundo, meta, rayo)
+				nodo.next_calle = Data.get_near_calle(mundo, nodo.global_position, rayo)
+				rayo.position = Vector2(0, 0)
+	# como existe una calle a la cual ir
+	else:
+		nodo.velocity = nodo.global_position.direction_to(
+			nodo.next_calle.global_position) * nodo.SPEED
+		# verificar si llego a la proxima calle
+		if nodo.global_position.distance_to(nodo.next_calle.global_position) < RADIO_CALLE:
+			# entonces buscar la siguiente
+			nodo.next_calle = nodo.next_calle.get_next_calle(nodo.obj_calle)
+		# cada tanto tratar de ver si puede llegar sin calle
+		if randf() < ESTOCASTICO:
+			var rayo = nodo.get_node("RayCalles")
+			if not Data.is_colision_orillas(nodo.global_position, rayo, meta):
+				nodo.next_calle = null
+	return RES_MOVE.FALTA
+
+static func mover_hacia_objetivo(nodo: Node, radio: float) -> RES_MOVE:
+	# verificacion de la existencia del objetivo, sino retornara nulo
+	if is_instance_valid(nodo.objetivo):
+		return mover_hacia_punto(nodo, nodo.objetivo.global_position, radio)
+	nodo.objetivo = null
+	return RES_MOVE.NULO
+
+static func is_colision_orillas(inicio: Vector2, rayo: RayCast2D, fin: Vector2) -> bool:
+	rayo.global_position = inicio
+	rayo.target_position = fin - inicio
+	rayo.force_raycast_update()
+	return rayo.is_colliding()
+
+static func get_near_calle(mundo: Node, inicio: Vector2, rayo: RayCast2D) -> Node:
+	var calles = mundo.get_node("Limites/Navegacion").get_children()
+	var vision: float = 1000000
+	var mejor: Node = null
+	for cll in calles:
+		if not Data.is_colision_orillas(inicio, rayo, cll.global_position):
+			var d = cll.global_position.distance_to(inicio)
+			if d < vision:
+				vision = d
+				mejor = cll
+	return mejor
+
+static func is_punto_free(nodo: Node, punto: Vector2, solidos: Array) -> bool:
+	var rayo = nodo.get_node("RayCalles")
+	if Data.is_colision_orillas(nodo.global_position, rayo, punto):
+		return false
+	for sol in solidos:
+		if punto.distance_to(sol.global_position) < sol.get_node("Coli").shape.radius:
+			return false
+	return true
