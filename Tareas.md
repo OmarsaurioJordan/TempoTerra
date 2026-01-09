@@ -1,27 +1,15 @@
 # Tareas
 
+- permitir en RIP múltiples caminos, elegir uno al azar
+- warriors se están quedando estancados en algunas calles al explorar
+- agregar movimiento errático al explorar o moverse lejos
+
 - objeto: arma o herramienta que puede caer al suelo
-- diplomacia: poner el estado defensivo
-- diplomacia: ejecutar ataque masivo
-- diplomacia: ordenar cese al fuego
-- proyectil: movimiento
-- proyectil: impacto
-- proyectil: explosion
-- warriors: movimiento
-- warriors: ataque distancia
-- warriors: ataque mele
-- obreras: movimiento
-- obreras: reproducción
-- obreras: recolección
+- diplomacia: modos defensivo, exlorativo, normal, guerra
+- proyectil: movimiento, impacto, explosion
 - robots: recolección
 - drones: ataque
-- animales: movimiento
-- animales: ataque
-- animales: repdroducción
 - insectos: errar
-- alienígenas: movimiento
-- alienígenas: ataque
-- alienígenas: reproducción
 - player: ataque distancia
 - player: ataque mele
 - player: ataque especial
@@ -32,7 +20,6 @@
 - entes: muerte animada
 - entes: crear robots o drones
 - entes: viaje temporal
-- entes: conversión a otra cultura
 - audio: efectos de sonido
 - audio: música contextual
 - menú: estructura visual main menú
@@ -53,10 +40,8 @@
 - mundos: colisión con bordes del mar, static
 - mundos: tiles del suelo segun tiempo
 - entes: estructura de sprites
-- player: movimiento
 - naturales: estructurar decorados y árboles
 - edificios: estructurar edificaciones de vivienda o centros
-- player: viaje temporal
 - entes: animación de sprites
 - mundos: creación inicial de unidades
 
@@ -66,28 +51,27 @@
 
 - si no hay obreras en mundo, crear una lejos del player
 - si hay exceso de obreras para las casas, eliminarlas, ver original vs otra tirbu vs visita
-- x recolectar comida
-- x convertir a comida procesada
-- x curar aliado cercano
-- generar nuevo aliado dependiendo de hogar no de grupo origen
-- charlar con otra obrera
-- caminar errando por su casa
+*  recolectar comida
+*  convertir a comida procesada
+*  curar aliado cercano
+* generar nuevo aliado dependiendo de hogar no de grupo origen
+* charlar con otra obrera
+* caminar errando por su casa
 - seguir a warrior para cambio de grupo, si no hay quien la proteja, ni dejar la base sola
 - enviar robot a recolectar lejos
 
 ## Warrior
 
-- caminar errando por su casa
+* caminar errando por su casa
 - atacar con mele a enemigo cercano
 - atacar a distancia a enemigo cercano
-- lanzar explosivos a enemigos cercanos
+- atacar con explosivos a enemigos cercanos
 - atacar con dron a enemigo lejano
 - explorar libremente el mundo
-- ir masivamente a atacar a punto
+- ir a atacar a punto especifico
 - conquistar obrera para llevarla a su grupo, prioridad mismo origen sobre otras (rescate)
 - asociarse a grupo si no tiene el suyo (viaje tiempo)
 - volver a casa por munición de distancia, explosivo, curacion o dron
-- huir si superado en número al atacar
 
 # Alien
 
@@ -129,8 +113,8 @@
 
 # Comandos
 
-- W,A,S,D: movimiento a pie
-- Q,E: viaje temporal
+* W,A,S,D: movimiento a pie
+* Q,E: viaje temporal
 - Lclic: disparar principal
 - Rclic: disparo secundaria
 - Mclic,R: recarga municion

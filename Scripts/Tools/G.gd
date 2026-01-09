@@ -192,6 +192,12 @@ static func get_prev_mundo(nodo: Node, mundos: Array) -> String:
 
 # movimiento inteligente de entes
 
+static func huir_de_punto(nodo: Node, meta: Vector2, is_giro_loco: bool = true) -> void:
+	var dir = meta.direction_to(nodo.global_position)
+	if is_giro_loco:
+		dir = dir.rotated(nodo.huida_giro)
+	nodo.velocity = dir * nodo.SPEED
+
 static func mover_hacia_punto(nodo: Node, meta: Vector2, radio: float) -> RES_MOVE:
 	# comportamiento estocastico para no consumir tantos ciclos de main loop
 	if randf() < ESTOCASTICO:
@@ -231,6 +237,22 @@ static func mover_hacia_objetivo(nodo: Node, radio: float) -> RES_MOVE:
 	# verificacion de la existencia del objetivo, sino retornara nulo
 	if is_instance_valid(nodo.objetivo):
 		return mover_hacia_punto(nodo, nodo.objetivo.global_position, radio)
+	nodo.objetivo = null
+	return RES_MOVE.NULO
+
+static func seguir_objetivo(nodo: Node, radio_max: float, radio_min: float) -> RES_MOVE:
+	# verificacion de la existencia del objetivo, sino retornara nulo
+	if is_instance_valid(nodo.objetivo):
+		var dis = nodo.global_position.distance_to(nodo.objetivo.global_position)
+		if dis <= radio_max and dis >= radio_min:
+			nodo.velocity = Vector2(0, 0)
+			return RES_MOVE.LLEGO
+		elif dis > radio_max:
+			mover_hacia_punto(nodo, nodo.objetivo.global_position, 0)
+			return RES_MOVE.FALTA
+		else:
+			huir_de_punto(nodo, nodo.objetivo.global_position, false)
+			return RES_MOVE.FALTA
 	nodo.objetivo = null
 	return RES_MOVE.NULO
 

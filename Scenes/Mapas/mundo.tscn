@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dm8eya16td43f"]
+[gd_scene load_steps=12 format=3 uid="uid://dm8eya16td43f"]
 
 [ext_resource type="PackedScene" uid="uid://dqw1tlaf3iaga" path="res://Scenes/Mapas/mundo_formacion.tscn" id="1_550vs"]
 [ext_resource type="Script" uid="uid://brsv7ov37w77s" path="res://Scripts/Mapas/mundo.gd" id="1_bu85d"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dootklixuc7sv" path="res://Scenes/Mapas/mundo_moderno.tscn" id="7_ha0ry"]
 [ext_resource type="PackedScene" uid="uid://d0kf6oyy50lea" path="res://Scenes/Mapas/mundo_avanzado.tscn" id="8_fbh3e"]
 [ext_resource type="PackedScene" uid="uid://dr16rpqt1d5ce" path="res://Scenes/Mapas/mundo_apocaliptico.tscn" id="9_5fehv"]
+[ext_resource type="PackedScene" uid="uid://b46gr0eansykw" path="res://Scenes/Componentes/gui.tscn" id="11_bu85d"]
 
 [node name="Mundo" type="Node2D"]
 script = ExtResource("1_bu85d")
@@ -40,3 +41,5 @@ position = Vector2(0, 7630)
 
 [node name="MundoApocaliptico" parent="." instance=ExtResource("9_5fehv")]
 position = Vector2(10920, 7630)
+
+[node name="GUI" parent="." instance=ExtResource("11_bu85d")]

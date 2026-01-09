@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b46gr0eansykw"]
+
+[ext_resource type="Texture2D" uid="uid://bwdy5lni0pm3l" path="res://Sprites/General/d_vision.png" id="1_33gso"]
+
+[node name="GUI" type="CanvasLayer"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_33gso")
+metadata/_edit_lock_ = true
