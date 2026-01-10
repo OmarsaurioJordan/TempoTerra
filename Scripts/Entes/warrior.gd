@@ -1,16 +1,19 @@
 extends CharacterBody2D
 
 const VIDA: int = 150 # cantidad de puntos de impacto
-const SPEED: float = 200 # velocidad de desplazamiento
+const SPEED: float = 150 # velocidad de desplazamiento
 const ALIMENTO: int = 20 # en cuanto aumenta su vida al ser alimentado
 const VISION: float = 1000 # rango de vision para otros entes o cosas
 
-enum ESTADO { LIBRE, SEGUIR, EXPLORAR, ATACAR, CONQUISTAR, RECARGAR }
+enum ESTADO { LIBRE, SEGUIR, EXPLORAR, CONQUISTAR, RECARGAR, MISION }
+enum POSTURA { HOGAR, EXTRA, SOBRA }
 
 var estado: ESTADO = ESTADO.LIBRE
 var grupo: Data.GRUPO = Data.GRUPO.SALVAJE
 var hogar: Node = null
 var vida: int = VIDA
+var municion: int = 0
+var mision: Node = null # la base o casa a la cual atacar o defender
 
 # para navegacion, puede ser perseguir cualquier tipo de nodo
 var meta: Vector2 = Vector2(0, 0) # punto al que se desea llegar
@@ -40,6 +43,25 @@ func is_hogar_grupo() -> bool:
 func get_grupo() -> Data.GRUPO:
 	return grupo
 
+func get_base() -> Node:
+	if is_hogar_grupo():
+		var bases = get_tree().get_nodes_in_group("bases")
+		var hogar_grupo = get_hogar_grupo()
+		for b in bases:
+			if b.get_grupo() == hogar_grupo:
+				return b
+	return null
+
+func get_postura() -> POSTURA:
+	if hogar != null:
+		var i = hogar.get_postura(self, false)
+		if i <= 0:
+			return POSTURA.HOGAR
+		elif i == 1:
+			return POSTURA.EXTRA
+		return POSTURA.SOBRA
+	return POSTURA.HOGAR
+
 func _physics_process(_delta: float) -> void:
 	if $TimPausa.is_stopped():
 		match estado:
@@ -49,12 +71,12 @@ func _physics_process(_delta: float) -> void:
 				est_seguir()
 			ESTADO.EXPLORAR:
 				est_explorar()
-			ESTADO.ATACAR:
-				est_atacar()
 			ESTADO.CONQUISTAR:
 				est_conquistar()
 			ESTADO.RECARGAR:
 				est_recargar()
+			ESTADO.MISION:
+				est_mision()
 	else:
 		velocity = Vector2(0, 0)
 	move_and_slide()
@@ -62,8 +84,7 @@ func _physics_process(_delta: float) -> void:
 func errar() -> void:
 	if mover_errar:
 		if meta.is_zero_approx():
-			var solidos = get_tree().get_nodes_in_group("bases")
-			solidos.append_array(get_tree().get_nodes_in_group("casas"))
+			var solidos = get_tree().get_nodes_in_group("buildings")
 			var pp = global_position + Vector2(randf() * VISION, 0).rotated(randf() * 2 * PI)
 			if is_hogar_grupo():
 				var mis_edif = []
@@ -79,6 +100,8 @@ func errar() -> void:
 		elif Data.mover_hacia_punto(self, meta, 75) == Data.RES_MOVE.LLEGO:
 			# llego al punto dado
 			meta = Vector2(0, 0)
+	elif global_position.distance_to(meta) > VISION * 2 and not meta.is_zero_approx():
+		Data.mover_hacia_punto(self, meta, 75)
 	else:
 		velocity = Vector2(0, 0)
 
@@ -109,19 +132,56 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 		ESTADO.EXPLORAR:
 			var calles = get_parent().get_parent().get_node("Limites/Navegacion").get_children()
 			objetivo = calles.pick_random()
-		ESTADO.ATACAR:
-			pass
 		ESTADO.CONQUISTAR:
 			pass
 		ESTADO.RECARGAR:
 			pass
+		ESTADO.MISION:
+			var base = get_base()
+			if base == null:
+				set_estado(ESTADO.LIBRE)
+			else:
+				mision = base.get_mision()
+				if mision == null:
+					var edif = get_tree().get_nodes_in_group("buildings")
+					var hogar_grupo = get_hogar_grupo()
+					for i in range(edif.size() -1, -1, -1):
+						if edif[i].get_grupo() == hogar_grupo:
+							edif.remove_at(i)
+					if edif.is_empty():
+						var calles = get_parent().get_parent().get_node(
+							"Limites/Navegacion").get_children()
+						mision = calles.pick_random()
+					else:
+						mision = edif.pick_random()
 
 func est_libre() -> void:
 	errar()
 	if $TimEstado.is_stopped():
-		var p = randf()
-		if p < 0.5:
-			set_estado(ESTADO.EXPLORAR)
+		var base = get_base()
+		if base != null:
+			var pos = get_postura()
+			match base.get_diplomacia():
+				Data.DIPLOMACIA.NORMAL:
+					if pos == POSTURA.SOBRA:
+						set_estado(ESTADO.EXPLORAR)
+					else:
+						$TimEstado.start(randf_range(3, 6))
+				Data.DIPLOMACIA.ATAQUE:
+					if pos == POSTURA.SOBRA:
+						set_estado(ESTADO.MISION)
+					else:
+						$TimEstado.start(randf_range(3, 6))
+				Data.DIPLOMACIA.DEFENSA, Data.DIPLOMACIA.GUERRA:
+					if pos != POSTURA.HOGAR:
+						set_estado(ESTADO.MISION)
+					else:
+						$TimEstado.start(randf_range(3, 6))
+				Data.DIPLOMACIA.EXPLORA:
+					if pos != POSTURA.HOGAR:
+						set_estado(ESTADO.EXPLORAR)
+					else:
+						$TimEstado.start(randf_range(3, 6))
 		else:
 			$TimEstado.start(randf_range(3, 6))
 
@@ -146,16 +206,33 @@ func est_explorar() -> void:
 	else:
 		errar()
 
-func est_atacar() -> void:
-	pass
-
 func est_conquistar() -> void:
 	pass
 
 func est_recargar() -> void:
 	pass
 
+func est_mision() -> void:
+	if mover_errar:
+		if meta.is_zero_approx():
+			var pp = mision.global_position +\
+				Vector2(randf() * VISION, 0).rotated(randf() * 2 * PI)
+			var solidos = get_tree().get_nodes_in_group("buildings")
+			if Data.is_punto_free(self, pp, solidos):
+				meta = pp
+		elif Data.mover_hacia_punto(self, meta, 75) == Data.RES_MOVE.LLEGO:
+			# llego al punto dado
+			meta = Vector2(0, 0)
+	elif global_position.distance_to(meta) > VISION * 1.5 and not meta.is_zero_approx():
+		Data.mover_hacia_punto(self, meta, 75)
+	else:
+		velocity = Vector2(0, 0)
+
 func _on_tim_errar_timeout() -> void:
 	$TimErrar.start(randf_range(1, 7))
 	mover_errar = not mover_errar
 	huida_giro = randf_range(-PI * 0.25, PI * 0.25)
+
+func base_cambia_diplomacia(base: Node) -> void:
+	if base == get_base():
+		set_estado(ESTADO.LIBRE)

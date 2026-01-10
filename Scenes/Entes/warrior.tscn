@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://iei3wam7xaxm"]
+[gd_scene load_steps=13 format=3 uid="uid://iei3wam7xaxm"]
 
 [ext_resource type="Texture2D" uid="uid://dunep3yumw4lg" path="res://Sprites/Entes/d_golpe_strip2.png" id="1_6e6mr"]
 [ext_resource type="Script" uid="uid://bw16pwdyolf8e" path="res://Scripts/Tools/imagen.gd" id="1_ev13i"]
 [ext_resource type="Script" uid="uid://dx47wra7le8s2" path="res://Scripts/Entes/warrior.gd" id="1_it582"]
+[ext_resource type="Texture2D" uid="uid://dfwko0hgjqi1x" path="res://Sprites/Entes/d_sombraselect_strip2.png" id="2_ev13i"]
 [ext_resource type="Texture2D" uid="uid://dgc4pg2bqr06b" path="res://Sprites/Entes/d_pies_strip12.png" id="2_gpjr2"]
 [ext_resource type="Texture2D" uid="uid://cudpblcjwc20s" path="res://Sprites/Entes/d_cuerpo_strip44.png" id="3_pr3kn"]
 [ext_resource type="Texture2D" uid="uid://bcpqm6locv2hf" path="res://Sprites/Entes/d_cabeza_strip44.png" id="4_203qf"]
@@ -32,6 +33,22 @@ metadata/_edit_lock_ = true
 enabled = false
 exclude_parent = false
 target_position = Vector2(100, 0)
+metadata/_edit_lock_ = true
+
+[node name="Sombra" type="Sprite2D" parent="."]
+position = Vector2(0, 7)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_ev13i")
+hframes = 2
+metadata/_edit_lock_ = true
+
+[node name="Select" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, 7)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_ev13i")
+hframes = 2
+frame = 1
 metadata/_edit_lock_ = true
 
 [node name="Imagen" type="Node2D" parent="."]

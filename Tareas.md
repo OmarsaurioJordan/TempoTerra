@@ -1,9 +1,5 @@
 # Tareas
 
-- permitir en RIP múltiples caminos, elegir uno al azar
-- warriors se están quedando estancados en algunas calles al explorar
-- agregar movimiento errático al explorar o moverse lejos
-
 - objeto: arma o herramienta que puede caer al suelo
 - diplomacia: modos defensivo, exlorativo, normal, guerra
 - proyectil: movimiento, impacto, explosion
@@ -29,6 +25,7 @@
 - mundos: colocar decorados naturales
 - entes: manejo manual por segundo player
 - entes: ajustar estadísticas de daño y eficiencia
+- menú: escritos sobre los diferentes grupos en inglés
 
 # Hecho
 
@@ -67,7 +64,7 @@
 - atacar a distancia a enemigo cercano
 - atacar con explosivos a enemigos cercanos
 - atacar con dron a enemigo lejano
-- explorar libremente el mundo
+* explorar libremente el mundo
 - ir a atacar a punto especifico
 - conquistar obrera para llevarla a su grupo, prioridad mismo origen sobre otras (rescate)
 - asociarse a grupo si no tiene el suyo (viaje tiempo)
@@ -101,6 +98,7 @@
 - 2: layer 3, naturales: arboles, rocas
 - 3: layer 4, entes móviles, como humanos, player, animales, robots
 - 4: layer 5, proyectiles
+- 5: layer 6, indicadores amarillos de interaccion con bases
 
 # Imágenes
 
@@ -118,8 +116,7 @@
 - Lclic: disparar principal
 - Rclic: disparo secundaria
 - Mclic,R: recarga municion
-- G: volverse neutral sin armas
-- Z,X: recoger herramienta o arma
+- Enter: tomar herramientas de la base, pasando por neutral
 - Space: select / deselect compañeros viaje temporal
 - Tab: ver dialogo de personaje
 - Esc: pausa y salir

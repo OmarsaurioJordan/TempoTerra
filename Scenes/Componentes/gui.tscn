@@ -1,11 +1,634 @@
-[gd_scene load_steps=2 format=3 uid="uid://b46gr0eansykw"]
+[gd_scene load_steps=5 format=3 uid="uid://b46gr0eansykw"]
 
 [ext_resource type="Texture2D" uid="uid://bwdy5lni0pm3l" path="res://Sprites/General/d_vision.png" id="1_33gso"]
+[ext_resource type="FontFile" uid="uid://dfhfupgu7dfr2" path="res://Sprites/General/comic_sana.ttf" id="2_2whkw"]
 
-[node name="GUI" type="CanvasLayer"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y5s8j"]
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2whkw"]
+bg_color = Color(0.976471, 0.929412, 0.643137, 0.862745)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.178089, 0.148901, 0.0639226, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="GUI" type="CanvasLayer" groups=["gui"]]
+
+[node name="Fondo" type="TextureRect" parent="."]
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = ExtResource("1_33gso")
+metadata/_edit_lock_ = true
+
+[node name="TxtEra" type="Label" parent="."]
+offset_left = 11.0
+offset_top = 12.0
+offset_right = 184.0
+offset_bottom = 91.0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxEmpty_y5s8j")
+text = "Era"
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Informacion" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_lock_ = true
+
+[node name="Texto" type="Label" parent="Informacion"]
+offset_left = 299.0
+offset_top = 66.0
+offset_right = 835.0
+offset_bottom = 468.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Info1" type="Label" parent="Informacion"]
+offset_left = 85.0
+offset_top = 376.0
+offset_right = 231.0
+offset_bottom = 472.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "W,A,S,D
+movement"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Info8" type="Label" parent="Informacion"]
+offset_left = 136.0
+offset_top = 69.0
+offset_right = 259.0
+offset_bottom = 162.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "Tab
+interact"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Info2" type="Label" parent="Informacion"]
+offset_left = 139.0
+offset_top = 490.0
+offset_right = 297.0
+offset_bottom = 586.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "Q,E
+time travel"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Info6" type="Label" parent="Informacion"]
+offset_left = 843.0
+offset_top = 480.0
+offset_right = 1020.0
+offset_bottom = 576.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "Space
+select beings"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Info7" type="Label" parent="Informacion"]
+offset_left = 906.0
+offset_top = 329.0
+offset_right = 1083.0
+offset_bottom = 456.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "N,M
+change tools
+here in base"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Info3" type="Label" parent="Informacion"]
+offset_left = 319.0
+offset_top = 501.0
+offset_right = 464.0
+offset_bottom = 597.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "L-clic
+main shot"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Info5" type="Label" parent="Informacion"]
+offset_left = 644.0
+offset_top = 503.0
+offset_right = 813.0
+offset_bottom = 599.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "R-clic
+special shot"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Info4" type="Label" parent="Informacion"]
+offset_left = 482.0
+offset_top = 510.0
+offset_right = 620.0
+offset_bottom = 606.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "M-clic, R
+reload"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Datos" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_lock_ = true
+
+[node name="G0" type="Label" parent="Datos"]
+offset_left = 1214.0
+offset_top = -438.0
+offset_right = 1750.0
+offset_bottom = -36.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "SAVAGE
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G1" type="Label" parent="Datos"]
+offset_left = 1216.0
+offset_top = 21.0
+offset_right = 1752.0
+offset_bottom = 423.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "TIGER
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G2" type="Label" parent="Datos"]
+offset_left = 1775.0
+offset_top = 23.0
+offset_right = 2311.0
+offset_bottom = 425.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "EAGLE
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G3" type="Label" parent="Datos"]
+offset_left = 2334.0
+offset_top = 17.0
+offset_right = 2870.0
+offset_bottom = 419.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "FISH
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G4" type="Label" parent="Datos"]
+offset_left = 2896.0
+offset_top = 11.0
+offset_right = 3432.0
+offset_bottom = 413.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "BULL
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G5" type="Label" parent="Datos"]
+offset_left = 3453.0
+offset_top = 9.0
+offset_right = 3989.0
+offset_bottom = 411.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "SNAKE
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G6" type="Label" parent="Datos"]
+offset_left = 4004.0
+offset_top = 9.0
+offset_right = 4540.0
+offset_bottom = 411.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "MANTIS
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G7" type="Label" parent="Datos"]
+offset_left = 1209.0
+offset_top = 457.0
+offset_right = 1745.0
+offset_bottom = 859.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "GREEK
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G8" type="Label" parent="Datos"]
+offset_left = 1781.0
+offset_top = 461.0
+offset_right = 2317.0
+offset_bottom = 863.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "EGYPTIAN
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G9" type="Label" parent="Datos"]
+offset_left = 2338.0
+offset_top = 455.0
+offset_right = 2874.0
+offset_bottom = 857.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "MAYAN
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G10" type="Label" parent="Datos"]
+offset_left = 2902.0
+offset_top = 457.0
+offset_right = 3438.0
+offset_bottom = 859.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "AFRICAN
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G11" type="Label" parent="Datos"]
+offset_left = 3457.0
+offset_top = 459.0
+offset_right = 3993.0
+offset_bottom = 861.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "BABYLONIAN
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G12" type="Label" parent="Datos"]
+offset_left = 1204.0
+offset_top = 892.0
+offset_right = 1740.0
+offset_bottom = 1294.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "LATIN
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G13" type="Label" parent="Datos"]
+offset_left = 1778.0
+offset_top = 896.0
+offset_right = 2314.0
+offset_bottom = 1298.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "ARABIAN
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G14" type="Label" parent="Datos"]
+offset_left = 2346.0
+offset_top = 894.0
+offset_right = 2882.0
+offset_bottom = 1296.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "VIKING
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G15" type="Label" parent="Datos"]
+offset_left = 2905.0
+offset_top = 896.0
+offset_right = 3441.0
+offset_bottom = 1298.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "ORIENTAL
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G16" type="Label" parent="Datos"]
+offset_left = 1205.0
+offset_top = 1327.0
+offset_right = 1741.0
+offset_bottom = 1729.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "VICTORIAN
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G17" type="Label" parent="Datos"]
+offset_left = 1779.0
+offset_top = 1333.0
+offset_right = 2315.0
+offset_bottom = 1735.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "FASCIST
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G18" type="Label" parent="Datos"]
+offset_left = 2343.0
+offset_top = 1339.0
+offset_right = 2879.0
+offset_bottom = 1741.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "COLONY
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G19" type="Label" parent="Datos"]
+offset_left = 1211.0
+offset_top = 1763.0
+offset_right = 1747.0
+offset_bottom = 2165.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "CAPITALIST
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G20" type="Label" parent="Datos"]
+offset_left = 1783.0
+offset_top = 1772.0
+offset_right = 2319.0
+offset_bottom = 2174.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "COMMUNIST
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G21" type="Label" parent="Datos"]
+offset_left = 1215.0
+offset_top = 2196.0
+offset_right = 1751.0
+offset_bottom = 2598.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "UNITY
+
+..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
 metadata/_edit_lock_ = true

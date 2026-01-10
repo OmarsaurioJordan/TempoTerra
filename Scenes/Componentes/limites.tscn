@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvign1huifj07"]
+[gd_scene load_steps=5 format=3 uid="uid://cvign1huifj07"]
 
 [ext_resource type="Texture2D" uid="uid://b1cktowpx74r7" path="res://Sprites/General/d_mapa_strip8.png" id="1_1gchw"]
+[ext_resource type="Script" uid="uid://t5gxf6t77hpd" path="res://Scripts/Componentes/limites.gd" id="1_w5vi5"]
 [ext_resource type="Texture2D" uid="uid://bseu44jn5acbr" path="res://Sprites/General/d_proyectil_strip4.png" id="2_bbdao"]
 [ext_resource type="Script" uid="uid://bwskf2xujtgfc" path="res://Scripts/Tools/calle.gd" id="3_w5vi5"]
 
 [node name="Limites" type="StaticBody2D"]
+script = ExtResource("1_w5vi5")
 metadata/_edit_lock_ = true
 
 [node name="Silueta" type="Sprite2D" parent="."]
@@ -125,6 +127,7 @@ offset = Vector2(-95, 0)
 hframes = 4
 script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle14"), NodePath("../Calle17")]
+guerra = true
 metadata/_edit_lock_ = true
 
 [node name="Calle9" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
@@ -135,6 +138,7 @@ offset = Vector2(-95, 0)
 hframes = 4
 script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle10"), NodePath("../Calle6")]
+guerra = true
 metadata/_edit_lock_ = true
 
 [node name="Calle10" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
@@ -165,6 +169,7 @@ offset = Vector2(-95, 0)
 hframes = 4
 script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle11"), NodePath("../Calle7")]
+guerra = true
 metadata/_edit_lock_ = true
 
 [node name="Calle13" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
@@ -185,6 +190,7 @@ offset = Vector2(-95, 0)
 hframes = 4
 script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle13"), NodePath("../Calle15"), NodePath("../Calle8")]
+guerra = true
 metadata/_edit_lock_ = true
 
 [node name="Calle15" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
@@ -194,7 +200,8 @@ texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)
 hframes = 4
 script = ExtResource("3_w5vi5")
-conexion = [NodePath("../Calle2"), NodePath("../Calle14")]
+conexion = [NodePath("../Calle2"), NodePath("../Calle14"), NodePath("../Calle16")]
+guerra = true
 metadata/_edit_lock_ = true
 
 [node name="Calle16" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
@@ -225,4 +232,26 @@ offset = Vector2(-95, 0)
 hframes = 4
 script = ExtResource("3_w5vi5")
 conexion = [NodePath("../Calle17"), NodePath("../Calle4"), NodePath("../Calle6")]
+guerra = true
 metadata/_edit_lock_ = true
+
+[node name="Lineas" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Linea" type="Line2D" parent="Lineas"]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 4.0
+antialiased = true
+metadata/_edit_lock_ = true
+
+[node name="TimRIP" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="TimCongestion" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="TimRIP" to="." method="_on_tim_rip_timeout"]
+[connection signal="timeout" from="TimCongestion" to="." method="_on_tim_congestion_timeout"]

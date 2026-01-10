@@ -68,8 +68,7 @@ func _physics_process(_delta: float) -> void:
 func errar() -> void:
 	if mover_errar:
 		if meta.is_zero_approx():
-			var solidos = get_tree().get_nodes_in_group("bases")
-			solidos.append_array(get_tree().get_nodes_in_group("casas"))
+			var solidos = get_tree().get_nodes_in_group("buildings")
 			var pp = global_position + Vector2(randf() * VISION, 0).rotated(randf() * 2 * PI)
 			if is_hogar_grupo():
 				var mis_edif = []

@@ -2,7 +2,15 @@ extends Node
 class_name Data
 
 const ESTOCASTICO: float = 0.5 # 0 calculo continuo - 1 extremadamente lento desperdicio loop
-const RADIO_CALLE: float = 64 # para detectar cuando llego a una calle
+const RADIO_CALLE: float = 40 # para detectar cuando llego a una calle
+
+enum DIPLOMACIA {
+	NORMAL, # los guerreros se distribuyen por todas las casas y algunos exploran
+	ATAQUE, # los guerreros se distribuyen por todas las casas y un grupo ataca a un punto
+	DEFENSA, # todos los guerreros se hacen en torno a la base propia
+	GUERRA, # todos los guerreros van a atacar a un punto, si puntos de bases se cruzan, unificarlos
+	EXPLORA # muchos guerreros se ponen en modo exploracion independiente
+}
 
 enum RES_MOVE { LLEGO, FALTA, NULO }
 
@@ -198,7 +206,8 @@ static func huir_de_punto(nodo: Node, meta: Vector2, is_giro_loco: bool = true) 
 		dir = dir.rotated(nodo.huida_giro)
 	nodo.velocity = dir * nodo.SPEED
 
-static func mover_hacia_punto(nodo: Node, meta: Vector2, radio: float) -> RES_MOVE:
+static func mover_hacia_punto(nodo: Node, meta: Vector2, radio: float,
+		is_giro_loco: bool = true) -> RES_MOVE:
 	# comportamiento estocastico para no consumir tantos ciclos de main loop
 	if randf() < ESTOCASTICO:
 		return RES_MOVE.FALTA
@@ -206,6 +215,8 @@ static func mover_hacia_punto(nodo: Node, meta: Vector2, radio: float) -> RES_MO
 	if nodo.next_calle == null:
 		# moverse hacia el objetivo
 		nodo.velocity = nodo.global_position.direction_to(meta) * nodo.SPEED
+		if is_giro_loco:
+			nodo.velocity = nodo.velocity.rotated(nodo.huida_giro)
 		# verificar si llego al objetivo
 		if nodo.global_position.distance_to(meta) < radio:
 			return RES_MOVE.LLEGO
@@ -222,6 +233,8 @@ static func mover_hacia_punto(nodo: Node, meta: Vector2, radio: float) -> RES_MO
 	else:
 		nodo.velocity = nodo.global_position.direction_to(
 			nodo.next_calle.global_position) * nodo.SPEED
+		if is_giro_loco:
+			nodo.velocity = nodo.velocity.rotated(nodo.huida_giro)
 		# verificar si llego a la proxima calle
 		if nodo.global_position.distance_to(nodo.next_calle.global_position) < RADIO_CALLE:
 			# entonces buscar la siguiente
