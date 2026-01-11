@@ -9,13 +9,16 @@ enum ESTADO { LIBRE, SEGUIR, EXPLORAR, CONQUISTAR, RECARGAR, MISION }
 enum POSTURA { HOGAR, EXTRA, SOBRA }
 
 var estado: ESTADO = ESTADO.LIBRE
-var grupo: Data.GRUPO = Data.GRUPO.SALVAJE
+var grupo: Data.GRUPO = Data.GRUPO.SOLO
 var hogar: Node = null
 var vida: int = VIDA
 var municion: int = 0
+var cargador: int = 0 # municion actualmente en el arma
 var especial: int = 0 # municion especial
 var mision: Node = null # la base o casa a la cual atacar o defender
+var archienemigos: Data.GRUPO = Data.GRUPO.SOLO # la mision a que grupo enemigo apunta
 var enemigo: Node = null # a quien tiene en mira para atacar
+var seguimiento: Vector2 = Vector2(0, 0) # ultima vez que vio a enemigo
 
 # para navegacion, puede ser perseguir cualquier tipo de nodo
 var meta: Vector2 = Vector2(0, 0) # punto al que se desea llegar
@@ -24,6 +27,7 @@ var next_calle: Node = null # proxima calle para llegar a la final
 var obj_calle: Node = null # calle final que conecta con objetivo
 var mover_errar: bool = false # para saber si esta en ciclo de movimiento
 var huida_giro: float = 0 # para esquivar al huir
+var dir_baile_rebote: Vector2 = Vector2(0, 0) # para moverse en la zona de pelea
 
 func initialize(el_grupo: Data.GRUPO, casa: Node) -> void:
 	grupo = el_grupo
@@ -37,10 +41,10 @@ func get_hogar() -> Node:
 func get_hogar_grupo() -> Data.GRUPO:
 	if hogar != null:
 		return hogar.grupo
-	return Data.GRUPO.SALVAJE
+	return Data.GRUPO.SOLO
 
 func is_hogar_grupo() -> bool:
-	return get_hogar_grupo() != Data.GRUPO.SALVAJE
+	return get_hogar_grupo() != Data.GRUPO.SOLO
 
 func get_grupo() -> Data.GRUPO:
 	return grupo
@@ -67,22 +71,33 @@ func get_postura() -> POSTURA:
 func is_mele() -> bool:
 	return $Imagen/Arma.visible
 
+func get_archienemigo_grupo() -> Data.GRUPO:
+	return archienemigos
+
 func _physics_process(_delta: float) -> void:
 	var bueno_dale = true
 	if enemigo != null:
 		if is_instance_valid(enemigo):
+			seguimiento = enemigo.global_position
 			match estado:
 				ESTADO.LIBRE, ESTADO.EXPLORAR, ESTADO.MISION:
-					est_bailewar()
-					bueno_dale = false
+					if est_bailewar():
+						bueno_dale = false
 				ESTADO.RECARGAR:
+					bueno_dale = false
 					est_recargar()
 					var dir = velocity.normalized() +\
 						enemigo.global_position.direction_to(global_position).rotated(huida_giro)
 					velocity = dir.normalized() * SPEED
-					bueno_dale = false
 		else:
 			enemigo = null
+	if bueno_dale:
+		if not seguimiento.is_zero_approx():
+			match estado:
+				ESTADO.LIBRE, ESTADO.EXPLORAR, ESTADO.MISION:
+					bueno_dale = false
+					if Data.mover_hacia_punto(self, seguimiento, 80, true) == Data.RES_MOVE.LLEGO:
+						seguimiento = Vector2(0, 0)
 	if bueno_dale:
 		if $TimPausa.is_stopped():
 			match estado:
@@ -106,37 +121,45 @@ func _physics_process(_delta: float) -> void:
 		ver_enemigo()
 
 func ver_enemigo() -> void:
-	if not enemigo_de_grupo("aliens"):
-		if not enemigo_de_grupo("monstruos"):
-			pass
+	# aliens, monstruos, warriors+players, drons, robots, obreras
+	if not enemigo_de_grupo("aliens", false, false):
+		if not enemigo_de_grupo("monstruos", false, false):
+			if not enemigo_de_grupo("warrioplayers", true, true):
+				if not enemigo_de_grupo("drones", true, false):
+					if not enemigo_de_grupo("robots", true, false):
+						enemigo_de_grupo("obreras", true, false) # Tarea obrera es caso especial
 
-func enemigo_de_grupo(grupo_str: String) -> bool:
+func enemigo_de_grupo(grupo_str: String, test_hogar_grupo: bool,
+		is_warrior_vs_warrior: bool) -> bool:
 	var entes = get_tree().get_nodes_in_group(grupo_str)
-	if is_mele():
-		var visto = Data.get_nearest(self, entes, VISION)
-		if visto != null:
-			enemigo = visto
-			return true
-	else:
-		var vistos = Data.get_envista(self, entes, VISION)
-		if not vistos.is_empty():
-			enemigo = vistos.pick_random()
-			return true
+	var visto = Data.get_nearest_enemy(self, entes, VISION, test_hogar_grupo, is_warrior_vs_warrior)
+	if visto != null:
+		enemigo = visto
+		return true
 	return false
 
-func est_bailewar() -> void:
+func est_bailewar() -> bool:
 	# funcion llamada solo si enemigo ha sido verificado
 	# verificar si lo alcanza a ver
-	
+	if Data.go_estocastico():
+		if enemigo.global_position.distance_to(global_position) > VISION:
+			enemigo = null
+			return false
+		$RayEntes.target_position = enemigo.global_position - global_position
+		$RayEntes.force_raycast_update()
+		if $RayEntes.is_colliding():
+			enemigo = null
+			return false
 	# moverse bailando cerca a enemigo
 	if is_mele():
 		Data.seguir_punto(self, enemigo.global_position, 125, 75)
 	else:
 		Data.seguir_punto(self, enemigo.global_position, VISION * 0.8, VISION * 0.5)
 	if velocity.is_zero_approx():
-		if not mover_errar:
-			mover_errar = true
-		errar()
+		velocity = dir_baile_rebote * SPEED
+	else:
+		dir_baile_rebote = Vector2(1, 0).rotated(randf() * 2.0 * PI)
+	return true
 
 func errar() -> void:
 	if mover_errar:
@@ -173,6 +196,7 @@ func is_libre() -> bool:
 
 func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 	estado = new_estado
+	archienemigos = Data.GRUPO.SOLO
 	objetivo = null
 	next_calle = null
 	meta = Vector2(0, 0)
@@ -209,8 +233,12 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 						var calles = get_parent().get_parent().get_node(
 							"Limites/Navegacion").get_children()
 						mision = calles.pick_random()
+						archienemigos = Data.GRUPO.ALIEN
 					else:
 						mision = edif.pick_random()
+						archienemigos = mision.get_grupo()
+				else:
+					archienemigos = mision.get_grupo()
 
 func est_libre() -> void:
 	errar()
@@ -297,3 +325,9 @@ func base_cambia_diplomacia(base: Node) -> void:
 func _on_tim_ver_timeout() -> void:
 	$TimVer.start(randf_range(4, 8))
 	ver_enemigo()
+
+func _on_tim_shot_go_timeout() -> void:
+	pass
+
+func hit_proyectil(ind_tech: int) -> void:
+	pass

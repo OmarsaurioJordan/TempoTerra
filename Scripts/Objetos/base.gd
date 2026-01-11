@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-@export var grupo: Data.GRUPO = Data.GRUPO.SALVAJE
+@export var grupo: Data.GRUPO = Data.GRUPO.SOLO
 
 @onready var diplomacia: Data.DIPLOMACIA = Data.DIPLOMACIA.NORMAL
 

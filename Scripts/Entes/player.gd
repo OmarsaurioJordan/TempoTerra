@@ -29,7 +29,7 @@ func get_grupo() -> Data.GRUPO:
 func get_hogar_grupo() -> Data.GRUPO:
 	if hogar != null:
 		return hogar.grupo
-	return Data.GRUPO.SALVAJE
+	return Data.GRUPO.SOLO
 
 func alimentar() -> void:
 	vida = min(vida + ALIMENTO, VIDA)

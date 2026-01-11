@@ -1,5 +1,27 @@
 # Tareas
 
+- ataque segun el arma que tenga en mano el warrior
+- crear proyectiles
+- crear explosivos
+- movimiento y explosion de explosivo
+- lanzar onda de mele
+- daño hecho por proyectil
+- daño hecho por mele
+- daño hecho por explosivo
+- bailewar retroceder si esta en modo recarga o cadencia
+- descontar municion o poner en modo recarga
+- activar relojes de cadencia y recarga
+- ir a recargar municion
+- ir a recargar vida
+- cambiar a arma de mele solo en algunos casos al acabar municion
+- cuándo eligen mele o distancia?
+- colocar velocidad y duracion a proyectil segun tipo
+- obrera se reubica en casa libre de su grupo
+- warrior atacar obrera solo si no cupo en las bases de ambos
+- colocar a obrera y player metodos necesarios para guerra
+
+...
+
 - proyectil: movimiento, impacto, explosion
 - insectos: errar
 - player: ataque distancia
@@ -110,12 +132,12 @@
 
 # Prioridades Ataque
 
-- 1 alien
-- 2 monstruo
-- 3 humano
-- 4 dron
-- 5 robot
-- 6 obrera
+- 1 aliens
+- 2 monstruos
+- 3 warriors + players
+- 4 drons
+- 5 robots
+- 6 obreras
 
 # Imágenes
 

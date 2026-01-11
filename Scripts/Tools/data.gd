@@ -15,7 +15,8 @@ enum DIPLOMACIA {
 enum RES_MOVE { LLEGO, FALTA, NULO }
 
 enum GRUPO {
-	SALVAJE,
+	SOLO,
+	SALVAJE, ANIMAL, ALIEN,
 	TIGRE, AGUILA, PEZ, TORO, SERPIENTE, INSECTO,
 	GRIEGO, EGIPCIO, INDIGENA, AFRICANO, PERSA,
 	LATINO, ARABE, VIKINGO, CHINO,
@@ -33,7 +34,8 @@ enum ERA {
 	INDUSTRIAL,
 	MODERNO,
 	AVANZADO,
-	APOCALIPTICO
+	APOCALIPTICO,
+	ETC
 }
 
 static func go_estocastico() -> bool:
@@ -57,7 +59,7 @@ static func grupo_to_era(grupo: GRUPO) -> ERA:
 			return ERA.MODERNO
 		GRUPO.CYBORG:
 			return ERA.AVANZADO
-	return ERA.APOCALIPTICO
+	return ERA.ETC
 
 static func era_to_tech(era: ERA) -> int:
 	match era:
@@ -123,6 +125,8 @@ static func get_nearest(nodo: Node, otros: Array, vision: float = 1000000) -> No
 	var mundillo = nodo.get_parent()
 	var mejor: Node = null
 	for ot in otros:
+		if ot == nodo:
+			continue
 		if ot.get_parent() != mundillo:
 			continue
 		var d = ot.global_position.distance_to(nodo.global_position)
@@ -136,6 +140,8 @@ static func get_farest(nodo: Node, otros: Array, vision: float = 1000000) -> Nod
 	var mejor: Node = null
 	var dismin: float = 0
 	for ot in otros:
+		if ot == nodo:
+			continue
 		if ot.get_parent() != mundillo:
 			continue
 		var d = ot.global_position.distance_to(nodo.global_position)
@@ -148,12 +154,104 @@ static func get_envista(nodo: Node, otros: Array, vision: float = 1000000) -> Ar
 	var mundillo = nodo.get_parent()
 	var res: Array = []
 	for ot in otros:
+		if ot == nodo:
+			continue
 		if ot.get_parent() != mundillo:
 			continue
 		var d = ot.global_position.distance_to(nodo.global_position)
 		if d < vision:
 			res.append(ot)
 	return res
+
+static func get_nearest_vision(nodo: Node, otros: Array, vision: float = 1000000) -> Node:
+	var mundillo = nodo.get_parent()
+	var mejor: Node = null
+	var rayo = nodo.get_node("RayEntes")
+	for ot in otros:
+		if ot == nodo:
+			continue
+		if ot.get_parent() != mundillo:
+			continue
+		var d = ot.global_position.distance_to(nodo.global_position)
+		if d < vision:
+			rayo.target_position = ot.global_position - nodo.global_position
+			rayo.force_raycast_update()
+			if not rayo.is_colliding():
+				vision = d
+				mejor = ot
+	return mejor
+
+static func get_farest_vision(nodo: Node, otros: Array, vision: float = 1000000) -> Node:
+	var mundillo = nodo.get_parent()
+	var mejor: Node = null
+	var dismin: float = 0
+	var rayo = nodo.get_node("RayEntes")
+	for ot in otros:
+		if ot == nodo:
+			continue
+		if ot.get_parent() != mundillo:
+			continue
+		var d = ot.global_position.distance_to(nodo.global_position)
+		if d > dismin and d < vision:
+			rayo.target_position = ot.global_position - nodo.global_position
+			rayo.force_raycast_update()
+			if not rayo.is_colliding():
+				dismin = d
+				mejor = ot
+	return mejor
+
+static func get_envista_vision(nodo: Node, otros: Array, vision: float = 1000000) -> Array:
+	var mundillo = nodo.get_parent()
+	var res: Array = []
+	var rayo = nodo.get_node("RayEntes")
+	for ot in otros:
+		if ot == nodo:
+			continue
+		if ot.get_parent() != mundillo:
+			continue
+		var d = ot.global_position.distance_to(nodo.global_position)
+		if d < vision:
+			rayo.target_position = ot.global_position - nodo.global_position
+			rayo.force_raycast_update()
+			if not rayo.is_colliding():
+				res.append(ot)
+	return res
+
+static func get_nearest_enemy(nodo: Node, otros: Array, vision: float = 1000000,
+		test_hogar_grupo: bool = false, is_warrior_vs_warrior: bool = false) -> Node:
+	var mundillo = nodo.get_parent()
+	var mejor: Node = null
+	var rayo = nodo.get_node("RayEntes")
+	var hogar_grupo = GRUPO.SOLO
+	if test_hogar_grupo:
+		hogar_grupo = nodo.get_hogar_grupo()
+	var enemy_grupo = GRUPO.SOLO
+	if is_warrior_vs_warrior:
+		if nodo.is_hogar_grupo():
+			enemy_grupo = nodo.get_archienemigo_grupo()
+	for ot in otros:
+		if ot == nodo:
+			continue
+		if ot.get_parent() != mundillo:
+			continue
+		if test_hogar_grupo:
+			if ot.get_hogar_grupo() == hogar_grupo:
+				continue
+		if is_warrior_vs_warrior:
+			var atack = enemy_grupo == GRUPO.ALIEN or\
+				(enemy_grupo != GRUPO.SOLO and ot.get_hogar_grupo() == enemy_grupo)
+			var otengru = ot.get_archienemigo_grupo()
+			var def = otengru == GRUPO.ALIEN or (otengru != GRUPO.SOLO and hogar_grupo == otengru)
+			if not (atack or def):
+				continue
+		var d = ot.global_position.distance_to(nodo.global_position)
+		if d < vision:
+			rayo.target_position = ot.global_position - nodo.global_position
+			rayo.force_raycast_update()
+			if not rayo.is_colliding():
+				vision = d
+				mejor = ot
+	return mejor
 
 # funciones de obtencion de informacion de la era y mundo
 
@@ -181,7 +279,7 @@ static func get_era_from_name(nombre: String) -> ERA:
 			return ERA.AVANZADO
 		"MundoApocaliptico":
 			return ERA.APOCALIPTICO
-	return ERA.FORMACION
+	return ERA.ETC
 
 static func get_next_mundo(nodo: Node, mundos: Array) -> String:
 	var era = get_era(nodo)

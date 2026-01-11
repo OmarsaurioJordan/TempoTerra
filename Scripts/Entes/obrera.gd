@@ -14,7 +14,7 @@ const INCUBACION: float = 60 # tiempo para crear nuevo individuo
 enum ESTADO { LIBRE, CHARLANDO, REPRODUCCION, RECOLECCION, ALIMENTACION, SEGUIR }
 
 var estado: ESTADO = ESTADO.LIBRE
-var grupo: Data.GRUPO = Data.GRUPO.SALVAJE
+var grupo: Data.GRUPO = Data.GRUPO.SOLO
 var hogar: Node = null
 var vida: int = int(VIDA / 2)
 
@@ -38,10 +38,10 @@ func get_hogar() -> Node:
 func get_hogar_grupo() -> Data.GRUPO:
 	if hogar != null:
 		return hogar.grupo
-	return Data.GRUPO.SALVAJE
+	return Data.GRUPO.SOLO
 
 func is_hogar_grupo() -> bool:
-	return get_hogar_grupo() != Data.GRUPO.SALVAJE
+	return get_hogar_grupo() != Data.GRUPO.SOLO
 
 func get_grupo() -> Data.GRUPO:
 	return grupo

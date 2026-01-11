@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-var grupo: Data.GRUPO = Data.GRUPO.SALVAJE
+var grupo: Data.GRUPO = Data.GRUPO.SOLO
 var resi_obreras: Array = []
 var resi_warriors: Array = []
 
