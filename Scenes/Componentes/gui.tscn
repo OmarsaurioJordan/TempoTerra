@@ -48,6 +48,7 @@ offset_bottom = 40.0
 metadata/_edit_lock_ = true
 
 [node name="Texto" type="Label" parent="Informacion"]
+layout_mode = 0
 offset_left = 299.0
 offset_top = 66.0
 offset_right = 835.0
@@ -64,6 +65,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="Info1" type="Label" parent="Informacion"]
+layout_mode = 0
 offset_left = 85.0
 offset_top = 376.0
 offset_right = 231.0
@@ -82,6 +84,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="Info8" type="Label" parent="Informacion"]
+layout_mode = 0
 offset_left = 136.0
 offset_top = 69.0
 offset_right = 259.0
@@ -100,6 +103,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="Info2" type="Label" parent="Informacion"]
+layout_mode = 0
 offset_left = 139.0
 offset_top = 490.0
 offset_right = 297.0
@@ -118,6 +122,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="Info6" type="Label" parent="Informacion"]
+layout_mode = 0
 offset_left = 843.0
 offset_top = 480.0
 offset_right = 1020.0
@@ -136,6 +141,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="Info7" type="Label" parent="Informacion"]
+layout_mode = 0
 offset_left = 906.0
 offset_top = 329.0
 offset_right = 1083.0
@@ -155,6 +161,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="Info3" type="Label" parent="Informacion"]
+layout_mode = 0
 offset_left = 319.0
 offset_top = 501.0
 offset_right = 464.0
@@ -173,6 +180,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="Info5" type="Label" parent="Informacion"]
+layout_mode = 0
 offset_left = 644.0
 offset_top = 503.0
 offset_right = 813.0
@@ -191,6 +199,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="Info4" type="Label" parent="Informacion"]
+layout_mode = 0
 offset_left = 482.0
 offset_top = 510.0
 offset_right = 620.0
@@ -216,6 +225,7 @@ offset_bottom = 40.0
 metadata/_edit_lock_ = true
 
 [node name="G0" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1214.0
 offset_top = -438.0
 offset_right = 1750.0
@@ -235,6 +245,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G1" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1216.0
 offset_top = 21.0
 offset_right = 1752.0
@@ -254,6 +265,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G2" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1775.0
 offset_top = 23.0
 offset_right = 2311.0
@@ -273,6 +285,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G3" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 2334.0
 offset_top = 17.0
 offset_right = 2870.0
@@ -292,6 +305,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G4" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 2896.0
 offset_top = 11.0
 offset_right = 3432.0
@@ -311,6 +325,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G5" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 3453.0
 offset_top = 9.0
 offset_right = 3989.0
@@ -330,6 +345,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G6" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 4004.0
 offset_top = 9.0
 offset_right = 4540.0
@@ -349,6 +365,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G7" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1209.0
 offset_top = 457.0
 offset_right = 1745.0
@@ -368,6 +385,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G8" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1781.0
 offset_top = 461.0
 offset_right = 2317.0
@@ -387,6 +405,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G9" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 2338.0
 offset_top = 455.0
 offset_right = 2874.0
@@ -406,6 +425,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G10" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 2902.0
 offset_top = 457.0
 offset_right = 3438.0
@@ -425,6 +445,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G11" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 3457.0
 offset_top = 459.0
 offset_right = 3993.0
@@ -444,6 +465,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G12" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1204.0
 offset_top = 892.0
 offset_right = 1740.0
@@ -463,6 +485,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G13" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1778.0
 offset_top = 896.0
 offset_right = 2314.0
@@ -482,6 +505,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G14" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 2346.0
 offset_top = 894.0
 offset_right = 2882.0
@@ -501,6 +525,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G15" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 2905.0
 offset_top = 896.0
 offset_right = 3441.0
@@ -520,6 +545,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G16" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1205.0
 offset_top = 1327.0
 offset_right = 1741.0
@@ -539,6 +565,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G17" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1779.0
 offset_top = 1333.0
 offset_right = 2315.0
@@ -558,6 +585,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G18" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 2343.0
 offset_top = 1339.0
 offset_right = 2879.0
@@ -577,6 +605,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G19" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1211.0
 offset_top = 1763.0
 offset_right = 1747.0
@@ -596,6 +625,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G20" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1783.0
 offset_top = 1772.0
 offset_right = 2319.0
@@ -615,6 +645,7 @@ clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="G21" type="Label" parent="Datos"]
+layout_mode = 0
 offset_left = 1215.0
 offset_top = 2196.0
 offset_right = 1751.0

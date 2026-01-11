@@ -36,6 +36,9 @@ enum ERA {
 	APOCALIPTICO
 }
 
+static func go_estocastico() -> bool:
+	return randf() > ESTOCASTICO
+
 # conversiones entre grupos, eras y constantes
 
 static func grupo_to_era(grupo: GRUPO) -> ERA:
@@ -209,7 +212,7 @@ static func huir_de_punto(nodo: Node, meta: Vector2, is_giro_loco: bool = true) 
 static func mover_hacia_punto(nodo: Node, meta: Vector2, radio: float,
 		is_giro_loco: bool = true) -> RES_MOVE:
 	# comportamiento estocastico para no consumir tantos ciclos de main loop
-	if randf() < ESTOCASTICO:
+	if not go_estocastico():
 		return RES_MOVE.FALTA
 	# en caso de no existir una proxima calle a la cual ir, ira al objetivo directamente
 	if nodo.next_calle == null:
@@ -221,7 +224,7 @@ static func mover_hacia_punto(nodo: Node, meta: Vector2, radio: float,
 		if nodo.global_position.distance_to(meta) < radio:
 			return RES_MOVE.LLEGO
 		# cada tanto verificar si el camino directo al objetivo esta libre
-		if randf() < ESTOCASTICO:
+		if go_estocastico():
 			var rayo = nodo.get_node("RayCalles")
 			if Data.is_colision_orillas(nodo.global_position, rayo, meta):
 				# como no esta libre, buscar calles para llegar hasta el objetivo
@@ -240,7 +243,7 @@ static func mover_hacia_punto(nodo: Node, meta: Vector2, radio: float,
 			# entonces buscar la siguiente
 			nodo.next_calle = nodo.next_calle.get_next_calle(nodo.obj_calle)
 		# cada tanto tratar de ver si puede llegar sin calle
-		if randf() < ESTOCASTICO:
+		if go_estocastico():
 			var rayo = nodo.get_node("RayCalles")
 			if not Data.is_colision_orillas(nodo.global_position, rayo, meta):
 				nodo.next_calle = null
@@ -253,19 +256,21 @@ static func mover_hacia_objetivo(nodo: Node, radio: float) -> RES_MOVE:
 	nodo.objetivo = null
 	return RES_MOVE.NULO
 
+static func seguir_punto(nodo: Node, meta: Vector2, radio_max: float, radio_min: float) -> RES_MOVE:
+	var dis = nodo.global_position.distance_to(meta)
+	if dis <= radio_max and dis >= radio_min:
+		nodo.velocity = Vector2(0, 0)
+		return RES_MOVE.LLEGO
+	elif dis > radio_max:
+		mover_hacia_punto(nodo, meta, 0)
+	else:
+		huir_de_punto(nodo, meta, false)
+	return RES_MOVE.FALTA
+
 static func seguir_objetivo(nodo: Node, radio_max: float, radio_min: float) -> RES_MOVE:
 	# verificacion de la existencia del objetivo, sino retornara nulo
 	if is_instance_valid(nodo.objetivo):
-		var dis = nodo.global_position.distance_to(nodo.objetivo.global_position)
-		if dis <= radio_max and dis >= radio_min:
-			nodo.velocity = Vector2(0, 0)
-			return RES_MOVE.LLEGO
-		elif dis > radio_max:
-			mover_hacia_punto(nodo, nodo.objetivo.global_position, 0)
-			return RES_MOVE.FALTA
-		else:
-			huir_de_punto(nodo, nodo.objetivo.global_position, false)
-			return RES_MOVE.FALTA
+		return seguir_punto(nodo, nodo.objetivo.global_position, radio_max, radio_min)
 	nodo.objetivo = null
 	return RES_MOVE.NULO
 

@@ -89,6 +89,9 @@ func errar() -> void:
 
 func alimentar() -> void:
 	vida = min(vida + ALIMENTO, VIDA)
+	if vida == VIDA:
+		vida = int(VIDA / 2)
+		set_estado(ESTADO.REPRODUCCION)
 
 func is_alimentable() -> bool:
 	return vida < VIDA / 2
@@ -191,7 +194,7 @@ func est_recoleccion() -> void:
 			$Imagen/Alimento.frame = 0
 			$TimPausa.start()
 		objetivo = null
-	elif randf() > Data.ESTOCASTICO:
+	elif Data.go_estocastico():
 		if not objetivo.get_listo():
 			objetivo = null
 
@@ -205,7 +208,7 @@ func est_charlando() -> void:
 				$Imagen/Charlita.visible = true
 				$TimEstado.start(randf_range(3, 6))
 		Data.RES_MOVE.FALTA:
-			if randf() > Data.ESTOCASTICO:
+			if Data.go_estocastico():
 				if objetivo.objetivo != self:
 					set_estado(ESTADO.LIBRE)
 					return
@@ -231,10 +234,7 @@ func est_alimentacion() -> void:
 		$TimEstado.start(randf_range(3, 4))
 		if objetivo == null:
 			alimentar()
-			if vida == VIDA:
-				vida = int(VIDA / 2)
-				set_estado(ESTADO.REPRODUCCION)
-			else:
+			if estado != ESTADO.REPRODUCCION:
 				set_estado(ESTADO.LIBRE)
 	elif objetivo != null:
 		if Data.mover_hacia_objetivo(self, 60) == Data.RES_MOVE.LLEGO:
@@ -246,7 +246,7 @@ func est_alimentacion() -> void:
 		errar()
 		# cada tanto buscar aliado que requiera ayuda
 		if is_hogar_grupo():
-			if randf() > Data.ESTOCASTICO:
+			if Data.go_estocastico():
 				var entes = get_tree().get_nodes_in_group("humans")
 				var envista = Data.get_envista(self, entes, VISION)
 				if not envista.is_empty():
@@ -263,7 +263,7 @@ func est_seguir() -> void:
 		Data.RES_MOVE.NULO:
 			set_estado(ESTADO.LIBRE)
 		Data.RES_MOVE.FALTA:
-			if randf() > Data.ESTOCASTICO:
+			if Data.go_estocastico():
 				if false: # Tarea ver aliados cercanos u objetivo desinteresado o player
 					set_estado(ESTADO.LIBRE)
 

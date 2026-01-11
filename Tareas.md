@@ -1,10 +1,6 @@
 # Tareas
 
-- objeto: arma o herramienta que puede caer al suelo
-- diplomacia: modos defensivo, exlorativo, normal, guerra
 - proyectil: movimiento, impacto, explosion
-- robots: recolección
-- drones: ataque
 - insectos: errar
 - player: ataque distancia
 - player: ataque mele
@@ -41,13 +37,13 @@
 - edificios: estructurar edificaciones de vivienda o centros
 - entes: animación de sprites
 - mundos: creación inicial de unidades
+- diplomacia: modos defensivo, explorativo, normal, guerra
 
 # Comportamiento
 
 ## Obrera
 
 - si no hay obreras en mundo, crear una lejos del player
-- si hay exceso de obreras para las casas, eliminarlas, ver original vs otra tirbu vs visita
 *  recolectar comida
 *  convertir a comida procesada
 *  curar aliado cercano
@@ -65,10 +61,11 @@
 - atacar con explosivos a enemigos cercanos
 - atacar con dron a enemigo lejano
 * explorar libremente el mundo
-- ir a atacar a punto especifico
+* ir a atacar a punto especifico
 - conquistar obrera para llevarla a su grupo, prioridad mismo origen sobre otras (rescate)
 - asociarse a grupo si no tiene el suyo (viaje tiempo)
 - volver a casa por munición de distancia, explosivo, curacion o dron
+- atacar obrera si sobrepasa limite de su base y de la propia
 
 # Alien
 
@@ -91,6 +88,17 @@
 - cuidar huevo un tiempo
 - alejarse de otros no animales
 
+# Robot
+
+- errar en torno a obrera
+- recolección y transformación en pan
+- alimentación, incluye sobrealimentar obrera para reproducir
+
+# Dron
+
+- errar en torno a warrior
+- ataque a objetivo a larga distancia
+
 # Colisiones
 
 - 0: layer 1, orilla del mar
@@ -99,6 +107,15 @@
 - 3: layer 4, entes móviles, como humanos, player, animales, robots
 - 4: layer 5, proyectiles
 - 5: layer 6, indicadores amarillos de interaccion con bases
+
+# Prioridades Ataque
+
+- 1 alien
+- 2 monstruo
+- 3 humano
+- 4 dron
+- 5 robot
+- 6 obrera
 
 # Imágenes
 

@@ -156,4 +156,10 @@ autostart = true
 [node name="TimEstado" type="Timer" parent="."]
 one_shot = true
 
+[node name="TimVer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+autostart = true
+
 [connection signal="timeout" from="TimErrar" to="." method="_on_tim_errar_timeout"]
+[connection signal="timeout" from="TimVer" to="." method="_on_tim_ver_timeout"]

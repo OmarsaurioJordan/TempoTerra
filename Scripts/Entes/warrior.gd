@@ -13,7 +13,9 @@ var grupo: Data.GRUPO = Data.GRUPO.SALVAJE
 var hogar: Node = null
 var vida: int = VIDA
 var municion: int = 0
+var especial: int = 0 # municion especial
 var mision: Node = null # la base o casa a la cual atacar o defender
+var enemigo: Node = null # a quien tiene en mira para atacar
 
 # para navegacion, puede ser perseguir cualquier tipo de nodo
 var meta: Vector2 = Vector2(0, 0) # punto al que se desea llegar
@@ -62,24 +64,79 @@ func get_postura() -> POSTURA:
 		return POSTURA.SOBRA
 	return POSTURA.HOGAR
 
+func is_mele() -> bool:
+	return $Imagen/Arma.visible
+
 func _physics_process(_delta: float) -> void:
-	if $TimPausa.is_stopped():
-		match estado:
-			ESTADO.LIBRE:
-				est_libre()
-			ESTADO.SEGUIR:
-				est_seguir()
-			ESTADO.EXPLORAR:
-				est_explorar()
-			ESTADO.CONQUISTAR:
-				est_conquistar()
-			ESTADO.RECARGAR:
-				est_recargar()
-			ESTADO.MISION:
-				est_mision()
-	else:
-		velocity = Vector2(0, 0)
+	var bueno_dale = true
+	if enemigo != null:
+		if is_instance_valid(enemigo):
+			match estado:
+				ESTADO.LIBRE, ESTADO.EXPLORAR, ESTADO.MISION:
+					est_bailewar()
+					bueno_dale = false
+				ESTADO.RECARGAR:
+					est_recargar()
+					var dir = velocity.normalized() +\
+						enemigo.global_position.direction_to(global_position).rotated(huida_giro)
+					velocity = dir.normalized() * SPEED
+					bueno_dale = false
+		else:
+			enemigo = null
+	if bueno_dale:
+		if $TimPausa.is_stopped():
+			match estado:
+				ESTADO.LIBRE:
+					est_libre()
+				ESTADO.SEGUIR:
+					est_seguir()
+				ESTADO.EXPLORAR:
+					est_explorar()
+				ESTADO.CONQUISTAR:
+					est_conquistar()
+				ESTADO.RECARGAR:
+					est_recargar()
+				ESTADO.MISION:
+					est_mision()
+		else:
+			velocity = Vector2(0, 0)
 	move_and_slide()
+	# buscar con quien pelear
+	if Data.go_estocastico() and enemigo == null:
+		ver_enemigo()
+
+func ver_enemigo() -> void:
+	if not enemigo_de_grupo("aliens"):
+		if not enemigo_de_grupo("monstruos"):
+			pass
+
+func enemigo_de_grupo(grupo_str: String) -> bool:
+	var entes = get_tree().get_nodes_in_group(grupo_str)
+	if is_mele():
+		var visto = Data.get_nearest(self, entes, VISION)
+		if visto != null:
+			enemigo = visto
+			return true
+	else:
+		var vistos = Data.get_envista(self, entes, VISION)
+		if not vistos.is_empty():
+			enemigo = vistos.pick_random()
+			return true
+	return false
+
+func est_bailewar() -> void:
+	# funcion llamada solo si enemigo ha sido verificado
+	# verificar si lo alcanza a ver
+	
+	# moverse bailando cerca a enemigo
+	if is_mele():
+		Data.seguir_punto(self, enemigo.global_position, 125, 75)
+	else:
+		Data.seguir_punto(self, enemigo.global_position, VISION * 0.8, VISION * 0.5)
+	if velocity.is_zero_approx():
+		if not mover_errar:
+			mover_errar = true
+		errar()
 
 func errar() -> void:
 	if mover_errar:
@@ -190,7 +247,7 @@ func est_seguir() -> void:
 		Data.RES_MOVE.NULO:
 			set_estado(ESTADO.LIBRE)
 		Data.RES_MOVE.FALTA:
-			if randf() > Data.ESTOCASTICO:
+			if Data.go_estocastico():
 				if false: # Tarea revisar player
 					set_estado(ESTADO.LIBRE)
 
@@ -236,3 +293,7 @@ func _on_tim_errar_timeout() -> void:
 func base_cambia_diplomacia(base: Node) -> void:
 	if base == get_base():
 		set_estado(ESTADO.LIBRE)
+
+func _on_tim_ver_timeout() -> void:
+	$TimVer.start(randf_range(4, 8))
+	ver_enemigo()
