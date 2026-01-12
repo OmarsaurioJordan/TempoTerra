@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://iei3wam7xaxm"]
+[gd_scene load_steps=24 format=3 uid="uid://iei3wam7xaxm"]
 
 [ext_resource type="Texture2D" uid="uid://dunep3yumw4lg" path="res://Sprites/Entes/d_golpe_strip2.png" id="1_6e6mr"]
 [ext_resource type="Script" uid="uid://bw16pwdyolf8e" path="res://Scripts/Tools/imagen.gd" id="1_ev13i"]
@@ -14,6 +14,9 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bjll6"]
 radius = 26.4764
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ev13i"]
+radius = 56.0
 
 [sub_resource type="Animation" id="Animation_it582"]
 length = 0.001
@@ -286,6 +289,43 @@ _data = {
 &"shot": SubResource("Animation_6e6mr")
 }
 
+[sub_resource type="Animation" id="Animation_8uc8b"]
+resource_name = "hit"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.631373, 0.631373, 1), Color(1, 0.631373, 0.631373, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_235dx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_weq60"]
+_data = {
+&"RESET": SubResource("Animation_235dx"),
+&"hit": SubResource("Animation_8uc8b")
+}
+
 [node name="Warrior" type="CharacterBody2D" groups=["entes", "humans", "warrioplayers", "warriors"]]
 collision_layer = 8
 collision_mask = 15
@@ -298,6 +338,17 @@ metadata/_edit_lock_ = true
 
 [node name="Coli" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bjll6")
+metadata/_edit_lock_ = true
+
+[node name="Ataque" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+metadata/_edit_lock_ = true
+
+[node name="Coli" type="CollisionShape2D" parent="Ataque"]
+shape = SubResource("CircleShape2D_ev13i")
+debug_color = Color(0.966026, 0.281397, 0.438831, 0.42)
 metadata/_edit_lock_ = true
 
 [node name="RayCalles" type="RayCast2D" parent="."]
@@ -429,6 +480,12 @@ libraries = {
 }
 speed_scale = 0.75
 
+[node name="Hit" type="AnimationPlayer" parent="Imagen"]
+libraries = {
+&"": SubResource("AnimationLibrary_weq60")
+}
+speed_scale = 1.2
+
 [node name="TimPausa" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
@@ -463,6 +520,8 @@ one_shot = true
 wait_time = 0.333
 one_shot = true
 
+[connection signal="body_entered" from="Ataque" to="." method="_on_ataque_body_entered"]
+[connection signal="body_exited" from="Ataque" to="." method="_on_ataque_body_exited"]
 [connection signal="animation_finished" from="Imagen/Anima" to="." method="_on_anima_animation_finished"]
 [connection signal="timeout" from="TimErrar" to="." method="_on_tim_errar_timeout"]
 [connection signal="timeout" from="TimVer" to="." method="_on_tim_ver_timeout"]

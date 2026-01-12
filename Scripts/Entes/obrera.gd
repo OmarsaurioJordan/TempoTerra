@@ -26,6 +26,9 @@ var obj_calle: Node = null # calle final que conecta con objetivo
 var mover_errar: bool = false # para saber si esta en ciclo de movimiento
 var huida_giro: float = 0 # para esquivar al huir
 
+# para golpes
+var retroceso: Vector2 = Vector2(0, 0)
+
 func initialize(el_grupo: Data.GRUPO, casa: Node) -> void:
 	grupo = el_grupo
 	hogar = casa
@@ -63,7 +66,12 @@ func _physics_process(_delta: float) -> void:
 				est_seguir()
 	else:
 		velocity = Vector2(0, 0)
+	# hacer movimiento aplicando retroceso por golpes
+	retroceso *= 0.95
+	var ant = velocity
+	velocity += retroceso
 	move_and_slide()
+	velocity = ant
 
 func errar() -> void:
 	if mover_errar:
@@ -272,5 +280,18 @@ func _on_tim_errar_timeout() -> void:
 	mover_errar = not mover_errar
 	huida_giro = randf_range(-PI * 0.25, PI * 0.25)
 
-func hit_proyectil(ind_tech: int) -> void:
-	pass
+func hit_proyectil(ind_tech: int, dir_empuje: Vector2) -> void:
+	retroceso = dir_empuje * Data.RETROCESO * 0.5
+	$Imagen/Hit.play("hit")
+	# Tarea hacer esto bien
+	vida -= 10
+	if vida <= 0:
+		queue_free()
+
+func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
+	retroceso = dir_empuje * Data.RETROCESO
+	$Imagen/Hit.play("hit")
+	# Tarea hacer esto bien
+	vida -= 20
+	if vida <= 0:
+		queue_free()

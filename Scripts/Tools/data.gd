@@ -5,13 +5,15 @@ const PROYECTIL = preload("res://Scenes/Objetos/proyectil.tscn")
 
 const ESTOCASTICO: float = 0.5 # 0 calculo continuo - 1 extremadamente lento desperdicio loop
 const RADIO_CALLE: float = 40 # para detectar cuando llego a una calle
+const RETROCESO: float = 400 # velocidad aplicada al empujarlos
 
 # tecnologias: 0:ant 1:imp 2:med 3:ind 4:mod 5:fut
 const MUNICION = [10, 1, 24, 12, 210, 300]
-const CARGADOR = [10, 1, 24, 1, 15, 25]
-const CADENCIA = [3.0, 3.0, 4.0, 1.0, 1.0, 1.0]
-const RECARGAS = [1.0, 1.0, 1.0, 10.0, 5.0, 10.0]
-const ESPECIAL = [0, 0, 0, 1, 3, 1]
+const CARGADOR = [10, 1, 24, 1, 15, 25] # municion puesta en mano o arma
+const CADENCIA = [3.0, 3.0, 4.0, 1.0, 1.0, 1.0] # tiempo entre disparos
+const RECARGAS = [1.0, 1.0, 1.0, 10.0, 5.0, 10.0] # tiempo de recarga
+const ESPECIAL = [0, 0, 0, 1, 3, 1] # municion de especial
+const AGILIDAD = [2.0, 2.0, 2.0, 2.0, 2.0, 2.0] # tiempo entre golpes mele
 
 enum DIPLOMACIA {
 	NORMAL, # los guerreros se distribuyen por todas las casas y algunos exploran

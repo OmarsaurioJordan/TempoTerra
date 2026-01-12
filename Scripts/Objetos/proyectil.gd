@@ -37,7 +37,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.get_parent() == get_parent():
 		if body.is_in_group("entes"):
 			if body.get_hogar_grupo() != grupo:
-				body.hit_proyectil($Imagen.frame)
+				body.hit_proyectil($Imagen.frame, direccion)
 				queue_free()
 		else:
 			queue_free()

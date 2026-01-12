@@ -30,6 +30,10 @@ var mover_errar: bool = false # para saber si esta en ciclo de movimiento
 var huida_giro: float = 0 # para esquivar al huir
 var dir_baile_rebote: Vector2 = Vector2(0, 0) # para moverse en la zona de pelea
 
+# para golpes
+var cuerpos_golpeables: Array = []
+var retroceso: Vector2 = Vector2(0, 0)
+
 func initialize(el_grupo: Data.GRUPO, casa: Node) -> void:
 	grupo = el_grupo
 	hogar = casa
@@ -119,7 +123,12 @@ func _physics_process(_delta: float) -> void:
 					est_mision()
 		else:
 			velocity = Vector2(0, 0)
+	# hacer movimiento aplicando retroceso por golpes
+	retroceso *= 0.95
+	var ant = velocity
+	velocity += retroceso
 	move_and_slide()
+	velocity = ant
 	# atacar al enemigo si existe en mira
 	atacar()
 	# buscar con quien pelear
@@ -148,10 +157,16 @@ func est_bailewar() -> void:
 	# funcion llamada solo si enemigo ha sido verificado
 	# moverse bailando cerca a enemigo
 	if is_mele():
-		# Tarea cambiar distancia de acuerdo a recarga
-		Data.seguir_punto(self, enemigo.global_position, 125, 75)
+		if not $Shots/TimShotMele.is_stopped() and $Shots/TimShotGo.is_stopped():
+			Data.seguir_punto(self, enemigo.global_position, 150, 100)
+		else:
+			Data.seguir_punto(self, enemigo.global_position, 10, 0)
+	elif not $Shots/TimShotCargador.is_stopped():
+		Data.seguir_punto(self, enemigo.global_position, VISION * 0.9, VISION * 0.8)
+	elif not $Shots/TimShotDistance.is_stopped():
+		Data.seguir_punto(self, enemigo.global_position, VISION * 0.7, VISION * 0.5)
 	else:
-		Data.seguir_punto(self, enemigo.global_position, VISION * 0.8, VISION * 0.5)
+		Data.seguir_punto(self, enemigo.global_position, VISION * 0.6, VISION * 0.4)
 	if velocity.is_zero_approx():
 		velocity = dir_baile_rebote * SPEED
 	else:
@@ -174,7 +189,12 @@ func atacar() -> void:
 			return
 	# hacer el intento de ataque principal
 	if is_mele():
-		pass
+		if $Shots/TimShotMele.is_stopped():
+			for bdy in cuerpos_golpeables:
+				if bdy == enemigo:
+					$Shots/TimShotGo.start()
+					$Shots/TimShotMele.start(Data.AGILIDAD[get_dist_tech()])
+					$Imagen/Anima.play("hit")
 	elif municion + cargador > 0:
 		if cargador == 0 and $Shots/TimShotCargador.is_stopped():
 			$Shots/TimShotCargador.start(Data.RECARGAS[get_dist_tech()])
@@ -353,12 +373,28 @@ func _on_tim_ver_timeout() -> void:
 
 func _on_tim_shot_go_timeout() -> void:
 	if is_mele():
-		pass
+		for bdy in cuerpos_golpeables:
+			if bdy == enemigo:
+				bdy.hit_mele(Data.distancia_to_tech($Imagen/Distancia.frame),
+					global_position.direction_to(bdy.global_position))
 	else:
 		Data.crea_proyectil(self, prepunteria, get_dist_tech())
 
-func hit_proyectil(ind_tech: int) -> void:
-	pass
+func hit_proyectil(ind_tech: int, dir_empuje: Vector2) -> void:
+	retroceso = dir_empuje * Data.RETROCESO * 0.5
+	$Imagen/Hit.play("hit")
+	# Tarea hacer esto bien
+	vida -= 10
+	if vida <= 0:
+		queue_free()
+
+func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
+	retroceso = dir_empuje * Data.RETROCESO
+	$Imagen/Hit.play("hit")
+	# Tarea hacer esto bien
+	vida -= 20
+	if vida <= 0:
+		queue_free()
 
 func _on_tim_shot_cargador_timeout() -> void:
 	var tech = get_dist_tech()
@@ -377,3 +413,12 @@ func _on_anima_animation_finished(anim_name: StringName) -> void:
 				$Imagen/Anima.play("recharge")
 			elif municion + cargador == 0 and $Imagen/Distancia.frame != 4: # arco
 				$Imagen.set_mele()
+
+func _on_ataque_body_entered(body: Node2D) -> void:
+	if body == self:
+		return
+	if not body in cuerpos_golpeables:
+		cuerpos_golpeables.append(body)
+
+func _on_ataque_body_exited(body: Node2D) -> void:
+	cuerpos_golpeables.erase(body)

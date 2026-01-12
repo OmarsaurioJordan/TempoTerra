@@ -17,6 +17,10 @@ var prepunteria: Vector2 = Vector2(0, 0) # direccion de disparo pre ajustada
 var area_tab: Array = []
 var linea: Line2D = null
 
+# para golpes
+var cuerpos_golpeables: Array = []
+var retroceso: Vector2 = Vector2(0, 0)
+
 func _ready() -> void:
 	$Imagen/Charlita.visible = false
 	call_deferred("set_camara_mundo")
@@ -62,7 +66,12 @@ func _physics_process(_delta: float) -> void:
 		velocity = dir * SPEED
 	else:
 		velocity = Vector2(0, 0)
+	# hacer movimiento aplicando retroceso por golpes
+	retroceso *= 0.95
+	var ant = velocity
+	velocity += retroceso
 	move_and_slide()
+	velocity = ant
 	# posicionar el mouse
 	for mou in get_tree().get_nodes_in_group("mouses"):
 		mou.global_position = get_global_mouse_position()
@@ -149,8 +158,21 @@ func _on_tim_shot_go_timeout() -> void:
 		var dir = global_position.direction_to(get_global_mouse_position())
 		Data.crea_proyectil(self, dir, get_dist_tech())
 
-func hit_proyectil(ind_tech: int) -> void:
-	pass
+func hit_proyectil(ind_tech: int, dir_empuje: Vector2) -> void:
+	retroceso = dir_empuje * Data.RETROCESO * 0.5
+	$Imagen/Hit.play("hit")
+	# Tarea hacer esto bien
+	vida -= 10
+	if vida <= 0:
+		pass#queue_free()
+
+func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
+	retroceso = dir_empuje * Data.RETROCESO
+	$Imagen/Hit.play("hit")
+	# Tarea hacer esto bien
+	vida -= 20
+	if vida <= 0:
+		pass#queue_free()
 
 func _on_tim_shot_cargador_timeout() -> void:
 	var tech = get_dist_tech()

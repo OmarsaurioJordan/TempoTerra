@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c6dvitqse44e7"]
+[gd_scene load_steps=18 format=3 uid="uid://c6dvitqse44e7"]
 
 [ext_resource type="Script" uid="uid://bw16pwdyolf8e" path="res://Scripts/Tools/imagen.gd" id="1_eeroj"]
 [ext_resource type="Texture2D" uid="uid://dgc4pg2bqr06b" path="res://Sprites/Entes/d_pies_strip12.png" id="1_ocluk"]
@@ -17,6 +17,43 @@
 radius = 26.4764
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n3j5c"]
+
+[sub_resource type="Animation" id="Animation_8uc8b"]
+resource_name = "hit"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.631373, 0.631373, 1), Color(1, 0.631373, 0.631373, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_235dx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_weq60"]
+_data = {
+&"RESET": SubResource("Animation_235dx"),
+&"hit": SubResource("Animation_8uc8b")
+}
 
 [node name="Obrera" type="CharacterBody2D" groups=["entes", "humans", "obreras"]]
 collision_layer = 8
@@ -146,6 +183,12 @@ scale = Vector2(0.339351, 0.344704)
 texture = ExtResource("11_cksku")
 offset = Vector2(8, -130)
 metadata/_edit_lock_ = true
+
+[node name="Hit" type="AnimationPlayer" parent="Imagen"]
+libraries = {
+&"": SubResource("AnimationLibrary_weq60")
+}
+speed_scale = 1.2
 
 [node name="TimPausa" type="Timer" parent="."]
 wait_time = 1.5
