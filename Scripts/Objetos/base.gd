@@ -4,7 +4,7 @@ extends StaticBody2D
 
 @onready var diplomacia: Data.DIPLOMACIA = Data.DIPLOMACIA.NORMAL
 
-var mision: Node = null # la base o casa a la cual atacar o defender, null elige al azar
+var mision: Node = null # la base, calle o casa a la cual atacar o defender
 var enemy_base: Node = null # solo para marcar base enemiga en modo guerra
 var estadistica = {
 	"casas": 0, # conteo del numero de casas asociadas
@@ -25,6 +25,11 @@ func get_grupo() -> Data.GRUPO:
 
 func get_mision() -> Node:
 	return mision
+
+func get_archienemigos() -> Data.GRUPO:
+	if enemy_base == null:
+		return Data.GRUPO.ALIEN
+	return enemy_base.get_grupo()
 
 func get_diplomacia() -> Data.DIPLOMACIA:
 	return diplomacia
@@ -60,11 +65,12 @@ func _on_tim_estadisticas_timeout() -> void:
 			else:
 				estadistica["refuerzos"] += 1
 
-func set_diplomacia(new_orden: Data.DIPLOMACIA, force_enemy: Node = null) -> void:
+func set_diplomacia(new_orden: Data.DIPLOMACIA, force_mision: Node = null,
+		force_enemy_base: Node = null) -> void:
 	if new_orden == diplomacia:
-		if force_enemy != null and mision != force_enemy:
-			mision = force_enemy
-			enemy_base = mision
+		if force_mision != null and mision != force_mision:
+			mision = force_mision
+			enemy_base = force_enemy_base
 			reset_warriors()
 		return
 	diplomacia = new_orden
@@ -75,9 +81,9 @@ func set_diplomacia(new_orden: Data.DIPLOMACIA, force_enemy: Node = null) -> voi
 		Data.DIPLOMACIA.DEFENSA:
 			mision = self
 		Data.DIPLOMACIA.GUERRA:
-			if force_enemy != null:
-				mision = force_enemy
-				enemy_base = mision
+			if force_mision != null:
+				mision = force_mision
+				enemy_base = force_enemy_base
 			else:
 				var edif = get_tree().get_nodes_in_group("bases")
 				edif.erase(self)
@@ -149,4 +155,4 @@ func _on_tim_zona_timeout() -> void:
 				meatakan[0].reset_warriors()
 		elif mision != enemy_base:
 			# forzar que la base atacada sea atacada, no que una anterior calle lo sea
-			set_diplomacia(Data.DIPLOMACIA.GUERRA, enemy_base)
+			set_diplomacia(Data.DIPLOMACIA.GUERRA, enemy_base, enemy_base)

@@ -1,7 +1,6 @@
 # Tareas
 
 - ataque segun el arma que tenga en mano el warrior
-- crear proyectiles
 - crear explosivos
 - movimiento y explosion de explosivo
 - lanzar onda de mele
@@ -9,17 +8,14 @@
 - daño hecho por mele
 - daño hecho por explosivo
 - bailewar retroceder si esta en modo recarga o cadencia
-- descontar municion o poner en modo recarga
-- activar relojes de cadencia y recarga
 - ir a recargar municion
 - ir a recargar vida
-- cambiar a arma de mele solo en algunos casos al acabar municion
-- cuándo eligen mele o distancia?
 - colocar velocidad y duracion a proyectil segun tipo
 - obrera se reubica en casa libre de su grupo
 - warrior atacar obrera solo si no cupo en las bases de ambos
 - colocar a obrera y player metodos necesarios para guerra
-
+- nuevos seres se crean sin ninguna municion ni arma
+- proyectil debe colisionar con solidos
 ...
 
 - proyectil: movimiento, impacto, explosion

@@ -1,8 +1,17 @@
 extends Node
 class_name Data
 
+const PROYECTIL = preload("res://Scenes/Objetos/proyectil.tscn")
+
 const ESTOCASTICO: float = 0.5 # 0 calculo continuo - 1 extremadamente lento desperdicio loop
 const RADIO_CALLE: float = 40 # para detectar cuando llego a una calle
+
+# tecnologias: 0:ant 1:imp 2:med 3:ind 4:mod 5:fut
+const MUNICION = [10, 1, 24, 12, 210, 300]
+const CARGADOR = [10, 1, 24, 1, 15, 25]
+const CADENCIA = [3.0, 3.0, 4.0, 1.0, 1.0, 1.0]
+const RECARGAS = [1.0, 1.0, 1.0, 10.0, 5.0, 10.0]
+const ESPECIAL = [0, 0, 0, 1, 3, 1]
 
 enum DIPLOMACIA {
 	NORMAL, # los guerreros se distribuyen por todas las casas y algunos exploran
@@ -15,14 +24,14 @@ enum DIPLOMACIA {
 enum RES_MOVE { LLEGO, FALTA, NULO }
 
 enum GRUPO {
-	SOLO,
-	SALVAJE, ANIMAL, ALIEN,
+	SALVAJE,
 	TIGRE, AGUILA, PEZ, TORO, SERPIENTE, INSECTO,
 	GRIEGO, EGIPCIO, INDIGENA, AFRICANO, PERSA,
 	LATINO, ARABE, VIKINGO, CHINO,
 	INGLES, ALEMAN, COLONO,
 	GRINGO, RUSO,
-	CYBORG
+	CYBORG,
+	SOLO, ANIMAL, ALIEN
 }
 
 enum ERA {
@@ -99,6 +108,7 @@ static func era_to_secundaria(era: ERA) -> Array:
 	return [false, 0]
 
 static func grupo_to_distancia(grupo: GRUPO) -> Array:
+	# distancia, municion_visible, municion
 	match grupo:
 		GRUPO.SALVAJE,\
 		GRUPO.TIGRE, GRUPO.AGUILA, GRUPO.PEZ, GRUPO.TORO, GRUPO.SERPIENTE, GRUPO.INSECTO:
@@ -398,3 +408,29 @@ static func is_punto_free(nodo: Node, punto: Vector2, solidos: Array) -> bool:
 		if punto.distance_to(sol.global_position) < sol.get_node("Coli").shape.radius:
 			return false
 	return true
+
+# crear cosas
+
+static func distancia_to_tech(ind: int) -> int:
+	# ind es el frame del arma de distancia, no la municion
+	match ind:
+		0:
+			return 0
+		2:
+			return 1
+		4:
+			return 2
+		5, 6:
+			return 3
+		7, 8:
+			return 4
+		9:
+			return 5
+	return 0
+
+static func crea_proyectil(nodo: Node, direccion: Vector2, tech: int) -> Node:
+	var pry = PROYECTIL.instantiate()
+	nodo.get_parent().add_child(pry)
+	pry.position = nodo.position + direccion * 40.0
+	pry.initialize(nodo.get_hogar_grupo(), direccion, tech)
+	return pry

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://iei3wam7xaxm"]
+[gd_scene load_steps=20 format=3 uid="uid://iei3wam7xaxm"]
 
 [ext_resource type="Texture2D" uid="uid://dunep3yumw4lg" path="res://Sprites/Entes/d_golpe_strip2.png" id="1_6e6mr"]
 [ext_resource type="Script" uid="uid://bw16pwdyolf8e" path="res://Scripts/Tools/imagen.gd" id="1_ev13i"]
@@ -126,22 +126,6 @@ tracks/8/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_6e6mr"]
-resource_name = "shot"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Distancia:skew")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.233333, 0.366667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.0, -0.174533, 0.0, 0.174533, 0.0]
-}
-
 [sub_resource type="Animation" id="Animation_ev13i"]
 resource_name = "hit"
 tracks/0/type = "value"
@@ -193,33 +177,6 @@ tracks/3/keys = {
 "values": [false, true, false, false]
 }
 
-[sub_resource type="Animation" id="Animation_gpjr2"]
-resource_name = "reload"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Distancia:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Municion:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.3, 1.3), Vector2(1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_pr3kn"]
 resource_name = "lanza"
 length = 0.7
@@ -248,11 +205,83 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_203qf"]
+resource_name = "recharge"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Distancia:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Municion:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.3, 1.3), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gpjr2"]
+resource_name = "reload"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Distancia:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Municion:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.3, 1.3), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6e6mr"]
+resource_name = "shot"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Distancia:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.233333, 0.366667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.174533, 0.0, 0.174533, 0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6e6mr"]
 _data = {
 &"RESET": SubResource("Animation_it582"),
 &"hit": SubResource("Animation_ev13i"),
 &"lanza": SubResource("Animation_pr3kn"),
+&"recharge": SubResource("Animation_203qf"),
 &"reload": SubResource("Animation_gpjr2"),
 &"shot": SubResource("Animation_6e6mr")
 }
@@ -418,7 +447,7 @@ autostart = true
 
 [node name="Shots" type="Node" parent="."]
 
-[node name="TimShotMain" type="Timer" parent="Shots"]
+[node name="TimShotDistance" type="Timer" parent="Shots"]
 one_shot = true
 
 [node name="TimShotEspecial" type="Timer" parent="Shots"]
@@ -434,6 +463,8 @@ one_shot = true
 wait_time = 0.333
 one_shot = true
 
+[connection signal="animation_finished" from="Imagen/Anima" to="." method="_on_anima_animation_finished"]
 [connection signal="timeout" from="TimErrar" to="." method="_on_tim_errar_timeout"]
 [connection signal="timeout" from="TimVer" to="." method="_on_tim_ver_timeout"]
+[connection signal="timeout" from="Shots/TimShotCargador" to="." method="_on_tim_shot_cargador_timeout"]
 [connection signal="timeout" from="Shots/TimShotGo" to="." method="_on_tim_shot_go_timeout"]

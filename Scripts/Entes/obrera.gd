@@ -271,3 +271,6 @@ func _on_tim_errar_timeout() -> void:
 	$TimErrar.start(randf_range(1, 7))
 	mover_errar = not mover_errar
 	huida_giro = randf_range(-PI * 0.25, PI * 0.25)
+
+func hit_proyectil(ind_tech: int) -> void:
+	pass

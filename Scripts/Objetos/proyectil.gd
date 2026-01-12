@@ -10,7 +10,7 @@ func initialize(el_grupo: Data.GRUPO, la_direccion: Vector2, ind_tech: int) -> v
 	grupo = el_grupo
 	direccion = la_direccion
 	$Imagen.frame = ind_tech
-	match ind_tech:
+	match ind_tech: # Tarea elegir velocidad y duracion
 		0:
 			pass
 		1:
@@ -25,7 +25,7 @@ func initialize(el_grupo: Data.GRUPO, la_direccion: Vector2, ind_tech: int) -> v
 			pass
 
 func _physics_process(delta: float) -> void:
-	position += direccion * SPEED
+	position += direccion * SPEED * delta
 	if $TimFin.is_stopped():
 		desvanecer = max(0, desvanecer - delta)
 		if desvanecer == 0:

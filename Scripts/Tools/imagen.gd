@@ -62,41 +62,53 @@ func initialize_warrior(grupo: Data.GRUPO) -> void:
 
 func set_armas(grupo: Data.GRUPO) -> void:
 	var era = Data.grupo_to_era(grupo)
+	var tech = Data.era_to_tech(era)
+	set_armas_base(grupo)
 	# 0:antiguo 1:imperial 2:medieval 3:industrial 4:moderno 5:avanzado
-	if Data.era_to_tech(era) <= 2:
-		set_mele(grupo)
+	if (tech == 0 or tech == 2) and randf() < 0.5:
+		set_mele()
 	else:
-		set_distancia(grupo)
+		set_distancia()
 
-func set_mele(grupo: Data.GRUPO) -> void:
+func set_armas_base(grupo: Data.GRUPO) -> void:
+	# secundaria
+	var era = Data.grupo_to_era(grupo)
+	var sec = Data.era_to_secundaria(era)
+	$Secundaria.visible = sec[0]
+	$Secundaria.frame = sec[1]
+	# distancia
+	var dis = Data.grupo_to_distancia(grupo)
+	$Municion.frame = dis[2]
+	$Distancia.frame = dis[0]
+	# arma mele
+	$Escudo.frame = grupo
+	$Arma.frame = grupo
+	# rellenar
+	var nodo = get_parent()
+	var tech = nodo.get_dist_tech()
+	nodo.municion = Data.MUNICION[tech]
+	nodo.cargador = 0
+	nodo.especial = Data.ESPECIAL[tech]
+
+func set_mele() -> void:
 	# invisibilizar
 	$Municion.visible = false
 	$Distancia.visible = false
-	# escudo
-	$Escudo.visible = grupo >= Data.GRUPO.GRIEGO and grupo <= Data.GRUPO.CHINO
-	$Escudo.frame = grupo
-	# secundaria
-	var era = Data.grupo_to_era(grupo)
-	var sec = Data.era_to_secundaria(era)
-	$Secundaria.visible = sec[0]
-	$Secundaria.frame = sec[1]
-	# arma
+	# arma mele
+	$Escudo.visible = $Escudo.frame >= 7 and $Escudo.frame <= 15
 	$Arma.visible = true
-	$Arma.frame = grupo
 
-func set_distancia(grupo: Data.GRUPO) -> void:
+func set_distancia() -> void:
 	# invisibilizar
-	$Escudo.visible = false
+	$Escudo.visible = $Escudo.frame >= 7 and $Escudo.frame <= 15
 	$Arma.visible = false
-	# secundaria
-	var era = Data.grupo_to_era(grupo)
-	var sec = Data.era_to_secundaria(era)
-	$Secundaria.visible = sec[0]
-	$Secundaria.frame = sec[1]
-	# municion
-	var dis = Data.grupo_to_distancia(grupo)
-	$Municion.visible = dis[1]
-	$Municion.frame = dis[2]
 	# distancia
+	$Municion.visible = $Municion.frame == 1 or $Municion.frame == 3
 	$Distancia.visible = true
-	$Distancia.frame = dis[0]
+	if $Municion.visible:
+		$Escudo.visible = false
+	# rellenar
+	var nodo = get_parent()
+	var tech = nodo.get_dist_tech()
+	nodo.get_node("Shots/TimShotCargador").start(Data.RECARGAS[tech])
+	$Anima.play("recharge")

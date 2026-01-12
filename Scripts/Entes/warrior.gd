@@ -15,10 +15,11 @@ var vida: int = VIDA
 var municion: int = 0
 var cargador: int = 0 # municion actualmente en el arma
 var especial: int = 0 # municion especial
-var mision: Node = null # la base o casa a la cual atacar o defender
+var mision: Node = null # la base, calle o casa a la cual atacar o defender
 var archienemigos: Data.GRUPO = Data.GRUPO.SOLO # la mision a que grupo enemigo apunta
 var enemigo: Node = null # a quien tiene en mira para atacar
 var seguimiento: Vector2 = Vector2(0, 0) # ultima vez que vio a enemigo
+var prepunteria: Vector2 = Vector2(0, 0) # direccion de disparo pre ajustada
 
 # para navegacion, puede ser perseguir cualquier tipo de nodo
 var meta: Vector2 = Vector2(0, 0) # punto al que se desea llegar
@@ -71,6 +72,9 @@ func get_postura() -> POSTURA:
 func is_mele() -> bool:
 	return $Imagen/Arma.visible
 
+func get_dist_tech() -> int:
+	return Data.distancia_to_tech($Imagen/Distancia.frame)
+
 func get_archienemigo_grupo() -> Data.GRUPO:
 	return archienemigos
 
@@ -81,8 +85,8 @@ func _physics_process(_delta: float) -> void:
 			seguimiento = enemigo.global_position
 			match estado:
 				ESTADO.LIBRE, ESTADO.EXPLORAR, ESTADO.MISION:
-					if est_bailewar():
-						bueno_dale = false
+					bueno_dale = false
+					est_bailewar()
 				ESTADO.RECARGAR:
 					bueno_dale = false
 					est_recargar()
@@ -116,6 +120,8 @@ func _physics_process(_delta: float) -> void:
 		else:
 			velocity = Vector2(0, 0)
 	move_and_slide()
+	# atacar al enemigo si existe en mira
+	atacar()
 	# buscar con quien pelear
 	if Data.go_estocastico() and enemigo == null:
 		ver_enemigo()
@@ -138,20 +144,11 @@ func enemigo_de_grupo(grupo_str: String, test_hogar_grupo: bool,
 		return true
 	return false
 
-func est_bailewar() -> bool:
+func est_bailewar() -> void:
 	# funcion llamada solo si enemigo ha sido verificado
-	# verificar si lo alcanza a ver
-	if Data.go_estocastico():
-		if enemigo.global_position.distance_to(global_position) > VISION:
-			enemigo = null
-			return false
-		$RayEntes.target_position = enemigo.global_position - global_position
-		$RayEntes.force_raycast_update()
-		if $RayEntes.is_colliding():
-			enemigo = null
-			return false
 	# moverse bailando cerca a enemigo
 	if is_mele():
+		# Tarea cambiar distancia de acuerdo a recarga
 		Data.seguir_punto(self, enemigo.global_position, 125, 75)
 	else:
 		Data.seguir_punto(self, enemigo.global_position, VISION * 0.8, VISION * 0.5)
@@ -159,7 +156,35 @@ func est_bailewar() -> bool:
 		velocity = dir_baile_rebote * SPEED
 	else:
 		dir_baile_rebote = Vector2(1, 0).rotated(randf() * 2.0 * PI)
-	return true
+
+func atacar() -> void:
+	# funcion llamada solo si enemigo ha sido verificado
+	# verificar que existe alguien a quien atacar
+	if enemigo == null or not $Shots/TimShotGo.is_stopped():
+		return
+	# verificar si lo alcanza a ver
+	if Data.go_estocastico():
+		if enemigo.global_position.distance_to(global_position) > VISION:
+			enemigo = null
+			return
+		$RayEntes.target_position = enemigo.global_position - global_position
+		$RayEntes.force_raycast_update()
+		if $RayEntes.is_colliding():
+			enemigo = null
+			return
+	# hacer el intento de ataque principal
+	if is_mele():
+		pass
+	elif municion + cargador > 0:
+		if cargador == 0 and $Shots/TimShotCargador.is_stopped():
+			$Shots/TimShotCargador.start(Data.RECARGAS[get_dist_tech()])
+			$Imagen/Anima.play("recharge")
+		elif $Shots/TimShotDistance.is_stopped() and $Shots/TimShotCargador.is_stopped():
+			$Shots/TimShotGo.start()
+			$Shots/TimShotDistance.start(Data.CADENCIA[get_dist_tech()])
+			$Imagen/Anima.play("shot")
+			prepunteria = global_position.direction_to(enemigo.global_position)
+			cargador -= 1
 
 func errar() -> void:
 	if mover_errar:
@@ -238,7 +263,7 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 						mision = edif.pick_random()
 						archienemigos = mision.get_grupo()
 				else:
-					archienemigos = mision.get_grupo()
+					archienemigos = base.get_archienemigos()
 
 func est_libre() -> void:
 	errar()
@@ -327,7 +352,28 @@ func _on_tim_ver_timeout() -> void:
 	ver_enemigo()
 
 func _on_tim_shot_go_timeout() -> void:
-	pass
+	if is_mele():
+		pass
+	else:
+		Data.crea_proyectil(self, prepunteria, get_dist_tech())
 
 func hit_proyectil(ind_tech: int) -> void:
 	pass
+
+func _on_tim_shot_cargador_timeout() -> void:
+	var tech = get_dist_tech()
+	while cargador < Data.CARGADOR[tech] and municion > 0:
+		cargador += 1
+		municion -= 1
+	$Imagen/Anima.play("RESET")
+	if municion + cargador <= 1:
+		$Imagen/Municion.visible = false
+
+func _on_anima_animation_finished(anim_name: StringName) -> void:
+	match anim_name:
+		"shot":
+			if cargador == 0 and municion > 0:
+				$Shots/TimShotCargador.start(Data.RECARGAS[get_dist_tech()])
+				$Imagen/Anima.play("recharge")
+			elif municion + cargador == 0 and $Imagen/Distancia.frame != 4: # arco
+				$Imagen.set_mele()
