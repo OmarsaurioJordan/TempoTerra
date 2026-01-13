@@ -124,16 +124,16 @@ func _physics_process(_delta: float) -> void:
 		else:
 			velocity = Vector2(0, 0)
 	# hacer movimiento aplicando retroceso por golpes
-	retroceso *= 0.95
-	var ant = velocity
-	velocity += retroceso
-	move_and_slide()
-	velocity = ant
+	if retroceso.length() > 10:
+		retroceso *= 0.95
+		var ant = velocity
+		velocity += retroceso
+		move_and_slide()
+		velocity = ant
+	else:
+		move_and_slide()
 	# atacar al enemigo si existe en mira
 	atacar()
-	# buscar con quien pelear
-	if Data.go_estocastico() and enemigo == null:
-		ver_enemigo()
 
 func ver_enemigo() -> void:
 	# aliens, monstruos, warriors+players, drons, robots, obreras
@@ -203,6 +203,7 @@ func atacar() -> void:
 			$Shots/TimShotGo.start()
 			$Shots/TimShotDistance.start(Data.CADENCIA[get_dist_tech()])
 			$Imagen/Anima.play("shot")
+			$TimPausa.start(0.5)
 			prepunteria = global_position.direction_to(enemigo.global_position)
 			cargador -= 1
 
@@ -368,7 +369,7 @@ func base_cambia_diplomacia(base: Node) -> void:
 		set_estado(ESTADO.LIBRE)
 
 func _on_tim_ver_timeout() -> void:
-	$TimVer.start(randf_range(4, 8))
+	$TimVer.start(randf_range(2, 4))
 	ver_enemigo()
 
 func _on_tim_shot_go_timeout() -> void:
@@ -422,3 +423,19 @@ func _on_ataque_body_entered(body: Node2D) -> void:
 
 func _on_ataque_body_exited(body: Node2D) -> void:
 	cuerpos_golpeables.erase(body)
+
+func _on_tim_reubicar_timeout() -> void:
+	$TimReubicar.start(randf_range(10, 15))
+	if get_postura() == POSTURA.SOBRA:
+		var casas = get_tree().get_nodes_in_group("casas")
+		var hogar_grupo = get_hogar_grupo()
+		var posibles = [[], [], []]
+		for ca in casas:
+			if ca.get_grupo() == hogar_grupo:
+				var tot = ca.get_total(false)
+				if tot < 3:
+					posibles[tot].append(ca)
+		for pos in posibles:
+			if not pos.is_empty():
+				hogar = pos.pick_random()
+				break

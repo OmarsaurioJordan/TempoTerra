@@ -45,3 +45,8 @@ func get_postura(nodo: Node, is_obrera: bool = false) -> int:
 	if is_obrera:
 		return resi_obreras.find(nodo)
 	return resi_warriors.find(nodo)
+
+func get_total(is_obrera: bool = false) -> int:
+	if is_obrera:
+		return resi_obreras.size()
+	return resi_warriors.size()

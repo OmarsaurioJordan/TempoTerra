@@ -289,6 +289,21 @@ _data = {
 &"shot": SubResource("Animation_6e6mr")
 }
 
+[sub_resource type="Animation" id="Animation_235dx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_8uc8b"]
 resource_name = "hit"
 length = 0.6
@@ -303,21 +318,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 0.631373, 0.631373, 1), Color(1, 0.631373, 0.631373, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_235dx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_weq60"]
@@ -502,6 +502,11 @@ wait_time = 4.0
 one_shot = true
 autostart = true
 
+[node name="TimReubicar" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
 [node name="Shots" type="Node" parent="."]
 
 [node name="TimShotDistance" type="Timer" parent="Shots"]
@@ -525,5 +530,6 @@ one_shot = true
 [connection signal="animation_finished" from="Imagen/Anima" to="." method="_on_anima_animation_finished"]
 [connection signal="timeout" from="TimErrar" to="." method="_on_tim_errar_timeout"]
 [connection signal="timeout" from="TimVer" to="." method="_on_tim_ver_timeout"]
+[connection signal="timeout" from="TimReubicar" to="." method="_on_tim_reubicar_timeout"]
 [connection signal="timeout" from="Shots/TimShotCargador" to="." method="_on_tim_shot_cargador_timeout"]
 [connection signal="timeout" from="Shots/TimShotGo" to="." method="_on_tim_shot_go_timeout"]

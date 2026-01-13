@@ -116,7 +116,10 @@ func _on_tim_automatic_timeout() -> void:
 	# en caso de no estar siendo atacado, atacar solo si tiene fuerza
 	if meatakan.is_empty():
 		if diplomacia == Data.DIPLOMACIA.GUERRA:
-			if fuerza < 0.6 or enemy_base.get_fuerza() < 0.2:
+			var otro_debil = false
+			if enemy_base != null:
+				otro_debil = enemy_base.get_fuerza() < 0.2
+			if fuerza < 0.6 or otro_debil:
 				set_diplomacia(Data.DIPLOMACIA.NORMAL)
 		elif diplomacia == Data.DIPLOMACIA.ATAQUE:
 			if fuerza < 0.7:

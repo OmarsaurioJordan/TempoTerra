@@ -8,14 +8,12 @@
 - bailewar agregar aleatoriedad en comportamiento mele, estan muy trompos
 - ir a recargar municion
 - ir a recargar vida
-- colocar velocidad y duracion a proyectil segun tipo
-- obrera se reubica en casa libre de su grupo
 - warrior atacar obrera solo si no cupo en las bases de ambos
 - poner en obrera modo de huida cuando sea atacada
-- al disparar debe quedarse quieto un momentico, para dar chance a mele
-- colocar a obrera y player metodos necesarios para guerra
 - nuevos seres se crean sin ninguna municion ni arma
-- proyectil debe colisionar con solidos
+- al tener objetivo a atacar, este auto contraataca si no tiene otro objetivo
+- al ser atacado recluta aliado cercano, help, sea obrera o warrior
+
 ...
 
 - proyectil: movimiento, impacto, explosion
@@ -125,6 +123,7 @@
 - 3: layer 4, entes móviles, como humanos, player, animales, robots
 - 4: layer 5, proyectiles
 - 5: layer 6, indicadores amarillos de interaccion con bases
+- 6: layer 7, igual que layer 2 + 3 pero para area que detiene proyectiles
 
 # Prioridades Ataque
 

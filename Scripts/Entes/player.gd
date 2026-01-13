@@ -62,16 +62,19 @@ func _physics_process(_delta: float) -> void:
 		set_tiempo(Data.get_prev_mundo(self, get_tree().get_nodes_in_group("mundos")))
 	# moverse por el suelo
 	var dir: Vector2 = Input.get_vector("ui_izquierda", "ui_derecha", "ui_arriba", "ui_abajo")
-	if dir.length() != 0:
+	if dir.length() != 0 and $TimPausa.is_stopped():
 		velocity = dir * SPEED
 	else:
 		velocity = Vector2(0, 0)
 	# hacer movimiento aplicando retroceso por golpes
-	retroceso *= 0.95
-	var ant = velocity
-	velocity += retroceso
-	move_and_slide()
-	velocity = ant
+	if retroceso.length() > 10:
+		retroceso *= 0.95
+		var ant = velocity
+		velocity += retroceso
+		move_and_slide()
+		velocity = ant
+	else:
+		move_and_slide()
 	# posicionar el mouse
 	for mou in get_tree().get_nodes_in_group("mouses"):
 		mou.global_position = get_global_mouse_position()
@@ -97,6 +100,7 @@ func _physics_process(_delta: float) -> void:
 				$Shots/TimShotGo.start()
 				$Shots/TimShotDistance.start(Data.CADENCIA[get_dist_tech()])
 				$Imagen/Anima.play("shot")
+				$TimPausa.start(0.5)
 				cargador -= 1
 
 func set_camara_mundo() -> void:

@@ -12,6 +12,7 @@ const ALIMENTO: int = 10 # en cuanto aumenta su vida al ser alimentado
 const INCUBACION: float = 60 # tiempo para crear nuevo individuo
 
 enum ESTADO { LIBRE, CHARLANDO, REPRODUCCION, RECOLECCION, ALIMENTACION, SEGUIR }
+enum POSTURA { HOGAR, EXTRA, SOBRA }
 
 var estado: ESTADO = ESTADO.LIBRE
 var grupo: Data.GRUPO = Data.GRUPO.SOLO
@@ -49,6 +50,16 @@ func is_hogar_grupo() -> bool:
 func get_grupo() -> Data.GRUPO:
 	return grupo
 
+func get_postura() -> POSTURA:
+	if hogar != null:
+		var i = hogar.get_postura(self, true)
+		if i <= 0:
+			return POSTURA.HOGAR
+		elif i == 1:
+			return POSTURA.EXTRA
+		return POSTURA.SOBRA
+	return POSTURA.HOGAR
+
 func _physics_process(_delta: float) -> void:
 	if $TimPausa.is_stopped():
 		match estado:
@@ -67,11 +78,14 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity = Vector2(0, 0)
 	# hacer movimiento aplicando retroceso por golpes
-	retroceso *= 0.95
-	var ant = velocity
-	velocity += retroceso
-	move_and_slide()
-	velocity = ant
+	if retroceso.length() > 10:
+		retroceso *= 0.95
+		var ant = velocity
+		velocity += retroceso
+		move_and_slide()
+		velocity = ant
+	else:
+		move_and_slide()
 
 func errar() -> void:
 	if mover_errar:
@@ -295,3 +309,19 @@ func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
 	vida -= 20
 	if vida <= 0:
 		queue_free()
+
+func _on_tim_reubicar_timeout() -> void:
+	$TimReubicar.start(randf_range(10, 15))
+	if get_postura() == POSTURA.SOBRA:
+		var casas = get_tree().get_nodes_in_group("casas")
+		var hogar_grupo = get_hogar_grupo()
+		var posibles = [[], [], []]
+		for ca in casas:
+			if ca.get_grupo() == hogar_grupo:
+				var tot = ca.get_total(true)
+				if tot < 3:
+					posibles[tot].append(ca)
+		for i in posibles:
+			if not posibles[i].is_empty():
+				hogar = posibles[i].pick_random()
+				break

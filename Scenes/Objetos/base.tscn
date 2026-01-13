@@ -1,13 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://dat4ol8uaol42"]
+[gd_scene load_steps=6 format=3 uid="uid://dat4ol8uaol42"]
 
 [ext_resource type="Script" uid="uid://b2267eed44kvw" path="res://Scripts/Objetos/base.gd" id="1_lbypb"]
 [ext_resource type="Texture2D" uid="uid://bl3aemo8lkro1" path="res://Sprites/General/d_base_strip22.png" id="2_lbypb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gn6y3"]
-radius = 134.239
+radius = 134.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lbypb"]
 radius = 166.883
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bco7i"]
+radius = 134.0
 
 [node name="Base" type="StaticBody2D" groups=["bases", "buildings"]]
 collision_layer = 2
@@ -28,6 +31,17 @@ metadata/_edit_lock_ = true
 [node name="Coli" type="CollisionShape2D" parent="AreaTab"]
 shape = SubResource("CircleShape2D_lbypb")
 debug_color = Color(0.498215, 0.581697, 0.0167626, 0.42)
+metadata/_edit_lock_ = true
+
+[node name="Basesota" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 64
+monitoring = false
+metadata/_edit_lock_ = true
+
+[node name="Coli" type="CollisionShape2D" parent="Basesota"]
+shape = SubResource("CircleShape2D_bco7i")
+debug_color = Color(0.770549, 0.250196, 0.903424, 0.42)
 metadata/_edit_lock_ = true
 
 [node name="Imagen" type="Sprite2D" parent="."]
