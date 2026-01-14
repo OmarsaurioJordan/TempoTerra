@@ -2,6 +2,7 @@ extends Node2D
 
 func _ready() -> void:
 	randomize()
+	Engine.time_scale = 1.0
 	call_deferred("initialize")
 
 func initialize() -> void:

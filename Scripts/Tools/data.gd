@@ -2,6 +2,8 @@ extends Node
 class_name Data
 
 const PROYECTIL = preload("res://Scenes/Objetos/proyectil.tscn")
+const EXPLOSIVO = preload("res://Scenes/Objetos/explosivo.tscn")
+const VAPOR = preload("res://Scenes/Componentes/vapor.tscn")
 
 const ESTOCASTICO: float = 0.5 # 0 calculo continuo - 1 extremadamente lento desperdicio loop
 const RADIO_CALLE: float = 40 # para detectar cuando llego a una calle
@@ -430,9 +432,39 @@ static func distancia_to_tech(ind: int) -> int:
 			return 5
 	return 0
 
-static func crea_proyectil(nodo: Node, direccion: Vector2, tech: int) -> Node:
+static func crea_proyectil(nodo: Node, direccion: Vector2, tech: int,
+		proyectiles: Array = []) -> Node:
+	var new_parent = nodo.get_parent()
+	var pos = nodo.global_position + direccion * 40.0
+	for pry in proyectiles:
+		if not pry.visible:
+			pry.initialize(new_parent, nodo.get_hogar_grupo(), direccion, tech, pos)
+			return pry
 	var pry = PROYECTIL.instantiate()
-	nodo.get_parent().add_child(pry)
-	pry.position = nodo.position + direccion * 40.0
-	pry.initialize(nodo.get_hogar_grupo(), direccion, tech)
+	new_parent.add_child(pry)
+	pry.initialize(new_parent, nodo.get_hogar_grupo(), direccion, tech, pos)
 	return pry
+
+static func crea_explosivo(nodo: Node, trayecto: Vector2, is_granada: bool,
+		explosivos: Array = []) -> Node:
+	var new_parent = nodo.get_parent()
+	var pos = nodo.global_position + trayecto.normalized() * 40.0
+	for pry in explosivos:
+		if not pry.visible:
+			pry.initialize(new_parent, nodo.get_hogar_grupo(), trayecto, is_granada, pos)
+			return pry
+	var pry = EXPLOSIVO.instantiate()
+	new_parent.add_child(pry)
+	pry.initialize(new_parent, nodo.get_hogar_grupo(), trayecto, is_granada, pos)
+	return pry
+
+static func crea_vapor(new_parent: Node, posicion: Vector2, tipo: int,
+		vapores: Array = []) -> Node:
+	for vap in vapores:
+		if not vap.visible:
+			vap.initialize(new_parent, posicion, tipo)
+			return vap
+	var vap = VAPOR.instantiate()
+	new_parent.add_child(vap)
+	vap.initialize(new_parent, posicion, tipo)
+	return vap

@@ -1,7 +1,6 @@
 # Tareas
 
-- crear explosivos
-- movimiento y explosion de explosivo
+- crear explosivos, falta poner lanzador en ente
 - daño hecho por proyectil
 - daño hecho por mele
 - daño hecho por explosivo
@@ -18,7 +17,6 @@
 
 - proyectil: movimiento, impacto, explosion
 - insectos: errar
-- player: ataque distancia
 - player: ataque mele
 - player: ataque especial
 - player: cambio de armas
@@ -38,22 +36,6 @@
 - entes: manejo manual por segundo player
 - entes: ajustar estadísticas de daño y eficiencia
 - menú: escritos sobre los diferentes grupos en inglés
-
-# Hecho
-
-- sprites: dibujar personaje de portada
-- sprites: dibujar mapas, suelo, decorados, edificios, objetos, personajes
-- proyecto: organizado en sus carpetas
-- proyecto: configuracion básica y de mapas de entrada
-- mundos: estructura base de todos los mundos
-- mundos: colisión con bordes del mar, static
-- mundos: tiles del suelo segun tiempo
-- entes: estructura de sprites
-- naturales: estructurar decorados y árboles
-- edificios: estructurar edificaciones de vivienda o centros
-- entes: animación de sprites
-- mundos: creación inicial de unidades
-- diplomacia: modos defensivo, explorativo, normal, guerra
 
 # Comportamiento
 

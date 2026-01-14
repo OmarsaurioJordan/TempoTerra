@@ -1,52 +1,27 @@
-extends CharacterBody2D
+extends Ente
 
 const VIDA: int = 200
 const SPEED: float = 300
 const ALIMENTO: int = 20
-const GRUPO: Data.GRUPO = Data.GRUPO.CYBORG
 
 @onready var gui: Node = get_tree().get_nodes_in_group("gui")[0]
-
-var vida: int = VIDA
-var hogar: Node = null
-var municion: int = 0
-var cargador: int = 0 # municion actualmente en el arma
-var especial: int = 0 # municion especial
-var prepunteria: Vector2 = Vector2(0, 0) # direccion de disparo pre ajustada
-
 var area_tab: Array = []
 var linea: Line2D = null
 
-# para golpes
-var cuerpos_golpeables: Array = []
-var retroceso: Vector2 = Vector2(0, 0)
+# metodos generales
 
 func _ready() -> void:
+	modo_lucha_manual = true
+	vida = VIDA
 	$Imagen/Charlita.visible = false
 	call_deferred("set_camara_mundo")
 	gui.get_node("Informacion").visible = false
 	gui.get_node("Datos").visible = false
 
 func initialize(_grp=0, _csa=null) -> void:
-	$Imagen.initialize_obrera(GRUPO)
-	$Imagen.initialize_warrior(GRUPO)
-
-func get_grupo() -> Data.GRUPO:
-	return GRUPO
-
-func get_hogar_grupo() -> Data.GRUPO:
-	if hogar != null:
-		return hogar.grupo
-	return Data.GRUPO.SOLO
-
-func is_mele() -> bool:
-	return $Imagen/Arma.visible
-
-func get_dist_tech() -> int:
-	return Data.distancia_to_tech($Imagen/Distancia.frame)
-
-func get_archienemigo_grupo() -> Data.GRUPO:
-	return Data.GRUPO.SOLO
+	grupo = Data.GRUPO.CYBORG
+	$Imagen.initialize_obrera(grupo)
+	$Imagen.initialize_warrior(grupo)
 
 func alimentar() -> void:
 	vida = min(vida + ALIMENTO, VIDA)
@@ -67,14 +42,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity = Vector2(0, 0)
 	# hacer movimiento aplicando retroceso por golpes
-	if retroceso.length() > 10:
-		retroceso *= 0.95
-		var ant = velocity
-		velocity += retroceso
-		move_and_slide()
-		velocity = ant
-	else:
-		move_and_slide()
+	move_empuje()
 	# posicionar el mouse
 	for mou in get_tree().get_nodes_in_group("mouses"):
 		mou.global_position = get_global_mouse_position()
@@ -102,6 +70,8 @@ func _physics_process(_delta: float) -> void:
 				$Imagen/Anima.play("shot")
 				$TimPausa.start(0.5)
 				cargador -= 1
+
+# metodos para viajar en el tiempo
 
 func set_camara_mundo() -> void:
 	var lim: Node = get_parent().get_parent().get_node("Limites")
@@ -146,6 +116,8 @@ func set_tiempo(nombre_mundo: String) -> void:
 		position = pos
 		call_deferred("set_camara_mundo")
 
+# automaticos para detecciones especiales
+
 func _on_area_tab_area_entered(area: Area2D) -> void:
 	if not area in area_tab:
 		area_tab.append(area)
@@ -154,44 +126,3 @@ func _on_area_tab_area_entered(area: Area2D) -> void:
 func _on_area_tab_area_exited(area: Area2D) -> void:
 	area_tab.erase(area)
 	$Imagen/Charlita.visible = not area_tab.is_empty()
-
-func _on_tim_shot_go_timeout() -> void:
-	if is_mele():
-		pass
-	else:
-		var dir = global_position.direction_to(get_global_mouse_position())
-		Data.crea_proyectil(self, dir, get_dist_tech())
-
-func hit_proyectil(ind_tech: int, dir_empuje: Vector2) -> void:
-	retroceso = dir_empuje * Data.RETROCESO * 0.5
-	$Imagen/Hit.play("hit")
-	# Tarea hacer esto bien
-	vida -= 10
-	if vida <= 0:
-		pass#queue_free()
-
-func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
-	retroceso = dir_empuje * Data.RETROCESO
-	$Imagen/Hit.play("hit")
-	# Tarea hacer esto bien
-	vida -= 20
-	if vida <= 0:
-		pass#queue_free()
-
-func _on_tim_shot_cargador_timeout() -> void:
-	var tech = get_dist_tech()
-	while cargador < Data.CARGADOR[tech] and municion > 0:
-		cargador += 1
-		municion -= 1
-	$Imagen/Anima.play("RESET")
-	if municion + cargador <= 1:
-		$Imagen/Municion.visible = false
-
-func _on_anima_animation_finished(anim_name: StringName) -> void:
-	match anim_name:
-		"shot":
-			if cargador == 0 and municion > 0:
-				$Shots/TimShotCargador.start(Data.RECARGAS[get_dist_tech()])
-				$Imagen/Anima.play("recharge")
-			elif municion + cargador == 0 and $Imagen/Distancia.frame != 4: # arco
-				$Imagen.set_mele()

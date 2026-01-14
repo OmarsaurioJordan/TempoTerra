@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dat4ol8uaol42"]
+[gd_scene load_steps=9 format=3 uid="uid://dat4ol8uaol42"]
 
 [ext_resource type="Script" uid="uid://b2267eed44kvw" path="res://Scripts/Objetos/base.gd" id="1_lbypb"]
 [ext_resource type="Texture2D" uid="uid://bl3aemo8lkro1" path="res://Sprites/General/d_base_strip22.png" id="2_lbypb"]
+[ext_resource type="Texture2D" uid="uid://cirkjvs0fqm6" path="res://Sprites/Entes/d_charla.png" id="3_d0dy4"]
+[ext_resource type="FontFile" uid="uid://dfhfupgu7dfr2" path="res://Sprites/General/comic_sana.ttf" id="4_fqbfc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gn6y3"]
 radius = 134.0
@@ -11,6 +13,8 @@ radius = 166.883
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bco7i"]
 radius = 134.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hibkl"]
 
 [node name="Base" type="StaticBody2D" groups=["bases", "buildings"]]
 collision_layer = 2
@@ -50,6 +54,31 @@ scale = Vector2(1.3, 1.3)
 texture = ExtResource("2_lbypb")
 hframes = 22
 frame = 7
+metadata/_edit_lock_ = true
+
+[node name="Charla" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.713726)
+position = Vector2(2, 2)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_d0dy4")
+offset = Vector2(8, -130)
+metadata/_edit_lock_ = true
+
+[node name="Texto" type="Label" parent="Charla"]
+offset_left = -223.0
+offset_top = -267.0
+offset_right = 233.0
+offset_bottom = -44.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("4_fqbfc")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hibkl")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
 metadata/_edit_lock_ = true
 
 [node name="TimEstadisticas" type="Timer" parent="."]

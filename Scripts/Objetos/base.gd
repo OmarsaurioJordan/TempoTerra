@@ -17,8 +17,8 @@ var estadistica = {
 }
 
 func _ready() -> void:
+	$Charla.visible = true
 	$Imagen.frame = grupo
-	call_deferred("set_casas")
 
 func get_grupo() -> Data.GRUPO:
 	return grupo
@@ -34,13 +34,12 @@ func get_archienemigos() -> Data.GRUPO:
 func get_diplomacia() -> Data.DIPLOMACIA:
 	return diplomacia
 
-func set_casas() -> void:
+func _on_tim_estadisticas_timeout() -> void:
+	$TimEstadisticas.start(randf_range(3, 4))
+	estadistica["casas"] = 0
 	for cas in get_tree().get_nodes_in_group("casas"):
 		if cas.get_grupo() == grupo:
 			estadistica["casas"] += 1
-
-func _on_tim_estadisticas_timeout() -> void:
-	$TimEstadisticas.start(randf_range(3, 4))
 	var era = Data.grupo_to_era(grupo)
 	estadistica["obreras"] = 0
 	estadistica["capturadas"] = 0
@@ -64,6 +63,27 @@ func _on_tim_estadisticas_timeout() -> void:
 				estadistica["aliados"] += 1
 			else:
 				estadistica["refuerzos"] += 1
+	# para debug
+	$Charla/Texto.text = get_info()
+
+func get_info() -> String:
+	var t = "INFO (" + str(int(position.x)) + "," + str(int(position.y)) + ")\nmision: "
+	if mision == null:
+		t += "null"
+	else:
+		t += str(int(mision.position.x)) + "," + str(int(mision.position.y))
+	t += "\nenemy_base: "
+	if enemy_base == null:
+		t += "null"
+	else:
+		t += str(int(enemy_base.position.x)) + "," + str(int(enemy_base.position.y))
+	t += "\ncasas: " + str(estadistica["casas"])
+	t += " - diplomacia: " + str(diplomacia)
+	t += "\nobreras: " + str(estadistica["obreras"] +\
+		estadistica["capturadas"] + estadistica["visitas"])
+	t += " - warriors: " + str(estadistica["warriors"] +\
+		estadistica["aliados"] + estadistica["refuerzos"])
+	return t
 
 func set_diplomacia(new_orden: Data.DIPLOMACIA, force_mision: Node = null,
 		force_enemy_base: Node = null) -> void:
@@ -99,6 +119,9 @@ func reset_warriors() -> void:
 	for wa in warriors:
 		wa.base_cambia_diplomacia(self)
 
+func con_obreras() -> bool:
+	return estadistica["obreras"] + estadistica["capturadas"] + estadistica["visitas"] > 0
+
 func get_fuerza() -> float:
 	var tot = estadistica["warriors"] + estadistica["aliados"] + estadistica["refuerzos"]
 	return tot / float(max(1, estadistica["casas"] * 3))
@@ -118,18 +141,21 @@ func _on_tim_automatic_timeout() -> void:
 		if diplomacia == Data.DIPLOMACIA.GUERRA:
 			var otro_debil = false
 			if enemy_base != null:
-				otro_debil = enemy_base.get_fuerza() < 0.2
-			if fuerza < 0.6 or otro_debil:
+				if con_obreras():
+					otro_debil = enemy_base.get_fuerza() < 0.2
+				elif not enemy_base.con_obreras():
+					otro_debil = true
+			if (fuerza < 0.6 and con_obreras()) or otro_debil:
 				set_diplomacia(Data.DIPLOMACIA.NORMAL)
 		elif diplomacia == Data.DIPLOMACIA.ATAQUE:
-			if fuerza < 0.7:
+			if fuerza < 0.7 and con_obreras():
 				set_diplomacia(Data.DIPLOMACIA.NORMAL)
 		else:
 			var rnd = [Data.DIPLOMACIA.NORMAL, Data.DIPLOMACIA.EXPLORA, diplomacia]
-			if fuerza >= 1:
+			if fuerza >= 1 or not con_obreras():
 				rnd = [Data.DIPLOMACIA.GUERRA, Data.DIPLOMACIA.ATAQUE, diplomacia]
 			set_diplomacia(rnd.pick_random())
-	elif meatakan.size() > 1 or fuerza < 0.6:
+	elif (meatakan.size() > 1 or fuerza < 0.6) and con_obreras():
 		set_diplomacia(Data.DIPLOMACIA.DEFENSA)
 	else:
 		set_diplomacia(Data.DIPLOMACIA.GUERRA, meatakan[0])

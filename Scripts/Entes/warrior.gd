@@ -1,86 +1,24 @@
-extends CharacterBody2D
+extends Ente
 
 const VIDA: int = 150 # cantidad de puntos de impacto
 const SPEED: float = 150 # velocidad de desplazamiento
 const ALIMENTO: int = 20 # en cuanto aumenta su vida al ser alimentado
 const VISION: float = 1000 # rango de vision para otros entes o cosas
 
-enum ESTADO { LIBRE, SEGUIR, EXPLORAR, CONQUISTAR, RECARGAR, MISION }
-enum POSTURA { HOGAR, EXTRA, SOBRA }
-
-var estado: ESTADO = ESTADO.LIBRE
-var grupo: Data.GRUPO = Data.GRUPO.SOLO
-var hogar: Node = null
-var vida: int = VIDA
-var municion: int = 0
-var cargador: int = 0 # municion actualmente en el arma
-var especial: int = 0 # municion especial
-var mision: Node = null # la base, calle o casa a la cual atacar o defender
-var archienemigos: Data.GRUPO = Data.GRUPO.SOLO # la mision a que grupo enemigo apunta
-var enemigo: Node = null # a quien tiene en mira para atacar
-var seguimiento: Vector2 = Vector2(0, 0) # ultima vez que vio a enemigo
-var prepunteria: Vector2 = Vector2(0, 0) # direccion de disparo pre ajustada
-
-# para navegacion, puede ser perseguir cualquier tipo de nodo
-var meta: Vector2 = Vector2(0, 0) # punto al que se desea llegar
-var objetivo: Node = null # nodo al que se desea llegar
-var next_calle: Node = null # proxima calle para llegar a la final
-var obj_calle: Node = null # calle final que conecta con objetivo
-var mover_errar: bool = false # para saber si esta en ciclo de movimiento
-var huida_giro: float = 0 # para esquivar al huir
-var dir_baile_rebote: Vector2 = Vector2(0, 0) # para moverse en la zona de pelea
-
-# para golpes
-var cuerpos_golpeables: Array = []
-var retroceso: Vector2 = Vector2(0, 0)
+# metodos generales
 
 func initialize(el_grupo: Data.GRUPO, casa: Node) -> void:
+	vida = VIDA
 	grupo = el_grupo
 	hogar = casa
 	$Imagen.initialize_warrior(grupo)
 	set_estado(ESTADO.LIBRE)
 
-func get_hogar() -> Node:
-	return hogar
+func alimentar() -> void:
+	vida = min(vida + ALIMENTO, VIDA)
 
-func get_hogar_grupo() -> Data.GRUPO:
-	if hogar != null:
-		return hogar.grupo
-	return Data.GRUPO.SOLO
-
-func is_hogar_grupo() -> bool:
-	return get_hogar_grupo() != Data.GRUPO.SOLO
-
-func get_grupo() -> Data.GRUPO:
-	return grupo
-
-func get_base() -> Node:
-	if is_hogar_grupo():
-		var bases = get_tree().get_nodes_in_group("bases")
-		var hogar_grupo = get_hogar_grupo()
-		for b in bases:
-			if b.get_grupo() == hogar_grupo:
-				return b
-	return null
-
-func get_postura() -> POSTURA:
-	if hogar != null:
-		var i = hogar.get_postura(self, false)
-		if i <= 0:
-			return POSTURA.HOGAR
-		elif i == 1:
-			return POSTURA.EXTRA
-		return POSTURA.SOBRA
-	return POSTURA.HOGAR
-
-func is_mele() -> bool:
-	return $Imagen/Arma.visible
-
-func get_dist_tech() -> int:
-	return Data.distancia_to_tech($Imagen/Distancia.frame)
-
-func get_archienemigo_grupo() -> Data.GRUPO:
-	return archienemigos
+func is_alimentable() -> bool:
+	return vida < VIDA
 
 func _physics_process(_delta: float) -> void:
 	var bueno_dale = true
@@ -90,7 +28,7 @@ func _physics_process(_delta: float) -> void:
 			match estado:
 				ESTADO.LIBRE, ESTADO.EXPLORAR, ESTADO.MISION:
 					bueno_dale = false
-					est_bailewar()
+					est_bailewar(is_mele(), VISION, SPEED)
 				ESTADO.RECARGAR:
 					bueno_dale = false
 					est_recargar()
@@ -124,130 +62,14 @@ func _physics_process(_delta: float) -> void:
 		else:
 			velocity = Vector2(0, 0)
 	# hacer movimiento aplicando retroceso por golpes
-	if retroceso.length() > 10:
-		retroceso *= 0.95
-		var ant = velocity
-		velocity += retroceso
-		move_and_slide()
-		velocity = ant
-	else:
-		move_and_slide()
+	move_empuje()
 	# atacar al enemigo si existe en mira
 	atacar()
-
-func ver_enemigo() -> void:
-	# aliens, monstruos, warriors+players, drons, robots, obreras
-	if not enemigo_de_grupo("aliens", false, false):
-		if not enemigo_de_grupo("monstruos", false, false):
-			if not enemigo_de_grupo("warrioplayers", true, true):
-				if not enemigo_de_grupo("drones", true, false):
-					if not enemigo_de_grupo("robots", true, false):
-						enemigo_de_grupo("obreras", true, false) # Tarea obrera es caso especial
-
-func enemigo_de_grupo(grupo_str: String, test_hogar_grupo: bool,
-		is_warrior_vs_warrior: bool) -> bool:
-	var entes = get_tree().get_nodes_in_group(grupo_str)
-	var visto = Data.get_nearest_enemy(self, entes, VISION, test_hogar_grupo, is_warrior_vs_warrior)
-	if visto != null:
-		enemigo = visto
-		return true
-	return false
-
-func est_bailewar() -> void:
-	# funcion llamada solo si enemigo ha sido verificado
-	# moverse bailando cerca a enemigo
-	if is_mele():
-		if not $Shots/TimShotMele.is_stopped() and $Shots/TimShotGo.is_stopped():
-			Data.seguir_punto(self, enemigo.global_position, 150, 100)
-		else:
-			Data.seguir_punto(self, enemigo.global_position, 10, 0)
-	elif not $Shots/TimShotCargador.is_stopped():
-		Data.seguir_punto(self, enemigo.global_position, VISION * 0.9, VISION * 0.8)
-	elif not $Shots/TimShotDistance.is_stopped():
-		Data.seguir_punto(self, enemigo.global_position, VISION * 0.7, VISION * 0.5)
-	else:
-		Data.seguir_punto(self, enemigo.global_position, VISION * 0.6, VISION * 0.4)
-	if velocity.is_zero_approx():
-		velocity = dir_baile_rebote * SPEED
-	else:
-		dir_baile_rebote = Vector2(1, 0).rotated(randf() * 2.0 * PI)
-
-func atacar() -> void:
-	# funcion llamada solo si enemigo ha sido verificado
-	# verificar que existe alguien a quien atacar
-	if enemigo == null or not $Shots/TimShotGo.is_stopped():
-		return
-	# verificar si lo alcanza a ver
-	if Data.go_estocastico():
-		if enemigo.global_position.distance_to(global_position) > VISION:
-			enemigo = null
-			return
-		$RayEntes.target_position = enemigo.global_position - global_position
-		$RayEntes.force_raycast_update()
-		if $RayEntes.is_colliding():
-			enemigo = null
-			return
-	# hacer el intento de ataque principal
-	if is_mele():
-		if $Shots/TimShotMele.is_stopped():
-			for bdy in cuerpos_golpeables:
-				if bdy == enemigo:
-					$Shots/TimShotGo.start()
-					$Shots/TimShotMele.start(Data.AGILIDAD[get_dist_tech()])
-					$Imagen/Anima.play("hit")
-	elif municion + cargador > 0:
-		if cargador == 0 and $Shots/TimShotCargador.is_stopped():
-			$Shots/TimShotCargador.start(Data.RECARGAS[get_dist_tech()])
-			$Imagen/Anima.play("recharge")
-		elif $Shots/TimShotDistance.is_stopped() and $Shots/TimShotCargador.is_stopped():
-			$Shots/TimShotGo.start()
-			$Shots/TimShotDistance.start(Data.CADENCIA[get_dist_tech()])
-			$Imagen/Anima.play("shot")
-			$TimPausa.start(0.5)
-			prepunteria = global_position.direction_to(enemigo.global_position)
-			cargador -= 1
-
-func errar() -> void:
-	if mover_errar:
-		if meta.is_zero_approx():
-			var solidos = get_tree().get_nodes_in_group("buildings")
-			var pp = global_position + Vector2(randf() * VISION, 0).rotated(randf() * 2 * PI)
-			if is_hogar_grupo():
-				var mis_edif = []
-				var mi_grupo = get_hogar_grupo()
-				for sol in solidos:
-					if sol.get_grupo() == mi_grupo:
-						mis_edif.append(sol)
-				if not mis_edif.is_empty():
-					pp = mis_edif.pick_random().global_position +\
-						Vector2(randf() * VISION, 0).rotated(randf() * 2 * PI)
-			if Data.is_punto_free(self, pp, solidos):
-				meta = pp
-		elif Data.mover_hacia_punto(self, meta, 75) == Data.RES_MOVE.LLEGO:
-			# llego al punto dado
-			meta = Vector2(0, 0)
-	elif global_position.distance_to(meta) > VISION * 2 and not meta.is_zero_approx():
-		Data.mover_hacia_punto(self, meta, 75)
-	else:
-		velocity = Vector2(0, 0)
-
-func alimentar() -> void:
-	vida = min(vida + ALIMENTO, VIDA)
-
-func is_alimentable() -> bool:
-	return vida < VIDA
-
-func is_libre() -> bool:
-	return estado == ESTADO.LIBRE
 
 func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 	estado = new_estado
 	archienemigos = Data.GRUPO.SOLO
-	objetivo = null
-	next_calle = null
-	meta = Vector2(0, 0)
-	velocity = Vector2(0, 0)
-	$TimEstado.stop()
+	reset_cosas()
 	match estado:
 		ESTADO.LIBRE:
 			$TimEstado.start(randf_range(3, 6))
@@ -286,12 +108,16 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 				else:
 					archienemigos = base.get_archienemigos()
 
+# estados
+
 func est_libre() -> void:
-	errar()
+	errar(VISION)
 	if $TimEstado.is_stopped():
 		var base = get_base()
 		if base != null:
-			var pos = get_postura()
+			var pos = POSTURA.SOBRA
+			if base.con_obreras():
+				pos = get_postura()
 			match base.get_diplomacia():
 				Data.DIPLOMACIA.NORMAL:
 					if pos == POSTURA.SOBRA:
@@ -335,7 +161,7 @@ func est_explorar() -> void:
 		$TimPausa.start(randf_range(1, 3))
 		set_estado(ESTADO.LIBRE)
 	else:
-		errar()
+		errar(VISION)
 
 func est_conquistar() -> void:
 	pass
@@ -359,83 +185,55 @@ func est_mision() -> void:
 	else:
 		velocity = Vector2(0, 0)
 
-func _on_tim_errar_timeout() -> void:
-	$TimErrar.start(randf_range(1, 7))
-	mover_errar = not mover_errar
-	huida_giro = randf_range(-PI * 0.25, PI * 0.25)
+# acciones de lucha
 
-func base_cambia_diplomacia(base: Node) -> void:
-	if base == get_base():
-		set_estado(ESTADO.LIBRE)
+func atacar() -> void:
+	# funcion llamada solo si enemigo ha sido verificado
+	# verificar que existe alguien a quien atacar
+	if enemigo == null or not $Shots/TimShotGo.is_stopped():
+		return
+	# verificar si lo alcanza a ver
+	if Data.go_estocastico():
+		if enemigo.global_position.distance_to(global_position) > VISION:
+			enemigo = null
+			return
+		$RayEntes.target_position = enemigo.global_position - global_position
+		$RayEntes.force_raycast_update()
+		if $RayEntes.is_colliding():
+			enemigo = null
+			return
+	# hacer el intento de ataque principal
+	if is_mele():
+		golpear(enemigo)
+	else:
+		disparar(enemigo.global_position)
+
+# busqueda de objetivos enemigos
+
+func ver_enemigo() -> void:
+	# aliens, monstruos, warriors+players, drons, robots, obreras
+	if not enemigo_de_grupo("aliens", false, false):
+		if not enemigo_de_grupo("monstruos", false, false):
+			if not enemigo_de_grupo("warrioplayers", true, true):
+				if not enemigo_de_grupo("drones", true, false):
+					if not enemigo_de_grupo("robots", true, false):
+						enemigo_de_grupo("obreras", true, false) # Tarea obrera es caso especial
+
+func enemigo_de_grupo(grupo_str: String, test_hogar_grupo: bool,
+		is_warrior_vs_warrior: bool) -> bool:
+	var entes = get_tree().get_nodes_in_group(grupo_str)
+	var visto = Data.get_nearest_enemy(self, entes, VISION, test_hogar_grupo, is_warrior_vs_warrior)
+	if visto != null:
+		enemigo = visto
+		return true
+	return false
 
 func _on_tim_ver_timeout() -> void:
 	$TimVer.start(randf_range(2, 4))
 	ver_enemigo()
 
-func _on_tim_shot_go_timeout() -> void:
-	if is_mele():
-		for bdy in cuerpos_golpeables:
-			if bdy == enemigo:
-				bdy.hit_mele(Data.distancia_to_tech($Imagen/Distancia.frame),
-					global_position.direction_to(bdy.global_position))
-	else:
-		Data.crea_proyectil(self, prepunteria, get_dist_tech())
+# metodo especialmente para warrior, para hacer cambios masivos
 
-func hit_proyectil(ind_tech: int, dir_empuje: Vector2) -> void:
-	retroceso = dir_empuje * Data.RETROCESO * 0.5
-	$Imagen/Hit.play("hit")
-	# Tarea hacer esto bien
-	vida -= 10
-	if vida <= 0:
-		queue_free()
-
-func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
-	retroceso = dir_empuje * Data.RETROCESO
-	$Imagen/Hit.play("hit")
-	# Tarea hacer esto bien
-	vida -= 20
-	if vida <= 0:
-		queue_free()
-
-func _on_tim_shot_cargador_timeout() -> void:
-	var tech = get_dist_tech()
-	while cargador < Data.CARGADOR[tech] and municion > 0:
-		cargador += 1
-		municion -= 1
-	$Imagen/Anima.play("RESET")
-	if municion + cargador <= 1:
-		$Imagen/Municion.visible = false
-
-func _on_anima_animation_finished(anim_name: StringName) -> void:
-	match anim_name:
-		"shot":
-			if cargador == 0 and municion > 0:
-				$Shots/TimShotCargador.start(Data.RECARGAS[get_dist_tech()])
-				$Imagen/Anima.play("recharge")
-			elif municion + cargador == 0 and $Imagen/Distancia.frame != 4: # arco
-				$Imagen.set_mele()
-
-func _on_ataque_body_entered(body: Node2D) -> void:
-	if body == self:
-		return
-	if not body in cuerpos_golpeables:
-		cuerpos_golpeables.append(body)
-
-func _on_ataque_body_exited(body: Node2D) -> void:
-	cuerpos_golpeables.erase(body)
-
-func _on_tim_reubicar_timeout() -> void:
-	$TimReubicar.start(randf_range(10, 15))
-	if get_postura() == POSTURA.SOBRA:
-		var casas = get_tree().get_nodes_in_group("casas")
-		var hogar_grupo = get_hogar_grupo()
-		var posibles = [[], [], []]
-		for ca in casas:
-			if ca.get_grupo() == hogar_grupo:
-				var tot = ca.get_total(false)
-				if tot < 3:
-					posibles[tot].append(ca)
-		for pos in posibles:
-			if not pos.is_empty():
-				hogar = pos.pick_random()
-				break
+func base_cambia_diplomacia(base: Node) -> void:
+	if base == get_base():
+		set_estado(ESTADO.LIBRE)

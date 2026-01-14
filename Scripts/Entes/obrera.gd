@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Ente
 
 const WARRIOR = preload("res://Scenes/Entes/warrior.tscn")
 const OBRERA = preload("res://Scenes/Entes/obrera.tscn")
@@ -11,54 +11,24 @@ const SPEED: float = 100 # velocidad de desplazamiento
 const ALIMENTO: int = 10 # en cuanto aumenta su vida al ser alimentado
 const INCUBACION: float = 60 # tiempo para crear nuevo individuo
 
-enum ESTADO { LIBRE, CHARLANDO, REPRODUCCION, RECOLECCION, ALIMENTACION, SEGUIR }
-enum POSTURA { HOGAR, EXTRA, SOBRA }
-
-var estado: ESTADO = ESTADO.LIBRE
-var grupo: Data.GRUPO = Data.GRUPO.SOLO
-var hogar: Node = null
-var vida: int = int(VIDA / 2)
-
-# para navegacion, puede ser perseguir cualquier tipo de nodo
-var meta: Vector2 = Vector2(0, 0) # punto al que se desea llegar
-var objetivo: Node = null # nodo al que se desea llegar
-var next_calle: Node = null # proxima calle para llegar a la final
-var obj_calle: Node = null # calle final que conecta con objetivo
-var mover_errar: bool = false # para saber si esta en ciclo de movimiento
-var huida_giro: float = 0 # para esquivar al huir
-
-# para golpes
-var retroceso: Vector2 = Vector2(0, 0)
+# metodos generales
 
 func initialize(el_grupo: Data.GRUPO, casa: Node) -> void:
+	is_obrera = true
+	vida = int(VIDA / 2)
 	grupo = el_grupo
 	hogar = casa
 	$Imagen.initialize_obrera(grupo)
 	set_estado(ESTADO.LIBRE)
 
-func get_hogar() -> Node:
-	return hogar
+func alimentar() -> void:
+	vida = min(vida + ALIMENTO, VIDA)
+	if vida == VIDA:
+		vida = int(VIDA / 2)
+		set_estado(ESTADO.REPRODUCCION)
 
-func get_hogar_grupo() -> Data.GRUPO:
-	if hogar != null:
-		return hogar.grupo
-	return Data.GRUPO.SOLO
-
-func is_hogar_grupo() -> bool:
-	return get_hogar_grupo() != Data.GRUPO.SOLO
-
-func get_grupo() -> Data.GRUPO:
-	return grupo
-
-func get_postura() -> POSTURA:
-	if hogar != null:
-		var i = hogar.get_postura(self, true)
-		if i <= 0:
-			return POSTURA.HOGAR
-		elif i == 1:
-			return POSTURA.EXTRA
-		return POSTURA.SOBRA
-	return POSTURA.HOGAR
+func is_alimentable() -> bool:
+	return vida < VIDA / 2
 
 func _physics_process(_delta: float) -> void:
 	if $TimPausa.is_stopped():
@@ -78,60 +48,15 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity = Vector2(0, 0)
 	# hacer movimiento aplicando retroceso por golpes
-	if retroceso.length() > 10:
-		retroceso *= 0.95
-		var ant = velocity
-		velocity += retroceso
-		move_and_slide()
-		velocity = ant
-	else:
-		move_and_slide()
-
-func errar() -> void:
-	if mover_errar:
-		if meta.is_zero_approx():
-			var solidos = get_tree().get_nodes_in_group("buildings")
-			var pp = global_position + Vector2(randf() * VISION, 0).rotated(randf() * 2 * PI)
-			if is_hogar_grupo():
-				var mis_edif = []
-				var mi_grupo = get_hogar_grupo()
-				for sol in solidos:
-					if sol.get_grupo() == mi_grupo:
-						mis_edif.append(sol)
-				if not mis_edif.is_empty():
-					pp = mis_edif.pick_random().global_position +\
-						Vector2(randf() * VISION, 0).rotated(randf() * 2 * PI)
-			if Data.is_punto_free(self, pp, solidos):
-				meta = pp
-		elif Data.mover_hacia_punto(self, meta, 75) == Data.RES_MOVE.LLEGO:
-			# llego al punto dado
-			meta = Vector2(0, 0)
-	else:
-		velocity = Vector2(0, 0)
-
-func alimentar() -> void:
-	vida = min(vida + ALIMENTO, VIDA)
-	if vida == VIDA:
-		vida = int(VIDA / 2)
-		set_estado(ESTADO.REPRODUCCION)
-
-func is_alimentable() -> bool:
-	return vida < VIDA / 2
-
-func is_libre() -> bool:
-	return estado == ESTADO.LIBRE
+	move_empuje()
 
 func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 	estado = new_estado
-	objetivo = null
-	next_calle = null
-	meta = Vector2(0, 0)
-	velocity = Vector2(0, 0)
+	reset_cosas()
 	$Imagen/Bolsa.visible = false
 	$Imagen/Alimento.visible = false
 	$Imagen/Huevo.visible = false
 	$Imagen/Charlita.visible = false
-	$TimEstado.stop()
 	match estado:
 		ESTADO.LIBRE:
 			$TimEstado.start(randf_range(3, 6))
@@ -169,8 +94,10 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 			else:
 				objetivo = ext_info
 
+# estados
+
 func est_libre() -> void:
-	errar()
+	errar(VISION)
 	if $TimEstado.is_stopped():
 		var p = randf()
 		if p < 0.5:
@@ -238,7 +165,7 @@ func est_charlando() -> void:
 		set_estado(ESTADO.LIBRE)
 
 func est_reproduccion() -> void:
-	errar()
+	errar(VISION)
 	if $TimEstado.is_stopped():
 		if is_hogar_grupo():
 			var aux: Node
@@ -265,7 +192,7 @@ func est_alimentacion() -> void:
 				set_estado(ESTADO.LIBRE)
 			objetivo = null
 	else:
-		errar()
+		errar(VISION)
 		# cada tanto buscar aliado que requiera ayuda
 		if is_hogar_grupo():
 			if Data.go_estocastico():
@@ -288,40 +215,3 @@ func est_seguir() -> void:
 			if Data.go_estocastico():
 				if false: # Tarea ver aliados cercanos u objetivo desinteresado o player
 					set_estado(ESTADO.LIBRE)
-
-func _on_tim_errar_timeout() -> void:
-	$TimErrar.start(randf_range(1, 7))
-	mover_errar = not mover_errar
-	huida_giro = randf_range(-PI * 0.25, PI * 0.25)
-
-func hit_proyectil(ind_tech: int, dir_empuje: Vector2) -> void:
-	retroceso = dir_empuje * Data.RETROCESO * 0.5
-	$Imagen/Hit.play("hit")
-	# Tarea hacer esto bien
-	vida -= 10
-	if vida <= 0:
-		queue_free()
-
-func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
-	retroceso = dir_empuje * Data.RETROCESO
-	$Imagen/Hit.play("hit")
-	# Tarea hacer esto bien
-	vida -= 20
-	if vida <= 0:
-		queue_free()
-
-func _on_tim_reubicar_timeout() -> void:
-	$TimReubicar.start(randf_range(10, 15))
-	if get_postura() == POSTURA.SOBRA:
-		var casas = get_tree().get_nodes_in_group("casas")
-		var hogar_grupo = get_hogar_grupo()
-		var posibles = [[], [], []]
-		for ca in casas:
-			if ca.get_grupo() == hogar_grupo:
-				var tot = ca.get_total(true)
-				if tot < 3:
-					posibles[tot].append(ca)
-		for i in posibles:
-			if not posibles[i].is_empty():
-				hogar = posibles[i].pick_random()
-				break

@@ -497,13 +497,13 @@ autostart = true
 [node name="TimEstado" type="Timer" parent="."]
 one_shot = true
 
-[node name="TimVer" type="Timer" parent="."]
-wait_time = 4.0
+[node name="TimReubicar" type="Timer" parent="."]
+wait_time = 10.0
 one_shot = true
 autostart = true
 
-[node name="TimReubicar" type="Timer" parent="."]
-wait_time = 10.0
+[node name="TimVer" type="Timer" parent="."]
+wait_time = 4.0
 one_shot = true
 autostart = true
 
@@ -529,7 +529,7 @@ one_shot = true
 [connection signal="body_exited" from="Ataque" to="." method="_on_ataque_body_exited"]
 [connection signal="animation_finished" from="Imagen/Anima" to="." method="_on_anima_animation_finished"]
 [connection signal="timeout" from="TimErrar" to="." method="_on_tim_errar_timeout"]
-[connection signal="timeout" from="TimVer" to="." method="_on_tim_ver_timeout"]
 [connection signal="timeout" from="TimReubicar" to="." method="_on_tim_reubicar_timeout"]
+[connection signal="timeout" from="TimVer" to="." method="_on_tim_ver_timeout"]
 [connection signal="timeout" from="Shots/TimShotCargador" to="." method="_on_tim_shot_cargador_timeout"]
 [connection signal="timeout" from="Shots/TimShotGo" to="." method="_on_tim_shot_go_timeout"]
