@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://cslp7mi0dfusl"]
+[gd_scene load_steps=22 format=4 uid="uid://cslp7mi0dfusl"]
 
 [ext_resource type="Texture2D" uid="uid://8c3tyk7afpv4" path="res://Sprites/General/d_mar.png" id="1_wj4dl"]
 [ext_resource type="Texture2D" uid="uid://b1cktowpx74r7" path="res://Sprites/General/d_mapa_strip8.png" id="2_hy7yq"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://w3oym53yjgcn" path="res://Sprites/General/d_suelo_ext_strip3.png" id="4_cvcb8"]
 [ext_resource type="PackedScene" uid="uid://cvign1huifj07" path="res://Scenes/Componentes/limites.tscn" id="5_hy7yq"]
 [ext_resource type="PackedScene" uid="uid://cn553qjo8k2nf" path="res://Scenes/Objetos/arbol_b.tscn" id="6_272g7"]
+[ext_resource type="PackedScene" uid="uid://dat4ol8uaol42" path="res://Scenes/Objetos/base.tscn" id="6_d6m8d"]
 [ext_resource type="PackedScene" uid="uid://su6ayp63vrdr" path="res://Scenes/Objetos/arbol_g.tscn" id="7_70pio"]
+[ext_resource type="PackedScene" uid="uid://d3nxgn1p73mvb" path="res://Scenes/Objetos/casa.tscn" id="7_hwwrt"]
 [ext_resource type="PackedScene" uid="uid://c1bohamuuh1kk" path="res://Scenes/Objetos/arbol_r.tscn" id="8_d6m8d"]
 [ext_resource type="PackedScene" uid="uid://caqc1vx66snui" path="res://Scenes/Objetos/arbusto_b.tscn" id="9_hwwrt"]
 [ext_resource type="PackedScene" uid="uid://cjddeeq2p3720" path="res://Scenes/Objetos/arbusto_g.tscn" id="10_1eisg"]
@@ -80,6 +82,19 @@ metadata/_edit_lock_ = true
 y_sort_enabled = true
 metadata/_edit_lock_ = true
 
+[node name="Base1" parent="Objetos" instance=ExtResource("6_d6m8d")]
+position = Vector2(4663, 5117)
+grupo = 0
+
+[node name="Casa1" parent="Objetos" instance=ExtResource("7_hwwrt")]
+position = Vector2(5020, 5458)
+
+[node name="Casa3" parent="Objetos" instance=ExtResource("7_hwwrt")]
+position = Vector2(5094, 5095)
+
+[node name="Casa2" parent="Objetos" instance=ExtResource("7_hwwrt")]
+position = Vector2(4252, 4941)
+
 [node name="Arbol1" parent="Objetos" instance=ExtResource("6_272g7")]
 position = Vector2(696.5, 359.25)
 
@@ -111,4 +126,28 @@ position = Vector2(597.5, 467.25)
 position = Vector2(719.5, 458.25)
 
 [node name="Maiz1" parent="Objetos" instance=ExtResource("16_kbu2s")]
-position = Vector2(822.908, 457.432)
+position = Vector2(4301, 6612)
+
+[node name="Maiz2" parent="Objetos" instance=ExtResource("16_kbu2s")]
+position = Vector2(5653, 7022)
+
+[node name="Maiz3" parent="Objetos" instance=ExtResource("16_kbu2s")]
+position = Vector2(6705, 4508)
+
+[node name="Maiz4" parent="Objetos" instance=ExtResource("16_kbu2s")]
+position = Vector2(5541, 5496)
+
+[node name="Maiz5" parent="Objetos" instance=ExtResource("16_kbu2s")]
+position = Vector2(4638, 6826)
+
+[node name="Maiz6" parent="Objetos" instance=ExtResource("16_kbu2s")]
+position = Vector2(6085, 3441)
+
+[node name="Maiz7" parent="Objetos" instance=ExtResource("16_kbu2s")]
+position = Vector2(5992, 6766)
+
+[node name="Maiz8" parent="Objetos" instance=ExtResource("16_kbu2s")]
+position = Vector2(9174, 6402)
+
+[node name="Maiz9" parent="Objetos" instance=ExtResource("16_kbu2s")]
+position = Vector2(1179, 5945)

@@ -11,7 +11,7 @@ var linea: Line2D = null
 # metodos generales
 
 func _ready() -> void:
-	modo_lucha_manual = true
+	is_player = true
 	vida = VIDA
 	$Imagen/Charlita.visible = false
 	call_deferred("set_camara_mundo")
@@ -20,7 +20,6 @@ func _ready() -> void:
 
 func initialize(_grp=0, _csa=null) -> void:
 	grupo = Data.GRUPO.CYBORG
-	$Imagen.initialize_obrera(grupo)
 	$Imagen.initialize_warrior(grupo)
 
 func alimentar() -> void:

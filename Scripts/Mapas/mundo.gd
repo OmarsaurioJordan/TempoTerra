@@ -17,3 +17,11 @@ func initialize() -> void:
 	for ent in get_tree().get_nodes_in_group("humans"):
 		var near = Data.get_nearest(ent, bases)
 		ent.initialize(near.get_grupo(), Data.get_nearest(ent, casas))
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_clock_max"):
+		if Data.DEBUG:
+			Engine.time_scale = min(Engine.time_scale + 1, 5)
+	elif event.is_action_pressed("ui_clock_min"):
+		if Data.DEBUG:
+			Engine.time_scale = max(Engine.time_scale - 1, 0)

@@ -773,7 +773,7 @@ position = Vector2(8796, 797)
 position = Vector2(8993, 1161)
 
 [node name="Arbol75" parent="Objetos" instance=ExtResource("8_hv8n3")]
-position = Vector2(9342, 1646)
+position = Vector2(9233, 1577)
 
 [node name="Arbol76" parent="Objetos" instance=ExtResource("8_hv8n3")]
 position = Vector2(9751, 1413)
@@ -833,7 +833,7 @@ position = Vector2(9202, 1754)
 position = Vector2(9424, 1835)
 
 [node name="Arbusto272" parent="Objetos" instance=ExtResource("11_p7yoc")]
-position = Vector2(9449, 1577)
+position = Vector2(9380, 1649)
 
 [node name="Arbusto273" parent="Objetos" instance=ExtResource("11_p7yoc")]
 position = Vector2(9717, 1552)

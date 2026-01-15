@@ -17,7 +17,7 @@ var estadistica = {
 }
 
 func _ready() -> void:
-	$Charla.visible = true
+	$Charla.visible = Data.DEBUG
 	$Imagen.frame = grupo
 
 func get_grupo() -> Data.GRUPO:
@@ -63,8 +63,8 @@ func _on_tim_estadisticas_timeout() -> void:
 				estadistica["aliados"] += 1
 			else:
 				estadistica["refuerzos"] += 1
-	# para debug
-	$Charla/Texto.text = get_info()
+	if Data.DEBUG:
+		$Charla/Texto.text = get_info()
 
 func get_info() -> String:
 	var t = "INFO (" + str(int(position.x)) + "," + str(int(position.y)) + ")\nmision: "
@@ -118,6 +118,21 @@ func reset_warriors() -> void:
 	var warriors = get_tree().get_nodes_in_group("warriors")
 	for wa in warriors:
 		wa.base_cambia_diplomacia(self)
+
+func get_total_clase(is_obrera: bool) -> int:
+	# numero total de obreras si es obrera o warriors si es warrior, en su tribu
+	if is_obrera:
+		return estadistica["obreras"] + estadistica["capturadas"] + estadistica["visitas"]
+	return estadistica["warriors"] + estadistica["aliados"] + estadistica["refuerzos"]
+
+func get_decision_clase(is_obrera: bool) -> int:
+	# devuelve 2 si sobran, 0 si faltan, 1 si esta perfecto
+	var tot = get_total_clase(is_obrera)
+	if tot > estadistica["casas"] * 2:
+		return 2
+	elif tot <= estadistica["casas"]:
+		return 0
+	return 1
 
 func con_obreras() -> bool:
 	return estadistica["obreras"] + estadistica["capturadas"] + estadistica["visitas"] > 0

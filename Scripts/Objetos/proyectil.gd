@@ -8,9 +8,13 @@ var grupo: Data.GRUPO = Data.GRUPO.SOLO
 var desvanecer : float = 1
 var direccion: Vector2 = Vector2(0, 0)
 
+func _ready() -> void:
+	set_physics_process(false)
+
 func initialize(new_parent: Node, el_grupo: Data.GRUPO, la_direccion: Vector2,
 		ind_tech: int, posicion: Vector2) -> void:
 	visible = true
+	set_physics_process(true)
 	call_deferred("activar_colision")
 	get_parent().remove_child(self)
 	new_parent.add_child(self)
@@ -19,6 +23,7 @@ func initialize(new_parent: Node, el_grupo: Data.GRUPO, la_direccion: Vector2,
 	desvanecer = 1
 	modulate = Color(1, 1, 1, 1)
 	$Imagen.frame = ind_tech
+	$Imagen.rotation = direccion.angle()
 	$TimFin.start(ALCANCE / SPEED)
 	global_position = posicion
 	match ind_tech:
@@ -39,14 +44,13 @@ func activar_colision() -> void:
 	monitoring = true
 
 func _physics_process(delta: float) -> void:
-	if visible:
-		position += direccion * SPEED * multiplo_speed * delta
-		if $TimFin.is_stopped():
-			desvanecer = max(0, desvanecer - delta)
-			if desvanecer == 0:
-				call_deferred("finalizar")
-			else:
-				modulate = Color(1, 1, 1, desvanecer)
+	position += direccion * SPEED * multiplo_speed * delta
+	if $TimFin.is_stopped():
+		desvanecer = max(0, desvanecer - delta)
+		if desvanecer == 0:
+			call_deferred("finalizar")
+		else:
+			modulate = Color(1, 1, 1, desvanecer)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.get_parent() == get_parent():
@@ -61,3 +65,4 @@ func finalizar() -> void:
 	monitoring = false
 	global_position = Vector2(0, 0)
 	visible = false
+	set_physics_process(false)

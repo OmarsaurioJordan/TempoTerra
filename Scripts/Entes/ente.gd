@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Ente
 
+const DIST_SEGUIR_PLAYER: float = 700
+
 enum POSTURA { HOGAR, EXTRA, SOBRA }
 
 enum ESTADO {
@@ -38,7 +40,7 @@ var dir_baile_rebote: Vector2 = Vector2(0, 0) # para moverse en la zona de pelea
 var cuerpos_golpeables: Array = [] # cuerpos en mira del area de mele
 var retroceso: Vector2 = Vector2(0, 0) # empujar cuando recibe golpes
 var prepunteria: Vector2 = Vector2(0, 0) # posicion de enemigo para disparo pre establecido
-var modo_lucha_manual: bool = false # poner a true para el player
+var is_player: bool = false # para poder manejar cosas manualmente
 var lanzo_explosivo: int = 0 # 0:ninguno, 1:fuego, 2:granada
 
 # para obtener informacion general
@@ -48,6 +50,11 @@ func is_libre() -> bool:
 
 func get_hogar() -> Node:
 	return hogar
+
+func is_in_origen() -> bool:
+	if hogar != null:
+		return hogar.grupo == grupo
+	return false
 
 func get_hogar_grupo() -> Data.GRUPO:
 	if hogar != null:
@@ -78,6 +85,13 @@ func get_base() -> Node:
 			if b.get_grupo() == hogar_grupo:
 				return b
 	return null
+
+func get_decision_clase(is_find_obreras: bool) -> int:
+	# devuelve 2 si sobran, 0 si faltan, 1 si esta perfecto
+	var base = get_base()
+	if base != null:
+		return base.get_decision_clase(is_find_obreras)
+	return 0
 
 # para movimientos
 
@@ -122,27 +136,34 @@ func _on_tim_errar_timeout() -> void:
 
 func hit_proyectil(ind_tech: int, dir_empuje: Vector2) -> void:
 	retroceso = dir_empuje * Data.RETROCESO * 0.5
-	$Imagen/Hit.play("hit")
 	# Tarea hacer esto bien
 	vida -= 10
-	if vida <= 0:
-		queue_free()
+	post_hit()
 
 func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
 	retroceso = dir_empuje * Data.RETROCESO
-	$Imagen/Hit.play("hit")
 	# Tarea hacer esto bien
 	vida -= 20
-	if vida <= 0:
-		queue_free()
+	post_hit()
 
 func hit_explosion(is_granada: bool, dir_empuje: Vector2) -> void:
 	retroceso = dir_empuje * Data.RETROCESO * 0.75
-	$Imagen/Hit.play("hit")
 	# Tarea hacer esto bien
 	vida -= 40
+	post_hit()
+
+func post_hit() -> void:
+	$Imagen/Hit.play("hit")
+	if estado == ESTADO.CONQUISTAR:
+		objetivo = null
 	if vida <= 0:
-		queue_free()
+		death()
+
+func death() -> void:
+	# Tarea limpiar enemigo y seguimiento en todos
+	var deaths = get_tree().get_nodes_in_group("deaths")
+	Data.crea_death(self, deaths)
+	queue_free()
 
 # para hacer cambios generales
 
@@ -150,6 +171,7 @@ func reset_cosas() -> void:
 	objetivo = null
 	next_calle = null
 	meta = Vector2(0, 0)
+	archienemigos = Data.GRUPO.SOLO
 	velocity = Vector2(0, 0)
 	$TimEstado.stop()
 
@@ -253,7 +275,7 @@ func _on_ataque_body_exited(body: Node2D) -> void:
 
 func _on_tim_shot_go_timeout() -> void:
 	if is_mele():
-		if modo_lucha_manual:
+		if is_player:
 			pass # tarea elegir un enemigo digno segun mouse
 		else:
 			for bdy in cuerpos_golpeables:
@@ -264,13 +286,13 @@ func _on_tim_shot_go_timeout() -> void:
 	elif lanzo_explosivo != 0:
 		var explosivos = get_tree().get_nodes_in_group("explosivos")
 		var trayecto = prepunteria - global_position
-		if modo_lucha_manual:
+		if is_player:
 			trayecto = get_global_mouse_position() - global_position
 		Data.crea_explosivo(self, trayecto, lanzo_explosivo == 2, explosivos)
 	else:
 		var proyectiles = get_tree().get_nodes_in_group("proyectiles")
 		var dir = global_position.direction_to(prepunteria) # Tarea agregar azar
-		if modo_lucha_manual:
+		if is_player:
 			dir = global_position.direction_to(get_global_mouse_position())
 		Data.crea_proyectil(self, dir, get_dist_tech(), proyectiles)
 

@@ -155,7 +155,7 @@ func est_charlando() -> void:
 		Data.RES_MOVE.LLEGO:
 			if not $Imagen/Charlita.visible:
 				$Imagen/Charlita.visible = true
-				$TimEstado.start(randf_range(3, 6))
+				$TimEstado.start(randf_range(3, 9))
 		Data.RES_MOVE.FALTA:
 			if Data.go_estocastico():
 				if objetivo.objetivo != self:
@@ -213,5 +213,13 @@ func est_seguir() -> void:
 			set_estado(ESTADO.LIBRE)
 		Data.RES_MOVE.FALTA:
 			if Data.go_estocastico():
-				if false: # Tarea ver aliados cercanos u objetivo desinteresado o player
+				if objetivo.is_player:
+					if objetivo.global_position.distance_to(global_position) > DIST_SEGUIR_PLAYER:
+						set_estado(ESTADO.LIBRE)
+				elif objetivo.estado != ESTADO.CONQUISTAR or objetivo.objetivo != self: # warrior
+					set_estado(ESTADO.LIBRE)
+		Data.RES_MOVE.LLEGO:
+			if not objetivo.is_player: # warrior
+				if Data.mover_hacia_punto(self, objetivo.meta, 150) == Data.RES_MOVE.LLEGO:
+					hogar = objetivo.hogar
 					set_estado(ESTADO.LIBRE)

@@ -1,9 +1,12 @@
 extends Node
 class_name Data
 
+const DEBUG: bool = true
+
 const PROYECTIL = preload("res://Scenes/Objetos/proyectil.tscn")
 const EXPLOSIVO = preload("res://Scenes/Objetos/explosivo.tscn")
 const VAPOR = preload("res://Scenes/Componentes/vapor.tscn")
+const DEATH = preload("res://Scenes/Componentes/death.tscn")
 
 const ESTOCASTICO: float = 0.5 # 0 calculo continuo - 1 extremadamente lento desperdicio loop
 const RADIO_CALLE: float = 40 # para detectar cuando llego a una calle
@@ -132,6 +135,23 @@ static func grupo_to_distancia(grupo: GRUPO) -> Array:
 		GRUPO.CYBORG:
 			return [9, false, 0]
 	return [0, false, 0]
+
+static func distancia_to_tech(ind: int) -> int:
+	# ind es el frame del arma de distancia, no la municion
+	match ind:
+		0:
+			return 0
+		2:
+			return 1
+		4:
+			return 2
+		5, 6:
+			return 3
+		7, 8:
+			return 4
+		9:
+			return 5
+	return 0
 
 # funciones de busqueda espacial
 
@@ -265,6 +285,43 @@ static func get_nearest_enemy(nodo: Node, otros: Array, vision: float = 1000000,
 			if not rayo.is_colliding():
 				vision = d
 				mejor = ot
+	return mejor
+
+static func get_nearest_obreras(nodo: Node, otros: Array, vision: float = 1000000) -> Array:
+	var mundillo = nodo.get_parent()
+	# [a,b,c,d] a: preferente, b: secundaria, c,d: (t:atack f:conq)
+	var mejor: Array = [null, null, false, false]
+	var vista: Array = [vision, vision]
+	var rayo = nodo.get_node("RayEntes")
+	var hogar_grupo = nodo.get_hogar_grupo()
+	var mi_decision = nodo.get_decision_clase(true)
+	var i: int
+	for ot in otros:
+		if ot == nodo:
+			continue
+		if ot.get_parent() != mundillo:
+			continue
+		if ot.get_hogar_grupo() == hogar_grupo:
+			continue
+		var decision = ot.get_decision_clase(true)
+		# devuelve 2 si sobran, 0 si faltan, 1 si esta perfecto
+		var dec = false
+		if mi_decision == 2 and decision == 2:
+			dec = true
+		elif not (mi_decision != 2 and decision != 0):
+			continue
+		var d = ot.global_position.distance_to(nodo.global_position)
+		if dec: # atack prelacion a grupo no autoctono
+			i = 1 if ot.is_in_origen() else 0
+		else: # conquist prelacion a propia
+			i = 0 if ot.get_grupo() == hogar_grupo else 1
+		if d < vista[i]:
+			rayo.target_position = ot.global_position - nodo.global_position
+			rayo.force_raycast_update()
+			if not rayo.is_colliding():
+				vista[i] = d
+				mejor[i] = ot
+				mejor[i + 2] = dec
 	return mejor
 
 # funciones de obtencion de informacion de la era y mundo
@@ -415,22 +472,17 @@ static func is_punto_free(nodo: Node, punto: Vector2, solidos: Array) -> bool:
 
 # crear cosas
 
-static func distancia_to_tech(ind: int) -> int:
-	# ind es el frame del arma de distancia, no la municion
-	match ind:
-		0:
-			return 0
-		2:
-			return 1
-		4:
-			return 2
-		5, 6:
-			return 3
-		7, 8:
-			return 4
-		9:
-			return 5
-	return 0
+static func crea_death(nodo: Node, deaths: Array = []) -> Node:
+	var new_parent = nodo.get_parent()
+	var pos = nodo.global_position
+	for pry in deaths:
+		if not pry.visible:
+			pry.initialize(new_parent, nodo.get_node("Imagen"), nodo.is_obrera, pos, nodo.is_player)
+			return pry
+	var pry = DEATH.instantiate()
+	new_parent.add_child(pry)
+	pry.initialize(new_parent, nodo.get_node("Imagen"), nodo.is_obrera, pos)
+	return pry
 
 static func crea_proyectil(nodo: Node, direccion: Vector2, tech: int,
 		proyectiles: Array = []) -> Node:

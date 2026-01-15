@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://d0kf6oyy50lea"]
+[gd_scene load_steps=24 format=4 uid="uid://d0kf6oyy50lea"]
 
 [ext_resource type="Texture2D" uid="uid://8c3tyk7afpv4" path="res://Sprites/General/d_mar.png" id="1_qav2b"]
 [ext_resource type="Texture2D" uid="uid://b1cktowpx74r7" path="res://Sprites/General/d_mapa_strip8.png" id="2_auutp"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bpojco5r5hcmg" path="res://Scenes/Entes/player.tscn" id="6_yk4q2"]
 [ext_resource type="PackedScene" uid="uid://su6ayp63vrdr" path="res://Scenes/Objetos/arbol_g.tscn" id="7_jj1as"]
 [ext_resource type="PackedScene" uid="uid://c1bohamuuh1kk" path="res://Scenes/Objetos/arbol_r.tscn" id="8_yk4q2"]
+[ext_resource type="PackedScene" uid="uid://d3nxgn1p73mvb" path="res://Scenes/Objetos/casa.tscn" id="9_06104"]
 [ext_resource type="PackedScene" uid="uid://caqc1vx66snui" path="res://Scenes/Objetos/arbusto_b.tscn" id="9_ojy0t"]
 [ext_resource type="PackedScene" uid="uid://cjddeeq2p3720" path="res://Scenes/Objetos/arbusto_g.tscn" id="10_06104"]
 [ext_resource type="PackedScene" uid="uid://b4ibgr4ap4s76" path="res://Scenes/Objetos/arbusto_r.tscn" id="11_y5wha"]
@@ -86,7 +87,47 @@ y_sort_enabled = true
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="Objetos" instance=ExtResource("6_yk4q2")]
-position = Vector2(4630, 3043)
+position = Vector2(5636, 1881)
+
+[node name="Base1" parent="Objetos" instance=ExtResource("18_ojy0t")]
+position = Vector2(5940, 1750)
+grupo = 21
+
+[node name="Casa1" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(9890, 2319)
+
+[node name="Casa2" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(1049, 2303)
+
+[node name="Casa3" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(1004, 5133)
+
+[node name="Casa4" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(4666, 4793)
+
+[node name="Casa5" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(9080, 6432)
+
+[node name="Casa6" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(5263, 1439)
+
+[node name="Casa7" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(4603, 2814)
+
+[node name="Casa8" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(2857, 2886)
+
+[node name="Casa9" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(1296, 6112)
+
+[node name="Casa10" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(9734, 3280)
+
+[node name="Casa11" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(5839, 6819)
+
+[node name="Casa12" parent="Objetos" instance=ExtResource("9_06104")]
+position = Vector2(7660, 3538)
 
 [node name="Arbol1" parent="Objetos" instance=ExtResource("6_vbjdg")]
 position = Vector2(696.5, 359.25)
@@ -119,8 +160,37 @@ position = Vector2(597.5, 467.25)
 position = Vector2(719.5, 458.25)
 
 [node name="Maiz1" parent="Objetos" instance=ExtResource("16_bayx2")]
-position = Vector2(822.908, 457.432)
+position = Vector2(1199, 3181)
 
-[node name="Base" parent="Objetos" instance=ExtResource("18_ojy0t")]
-position = Vector2(4763, 2719)
-grupo = 21
+[node name="Maiz2" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(2138, 3298)
+
+[node name="Maiz3" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(2770, 6487)
+
+[node name="Maiz4" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(2400, 4475)
+
+[node name="Maiz5" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(6066, 4630)
+
+[node name="Maiz6" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(9766, 5330)
+
+[node name="Maiz7" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(4290, 6635)
+
+[node name="Maiz8" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(8482, 2183)
+
+[node name="Maiz9" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(8369, 2342)
+
+[node name="Maiz10" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(6865, 1837)
+
+[node name="Maiz12" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(8254, 2546)
+
+[node name="Maiz11" parent="Objetos" instance=ExtResource("16_bayx2")]
+position = Vector2(4254, 2259)

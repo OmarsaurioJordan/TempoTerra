@@ -78,11 +78,11 @@ metadata/_edit_lock_ = true
 y_sort_enabled = true
 metadata/_edit_lock_ = true
 
-[node name="Base" parent="Objetos" instance=ExtResource("6_k38ve")]
+[node name="Base1" parent="Objetos" instance=ExtResource("6_k38ve")]
 position = Vector2(8882, 2269)
 grupo = 21
 
-[node name="Casa" parent="Objetos" instance=ExtResource("7_qcqro")]
+[node name="Casa1" parent="Objetos" instance=ExtResource("7_qcqro")]
 position = Vector2(8250, 1888)
 
 [node name="Casa2" parent="Objetos" instance=ExtResource("7_qcqro")]

@@ -80,7 +80,7 @@ conexion = [NodePath("../Calle2"), NodePath("../Calle5")]
 metadata/_edit_lock_ = true
 
 [node name="Calle4" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
-position = Vector2(6960, 5945)
+position = Vector2(7023, 6024)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)
@@ -90,7 +90,7 @@ conexion = [NodePath("../Calle18"), NodePath("../Calle5")]
 metadata/_edit_lock_ = true
 
 [node name="Calle5" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
-position = Vector2(8425, 6010)
+position = Vector2(8251, 5740)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)
@@ -110,7 +110,7 @@ conexion = [NodePath("../Calle9"), NodePath("../Calle18")]
 metadata/_edit_lock_ = true
 
 [node name="Calle7" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
-position = Vector2(3874, 1875)
+position = Vector2(4033, 1891)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)
@@ -142,7 +142,7 @@ guerra = true
 metadata/_edit_lock_ = true
 
 [node name="Calle10" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
-position = Vector2(1684, 5261)
+position = Vector2(2192, 5213)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)
@@ -152,7 +152,7 @@ conexion = [NodePath("../Calle1"), NodePath("../Calle9")]
 metadata/_edit_lock_ = true
 
 [node name="Calle11" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
-position = Vector2(1717, 2518)
+position = Vector2(2114, 2677)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)
@@ -173,7 +173,7 @@ guerra = true
 metadata/_edit_lock_ = true
 
 [node name="Calle13" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
-position = Vector2(5291, 1957)
+position = Vector2(5243, 2338)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)
@@ -194,7 +194,7 @@ guerra = true
 metadata/_edit_lock_ = true
 
 [node name="Calle15" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
-position = Vector2(8091, 2901)
+position = Vector2(7917, 2838)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)
@@ -205,7 +205,7 @@ guerra = true
 metadata/_edit_lock_ = true
 
 [node name="Calle16" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
-position = Vector2(9475, 1973)
+position = Vector2(9427, 1513)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)
@@ -215,7 +215,7 @@ conexion = [NodePath("../Calle15")]
 metadata/_edit_lock_ = true
 
 [node name="Calle17" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
-position = Vector2(5632, 5042)
+position = Vector2(5727, 5074)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)
@@ -225,7 +225,7 @@ conexion = [NodePath("../Calle8"), NodePath("../Calle18")]
 metadata/_edit_lock_ = true
 
 [node name="Calle18" type="Sprite2D" parent="Navegacion" node_paths=PackedStringArray("conexion")]
-position = Vector2(5233, 6076)
+position = Vector2(5233, 6377)
 scale = Vector2(3, 3)
 texture = ExtResource("2_bbdao")
 offset = Vector2(-95, 0)

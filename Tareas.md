@@ -1,5 +1,6 @@
 # Tareas
 
+- bases no están elijiendo base enemiga objetivo...
 - crear explosivos, falta poner lanzador en ente
 - daño hecho por proyectil
 - daño hecho por mele
@@ -7,25 +8,25 @@
 - bailewar agregar aleatoriedad en comportamiento mele, estan muy trompos
 - ir a recargar municion
 - ir a recargar vida
-- warrior atacar obrera solo si no cupo en las bases de ambos
 - poner en obrera modo de huida cuando sea atacada
 - nuevos seres se crean sin ninguna municion ni arma
 - al tener objetivo a atacar, este auto contraataca si no tiene otro objetivo
 - al ser atacado recluta aliado cercano, help, sea obrera o warrior
-
+- hacer animaciones de muertes
+- respawn de player con animacion
+- animacion cambio de era
+- seleccionar y deseleccionar entes
+- cambiar de era a los entes
+- envejecerlos y kill si sobrepasan limite
+- dibujar sprites de salvajes y su centro
 ...
-
-- proyectil: movimiento, impacto, explosion
 - insectos: errar
 - player: ataque mele
 - player: ataque especial
 - player: cambio de armas
 - player: recolección de relojes
 - entes: dialogos contextuales
-- entes: sombras
-- entes: muerte animada
 - entes: crear robots o drones
-- entes: viaje temporal
 - audio: efectos de sonido
 - audio: música contextual
 - menú: estructura visual main menú

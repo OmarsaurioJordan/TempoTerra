@@ -20,7 +20,6 @@ radius = 134.0
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_lbypb")
-metadata/_edit_lock_ = true
 
 [node name="Coli" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gn6y3")
@@ -59,7 +58,7 @@ metadata/_edit_lock_ = true
 [node name="Charla" type="Sprite2D" parent="."]
 visible = false
 modulate = Color(1, 1, 1, 0.713726)
-position = Vector2(2, 2)
+position = Vector2(-5, -219)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("3_d0dy4")
 offset = Vector2(8, -130)

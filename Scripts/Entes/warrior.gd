@@ -68,7 +68,6 @@ func _physics_process(_delta: float) -> void:
 
 func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 	estado = new_estado
-	archienemigos = Data.GRUPO.SOLO
 	reset_cosas()
 	match estado:
 		ESTADO.LIBRE:
@@ -82,7 +81,13 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 			var calles = get_parent().get_parent().get_node("Limites/Navegacion").get_children()
 			objetivo = calles.pick_random()
 		ESTADO.CONQUISTAR:
-			pass
+			if ext_info == null or not is_hogar_grupo():
+				set_estado(ESTADO.LIBRE)
+			else:
+				enemigo = null
+				archienemigos = Data.GRUPO.ALIEN
+				meta = hogar.global_position
+				objetivo = ext_info
 		ESTADO.RECARGAR:
 			pass
 		ESTADO.MISION:
@@ -164,7 +169,16 @@ func est_explorar() -> void:
 		errar(VISION)
 
 func est_conquistar() -> void:
-	pass
+	if objetivo == null:
+		set_estado(ESTADO.LIBRE)
+		return
+	match Data.seguir_objetivo(self, 125, 75):
+		Data.RES_MOVE.NULO:
+			set_estado(ESTADO.LIBRE)
+		Data.RES_MOVE.FALTA:
+			if Data.go_estocastico():
+				if objetivo.estado != ESTADO.SEGUIR or objetivo.objetivo != self:
+					set_estado(ESTADO.LIBRE)
 
 func est_recargar() -> void:
 	pass
@@ -212,12 +226,32 @@ func atacar() -> void:
 
 func ver_enemigo() -> void:
 	# aliens, monstruos, warriors+players, drons, robots, obreras
+	var ver_obrera = false
 	if not enemigo_de_grupo("aliens", false, false):
 		if not enemigo_de_grupo("monstruos", false, false):
 			if not enemigo_de_grupo("warrioplayers", true, true):
 				if not enemigo_de_grupo("drones", true, false):
 					if not enemigo_de_grupo("robots", true, false):
-						enemigo_de_grupo("obreras", true, false) # Tarea obrera es caso especial
+						ver_obrera = true
+	if Data.go_estocastico() and ver_obrera and\
+			(estado == ESTADO.MISION or estado == ESTADO.EXPLORAR):
+		var entes = get_tree().get_nodes_in_group("obreras")
+		var res = Data.get_nearest_obreras(self, entes, VISION)
+		# [a,b,c,d] a: preferente, b: secundaria, c,d: (t:atack f:conq)
+		if estado == ESTADO.EXPLORAR:
+			if res[0] != null and not res[2]:
+				set_estado(ESTADO.CONQUISTAR, res[0])
+			elif res[1] != null and not res[3]:
+				set_estado(ESTADO.CONQUISTAR, res[1])
+		elif estado == ESTADO.MISION:
+			if res[0] != null and res[2]:
+				enemigo = res[0]
+			elif res[1] != null and res[3]:
+				enemigo = res[1]
+			elif res[0] != null and not res[2]:
+				set_estado(ESTADO.CONQUISTAR, res[0])
+			elif res[1] != null and not res[3]:
+				set_estado(ESTADO.CONQUISTAR, res[1])
 
 func enemigo_de_grupo(grupo_str: String, test_hogar_grupo: bool,
 		is_warrior_vs_warrior: bool) -> bool:
