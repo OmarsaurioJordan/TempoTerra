@@ -1,12 +1,19 @@
 extends Ente
 
+const CERCANO: float = 200
+
 const VIDA: int = 200
 const SPEED: float = 300
 const ALIMENTO: int = 20
+const TIME_VIAJE: float = 4
 
 @onready var gui: Node = get_tree().get_nodes_in_group("gui")[0]
 var area_tab: Array = []
 var linea: Line2D = null
+
+var is_al_futuro: bool = true # dice si viaja al futuro o pasado
+var is_viaje_ida: bool = true # para saber si particulas aparecen o desaparecen
+var reloj_viaje: float = 0 # para ejecutar teleportacion
 
 # metodos generales
 
@@ -17,6 +24,8 @@ func _ready() -> void:
 	call_deferred("set_camara_mundo")
 	gui.get_node("Informacion").visible = false
 	gui.get_node("Datos").visible = false
+	$PartiUp.visible = false
+	$PartiDown.visible = false
 
 func initialize(_grp=0, _csa=null) -> void:
 	grupo = Data.GRUPO.CYBORG
@@ -28,12 +37,12 @@ func alimentar() -> void:
 func is_alimentable() -> bool:
 	return vida < VIDA
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	# cambiar de linea temporal
 	if Input.is_action_just_pressed("ui_futuro"):
-		set_tiempo(Data.get_next_mundo(self, get_tree().get_nodes_in_group("mundos")))
+		go_viaje_temp(true)
 	elif Input.is_action_just_pressed("ui_pasado"):
-		set_tiempo(Data.get_prev_mundo(self, get_tree().get_nodes_in_group("mundos")))
+		go_viaje_temp(false)
 	# moverse por el suelo
 	var dir: Vector2 = Input.get_vector("ui_izquierda", "ui_derecha", "ui_arriba", "ui_abajo")
 	if dir.length() != 0 and $TimPausa.is_stopped():
@@ -69,6 +78,12 @@ func _physics_process(_delta: float) -> void:
 				$Imagen/Anima.play("shot")
 				$TimPausa.start(0.5)
 				cargador -= 1
+	# seleccion
+	if Input.is_action_just_pressed("ui_seleccionar"):
+		seleccionar()
+	# particulas viaje tiempo
+	if $PartiUp.visible:
+		step_particulas(delta)
 
 # metodos para viajar en el tiempo
 
@@ -106,7 +121,7 @@ func set_camara_mundo() -> void:
 		"MundoApocaliptico":
 			gui.get_node("TxtEra").text = "Apocalyptic"
 
-func set_tiempo(nombre_mundo: String) -> void:
+func set_tiempo(nombre_mundo: String, hongovapor: bool = true) -> void:
 	if nombre_mundo != "":
 		var mundo = get_parent().get_parent().get_parent().get_node(nombre_mundo)
 		var pos = position
@@ -114,6 +129,10 @@ func set_tiempo(nombre_mundo: String) -> void:
 		mundo.get_node("Objetos").add_child(self)
 		position = pos
 		call_deferred("set_camara_mundo")
+		if hongovapor:
+			var vapores = get_tree().get_nodes_in_group("vapores")
+			var parent = get_parent()
+			Data.crea_hongovapor(parent, global_position, 0, 3, 64, vapores)
 
 # automaticos para detecciones especiales
 
@@ -125,3 +144,64 @@ func _on_area_tab_area_entered(area: Area2D) -> void:
 func _on_area_tab_area_exited(area: Area2D) -> void:
 	area_tab.erase(area)
 	$Imagen/Charlita.visible = not area_tab.is_empty()
+
+# hacer viaje temporal y particulas
+
+func go_viaje_temp(is_to_futuro: bool) -> void:
+	if reloj_viaje == 0:
+		is_al_futuro = is_to_futuro
+		set_particulas() 
+
+func set_particulas() -> void:
+	$PartiUp.visible = true
+	$PartiDown.visible = true
+	var parts = $PartiUp.get_children()
+	parts.append_array($PartiDown.get_children())
+	for p in parts:
+		p.initialize($PartiUp, $PartiDown)
+		p.visible = false
+
+func step_particulas(delta: float) -> void:
+	if Data.DEBUG:
+		delta *= 4
+	if is_viaje_ida:
+		var ant = reloj_viaje
+		reloj_viaje = min(reloj_viaje + delta, TIME_VIAJE)
+		if reloj_viaje == TIME_VIAJE:
+			is_viaje_ida = false
+			if is_al_futuro:
+				set_tiempo(Data.get_next_mundo(self, get_tree().get_nodes_in_group("mundos")))
+			else:
+				set_tiempo(Data.get_prev_mundo(self, get_tree().get_nodes_in_group("mundos")))
+		elif ant < TIME_VIAJE - 0.4 and reloj_viaje >= TIME_VIAJE - 0.4:
+			gui.get_node("Anima").play("oscuro")
+	else:
+		reloj_viaje = max(reloj_viaje - delta, 0)
+		if reloj_viaje == 0:
+			is_viaje_ida = true
+			$PartiUp.visible = false
+			$PartiDown.visible = false
+	var parts = $PartiUp.get_children()
+	parts.append_array($PartiDown.get_children())
+	var actual = (parts.size() * 2.0) * (reloj_viaje / TIME_VIAJE)
+	for p in parts:
+		p.step($PartiUp, $PartiDown, delta)
+		p.visible = int(p.name.replace("P", "")) < actual
+
+# seleccionar entes cercanos
+
+func seleccionar() -> void:
+	var entes = get_tree().get_nodes_in_group("entes")
+	for ent in entes:
+		if ent == self:
+			continue
+		if ent.get_envisto():
+			ent.set_seleccionado(not ent.get_seleccionado())
+
+func _on_tim_enmira_timeout() -> void:
+	var entes = get_tree().get_nodes_in_group("entes")
+	var cercano = Data.get_nearest(self, entes, CERCANO)
+	for ent in entes:
+		if ent == self:
+			continue
+		ent.set_envisto(ent == cercano)

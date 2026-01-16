@@ -380,6 +380,17 @@ hframes = 2
 frame = 1
 metadata/_edit_lock_ = true
 
+[node name="Enmira" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-4.06025, -101)
+rotation = 1.5708
+scale = Vector2(2.66097, 3.26)
+texture = ExtResource("2_ev13i")
+flip_h = true
+hframes = 2
+frame = 1
+metadata/_edit_lock_ = true
+
 [node name="Imagen" type="Node2D" parent="."]
 script = ExtResource("1_ev13i")
 name_nodos_respiran = Array[String](["Cuerpo", "Cabeza", "Escudo", "Municion", "Secundaria", "Arma", "Distancia"])

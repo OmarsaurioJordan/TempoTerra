@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bpojco5r5hcmg"]
+[gd_scene load_steps=27 format=3 uid="uid://bpojco5r5hcmg"]
 
 [ext_resource type="Texture2D" uid="uid://cfgisrc24cg16" path="res://Sprites/Entes/d_player_strip4.png" id="1_83mts"]
 [ext_resource type="Script" uid="uid://ojl0shbngmss" path="res://Scripts/Entes/player.gd" id="1_c234k"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dfwko0hgjqi1x" path="res://Sprites/Entes/d_sombraselect_strip2.png" id="2_8uc8b"]
 [ext_resource type="Texture2D" uid="uid://dxy3eeidmweif" path="res://Sprites/Entes/d_escudo_strip22.png" id="2_knad1"]
 [ext_resource type="Script" uid="uid://bw16pwdyolf8e" path="res://Scripts/Tools/imagen.gd" id="2_rn4bi"]
+[ext_resource type="PackedScene" uid="uid://vbt3foh6pp3w" path="res://Scenes/Componentes/parti_telep.tscn" id="3_rn4bi"]
 [ext_resource type="Texture2D" uid="uid://cl74su0pkyhdh" path="res://Sprites/Entes/d_distancia_strip10.png" id="4_rn4bi"]
 [ext_resource type="Texture2D" uid="uid://dd0nvr88qpjmr" path="res://Sprites/Entes/d_secundaria_strip3.png" id="5_qm2yj"]
 [ext_resource type="Texture2D" uid="uid://dkubspuc1unir" path="res://Sprites/Entes/d_mele_strip22.png" id="6_8uc8b"]
@@ -361,6 +362,46 @@ texture = ExtResource("2_8uc8b")
 hframes = 2
 metadata/_edit_lock_ = true
 
+[node name="PartiUp" type="Node2D" parent="."]
+y_sort_enabled = true
+metadata/_edit_lock_ = true
+
+[node name="P1" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P2" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P3" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P4" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P5" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P6" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P7" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P8" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P9" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P10" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P11" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
+[node name="P12" parent="PartiUp" instance=ExtResource("3_rn4bi")]
+position = Vector2(80, 0)
+
 [node name="Imagen" type="Node2D" parent="."]
 script = ExtResource("2_rn4bi")
 name_nodos_respiran = Array[String](["Cuerpo", "Cabeza", "Escudo", "Municion", "Secundaria", "Arma", "Distancia"])
@@ -517,6 +558,10 @@ libraries = {
 }
 speed_scale = 1.2
 
+[node name="PartiDown" type="Node2D" parent="."]
+y_sort_enabled = true
+metadata/_edit_lock_ = true
+
 [node name="Camara" type="Camera2D" parent="."]
 offset = Vector2(0, -110)
 zoom = Vector2(0.8, 0.8)
@@ -526,6 +571,10 @@ metadata/_edit_lock_ = true
 [node name="TimPausa" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
+
+[node name="TimEnmira" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
 
 [node name="Shots" type="Node" parent="."]
 
@@ -548,5 +597,6 @@ one_shot = true
 [connection signal="area_entered" from="AreaTab" to="." method="_on_area_tab_area_entered"]
 [connection signal="area_exited" from="AreaTab" to="." method="_on_area_tab_area_exited"]
 [connection signal="animation_finished" from="Imagen/Anima" to="." method="_on_anima_animation_finished"]
+[connection signal="timeout" from="TimEnmira" to="." method="_on_tim_enmira_timeout"]
 [connection signal="timeout" from="Shots/TimShotCargador" to="." method="_on_tim_shot_cargador_timeout"]
 [connection signal="timeout" from="Shots/TimShotGo" to="." method="_on_tim_shot_go_timeout"]

@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b46gr0eansykw"]
+[gd_scene load_steps=9 format=3 uid="uid://b46gr0eansykw"]
 
 [ext_resource type="Texture2D" uid="uid://bwdy5lni0pm3l" path="res://Sprites/General/d_vision.png" id="1_33gso"]
 [ext_resource type="FontFile" uid="uid://dfhfupgu7dfr2" path="res://Sprites/General/comic_sana.ttf" id="2_2whkw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y5s8j"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y5s8j"]
 
@@ -18,7 +21,51 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+[sub_resource type="Animation" id="Animation_o8qdi"]
+resource_name = "oscuro"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Oscuro:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_r16fv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Oscuro:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_05rw0"]
+_data = {
+&"RESET": SubResource("Animation_r16fv"),
+&"oscuro": SubResource("Animation_o8qdi")
+}
+
 [node name="GUI" type="CanvasLayer" groups=["gui"]]
+
+[node name="Oscuro" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y5s8j")
+metadata/_edit_lock_ = true
 
 [node name="Fondo" type="TextureRect" parent="."]
 offset_right = 1152.0
@@ -663,3 +710,8 @@ vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 metadata/_edit_lock_ = true
+
+[node name="Anima" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_05rw0")
+}

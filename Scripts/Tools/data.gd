@@ -1,7 +1,7 @@
 extends Node
 class_name Data
 
-const DEBUG: bool = true
+const DEBUG: bool = false
 
 const PROYECTIL = preload("res://Scenes/Objetos/proyectil.tscn")
 const EXPLOSIVO = preload("res://Scenes/Objetos/explosivo.tscn")
@@ -512,6 +512,7 @@ static func crea_explosivo(nodo: Node, trayecto: Vector2, is_granada: bool,
 
 static func crea_vapor(new_parent: Node, posicion: Vector2, tipo: int,
 		vapores: Array = []) -> Node:
+	# 0:morado, 1:humo, 2:fuego
 	for vap in vapores:
 		if not vap.visible:
 			vap.initialize(new_parent, posicion, tipo)
@@ -520,3 +521,18 @@ static func crea_vapor(new_parent: Node, posicion: Vector2, tipo: int,
 	new_parent.add_child(vap)
 	vap.initialize(new_parent, posicion, tipo)
 	return vap
+
+static func crea_hongovapor(new_parent: Node, posicion: Vector2, tipo: int,
+		radios: int, un_radio: float, vapores: Array = []) -> void:
+	# 0:morado, 1:humo, 2:fuego
+	crea_vapor(new_parent, posicion, tipo, vapores)
+	for r in range(1, radios):
+		var desf = randf() * 2.0 * PI
+		var rad = un_radio * r
+		var perim = 2.0 * PI * rad
+		var vaps = ceil(perim / 80.0)
+		var paso = 2.0 * PI / vaps
+		for i in range(vaps):
+			var ang = i * paso + desf + randf_range(-paso * 0.2, paso * 0.2)
+			var lon = randf_range(rad * 0.8, rad * 1.2)
+			Data.crea_vapor(new_parent, posicion + Vector2(lon, 0).rotated(ang), tipo, vapores)

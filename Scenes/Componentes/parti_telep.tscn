@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://vbt3foh6pp3w"]
+
+[ext_resource type="Texture2D" uid="uid://ba2y8x024vkep" path="res://Sprites/General/d_luz.png" id="1_yl1sf"]
+[ext_resource type="Script" uid="uid://dlcrafa5dkp0p" path="res://Scripts/Componentes/parti_telep.gd" id="2_yl1sf"]
+[ext_resource type="Texture2D" uid="uid://dfwko0hgjqi1x" path="res://Sprites/Entes/d_sombraselect_strip2.png" id="3_yl1sf"]
+
+[node name="PartiTelep" type="Sprite2D"]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_yl1sf")
+offset = Vector2(0, -130)
+script = ExtResource("2_yl1sf")
+
+[node name="Sombra" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.784314)
+show_behind_parent = true
+position = Vector2(0, 7)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_yl1sf")
+hframes = 2
+metadata/_edit_lock_ = true

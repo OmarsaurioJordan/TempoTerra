@@ -312,3 +312,17 @@ func _on_anima_animation_finished(anim_name: StringName) -> void:
 				recargar()
 			elif municion + cargador == 0 and $Imagen/Distancia.frame != 4: # arco
 				$Imagen.set_mele()
+
+# seleccion
+
+func set_envisto(is_envisto: bool) -> void:
+	$Enmira.visible = is_envisto
+
+func get_envisto() -> bool:
+	return $Enmira.visible
+
+func set_seleccionado(is_seleccionado: bool) -> void:
+	$Select.visible = is_seleccionado
+
+func get_seleccionado() -> bool:
+	return $Select.visible

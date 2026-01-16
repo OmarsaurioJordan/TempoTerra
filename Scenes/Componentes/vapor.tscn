@@ -123,5 +123,6 @@ metadata/_edit_lock_ = true
 libraries = {
 &"": SubResource("AnimationLibrary_8pxng")
 }
+speed_scale = 0.333
 
 [connection signal="animation_finished" from="Anima" to="." method="_on_anima_animation_finished"]

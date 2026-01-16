@@ -1,6 +1,9 @@
 # Tareas
 
 - bases no están elijiendo base enemiga objetivo...
+- base futurista es la misma en estadisticas que apocaliptica, hacer algo...
+- casas medievales quitarles más marcador a zona de conexión con tierra
+...
 - crear explosivos, falta poner lanzador en ente
 - daño hecho por proyectil
 - daño hecho por mele
@@ -12,10 +15,9 @@
 - nuevos seres se crean sin ninguna municion ni arma
 - al tener objetivo a atacar, este auto contraataca si no tiene otro objetivo
 - al ser atacado recluta aliado cercano, help, sea obrera o warrior
-- hacer animaciones de muertes
 - respawn de player con animacion
-- animacion cambio de era
-- seleccionar y deseleccionar entes
+- deseleccionar entes si estan muy lejos
+- hacer que entes seleccionados sigan, solo si aliados
 - cambiar de era a los entes
 - envejecerlos y kill si sobrepasan limite
 - dibujar sprites de salvajes y su centro

@@ -85,7 +85,6 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 				set_estado(ESTADO.LIBRE)
 			else:
 				enemigo = null
-				archienemigos = Data.GRUPO.ALIEN
 				meta = hogar.global_position
 				objetivo = ext_info
 		ESTADO.RECARGAR:
