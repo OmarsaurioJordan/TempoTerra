@@ -99,7 +99,7 @@ position = Vector2(5533, 1410)
 grupo = 4
 
 [node name="Base5" parent="Objetos" instance=ExtResource("6_qbkwk")]
-position = Vector2(8959, 6005)
+position = Vector2(8973, 6003)
 grupo = 3
 
 [node name="Base6" parent="Objetos" instance=ExtResource("6_qbkwk")]
@@ -1300,6 +1300,21 @@ position = Vector2(6403, 5326)
 [node name="Arbusto161" parent="Objetos" instance=ExtResource("12_odykk")]
 position = Vector2(6443, 5564)
 
+[node name="Arbusto352" parent="Objetos" instance=ExtResource("12_odykk")]
+position = Vector2(6942, 5617)
+
+[node name="Arbusto353" parent="Objetos" instance=ExtResource("12_odykk")]
+position = Vector2(6936, 5714)
+
+[node name="Arbusto354" parent="Objetos" instance=ExtResource("12_odykk")]
+position = Vector2(7200, 5723)
+
+[node name="Arbusto355" parent="Objetos" instance=ExtResource("12_odykk")]
+position = Vector2(6892, 6159)
+
+[node name="Arbusto356" parent="Objetos" instance=ExtResource("12_odykk")]
+position = Vector2(6520, 5631)
+
 [node name="Arbusto162" parent="Objetos" instance=ExtResource("12_odykk")]
 position = Vector2(6307, 5443)
 
@@ -1640,7 +1655,7 @@ position = Vector2(7745, 5192)
 position = Vector2(7728, 5409)
 
 [node name="Arbusto187" parent="Objetos" instance=ExtResource("13_xj30n")]
-position = Vector2(7735, 5506)
+position = Vector2(7730, 5502)
 
 [node name="Arbusto188" parent="Objetos" instance=ExtResource("13_xj30n")]
 position = Vector2(7894, 5775)
@@ -1824,6 +1839,9 @@ position = Vector2(7080, 3037)
 
 [node name="Roquita103" parent="Objetos" instance=ExtResource("15_jw3e8")]
 position = Vector2(7030, 3115)
+
+[node name="Roquita136" parent="Objetos" instance=ExtResource("15_jw3e8")]
+position = Vector2(5866, 3702)
 
 [node name="Roquita104" parent="Objetos" instance=ExtResource("15_jw3e8")]
 position = Vector2(7252, 3221)

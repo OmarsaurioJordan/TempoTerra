@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c6dvitqse44e7"]
+[gd_scene load_steps=19 format=3 uid="uid://c6dvitqse44e7"]
 
 [ext_resource type="Script" uid="uid://bw16pwdyolf8e" path="res://Scripts/Tools/imagen.gd" id="1_eeroj"]
 [ext_resource type="Texture2D" uid="uid://dgc4pg2bqr06b" path="res://Sprites/Entes/d_pies_strip12.png" id="1_ocluk"]
@@ -54,6 +54,13 @@ _data = {
 &"RESET": SubResource("Animation_235dx"),
 &"hit": SubResource("Animation_8uc8b")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4w5ab"]
+bg_color = Color(0.85098, 0.85098, 0.85098, 0.717647)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Obrera" type="CharacterBody2D" groups=["entes", "humans", "obreras"]]
 collision_layer = 8
@@ -200,6 +207,20 @@ libraries = {
 &"": SubResource("AnimationLibrary_weq60")
 }
 speed_scale = 1.2
+
+[node name="TxtEst" type="Label" parent="."]
+offset_left = -61.0
+offset_top = -217.0
+offset_right = 62.0
+offset_bottom = -183.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_m4o04")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_4w5ab")
+text = "est"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="TimPausa" type="Timer" parent="."]
 wait_time = 1.5

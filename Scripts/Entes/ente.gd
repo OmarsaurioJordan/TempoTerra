@@ -3,7 +3,7 @@ class_name Ente
 
 const DIST_SEGUIR_PLAYER: float = 700
 
-enum POSTURA { HOGAR, EXTRA, SOBRA }
+enum POSTURA { HOGAR, EXTRA, SOBRA, VIEJO }
 
 enum ESTADO {
 	LIBRE, SEGUIR, # general
@@ -74,7 +74,9 @@ func get_postura() -> POSTURA:
 			return POSTURA.HOGAR
 		elif i == 1:
 			return POSTURA.EXTRA
-		return POSTURA.SOBRA
+		elif i == 2:
+			return POSTURA.SOBRA
+		return POSTURA.VIEJO
 	return POSTURA.HOGAR
 
 func get_base() -> Node:
@@ -98,7 +100,7 @@ func get_decision_clase(is_find_obreras: bool) -> int:
 func errar(vision: float) -> void:
 	if mover_errar:
 		if meta.is_zero_approx():
-			var solidos = get_tree().get_nodes_in_group("buildings")
+			var solidos = Data.get_grupo_local(get_parent(), "buildings")
 			var pp = global_position + Vector2(randf() * vision, 0).rotated(randf() * 2 * PI)
 			if is_hogar_grupo():
 				var mis_edif = []
@@ -161,6 +163,8 @@ func post_hit() -> void:
 
 func death() -> void:
 	# Tarea limpiar enemigo y seguimiento en todos
+	if is_player: # Tarea quitar
+		return
 	var deaths = get_tree().get_nodes_in_group("deaths")
 	Data.crea_death(self, deaths)
 	queue_free()
@@ -177,8 +181,8 @@ func reset_cosas() -> void:
 
 func _on_tim_reubicar_timeout() -> void:
 	$TimReubicar.start(randf_range(10, 15))
-	if get_postura() == POSTURA.SOBRA:
-		var casas = get_tree().get_nodes_in_group("casas")
+	if get_postura() >= POSTURA.SOBRA:
+		var casas = Data.get_grupo_local(get_parent(), "casas")
 		var hogar_grupo = get_hogar_grupo()
 		var posibles = [[], [], []]
 		for ca in casas:
@@ -190,6 +194,13 @@ func _on_tim_reubicar_timeout() -> void:
 			if not pos.is_empty():
 				hogar = pos.pick_random()
 				break
+
+func envejecer(el_grupo: Data.GRUPO) -> bool:
+	if get_hogar_grupo() == el_grupo:
+		if get_postura() == POSTURA.VIEJO:
+			death()
+			return true
+	return false
 
 # obtener informacion de ataque y lucha
 
@@ -326,3 +337,8 @@ func set_seleccionado(is_seleccionado: bool) -> void:
 
 func get_seleccionado() -> bool:
 	return $Select.visible
+
+# informacion textual
+
+static func get_est_name(est: ESTADO) -> String:
+	return ESTADO.keys()[est]

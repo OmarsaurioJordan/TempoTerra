@@ -1,8 +1,11 @@
 # Tareas
 
-- bases no están elijiendo base enemiga objetivo...
-- base futurista es la misma en estadisticas que apocaliptica, hacer algo...
-- casas medievales quitarles más marcador a zona de conexión con tierra
+- no se están asignando o navegando bien hacia los lugares de mision o ataque
+- viajeros tiempo reloj para no envejecer tan rapido, como un seguro momentáneo, y obrera capt igual, y recién nacido
+- solo atacar obrera si no modo conquista ya
+- ataque ataca a explorador
+- obrera habla con cualquier otra de otro grupo
+- mosekte pasar a mele si enemigo cerca con mele, y pasar a moskete si enemigo lejos y munición
 ...
 - crear explosivos, falta poner lanzador en ente
 - daño hecho por proyectil
@@ -22,23 +25,21 @@
 - envejecerlos y kill si sobrepasan limite
 - dibujar sprites de salvajes y su centro
 ...
-- insectos: errar
-- player: ataque mele
-- player: ataque especial
-- player: cambio de armas
-- player: recolección de relojes
-- entes: dialogos contextuales
-- entes: crear robots o drones
+- insectos errar
+- player ataque mele
+- player ataque especial
+- player cambio de armas
+- player mouse mueve camara
+- player recolección de relojes
+- entes con dialogos contextuales
+- entes pueden crear robots o drones
 - audio: efectos de sonido
 - audio: música contextual
-- menú: estructura visual main menú
-- menú: de pausa, opciónes sonido y salir
-- menú: poder iniciar juego nuevo o guardado
-- mundos: colocar casas y centros
-- mundos: colocar decorados naturales
-- entes: manejo manual por segundo player
-- entes: ajustar estadísticas de daño y eficiencia
-- menú: escritos sobre los diferentes grupos en inglés
+- menú principal, juego nuevo o continuar
+- pausa, opciónes sonido y salir
+- construir todos los mundos, diseño de nivel
+- escritos sobre los diferentes grupos en inglés
+- borrar lineas basura sprites
 
 # Comportamiento
 

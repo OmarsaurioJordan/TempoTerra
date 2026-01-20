@@ -155,6 +155,15 @@ static func distancia_to_tech(ind: int) -> int:
 
 # funciones de busqueda espacial
 
+static func get_grupo_local(el_parent: Node, grp_name: String) -> Array:
+	var cosas = el_parent.get_tree().get_nodes_in_group(grp_name)
+	if cosas.is_empty():
+		return cosas
+	for i in range(cosas.size() - 1, -1, -1):
+		if cosas[i].get_parent() != el_parent:
+			cosas.remove_at(i)
+	return cosas
+
 static func get_nearest(nodo: Node, otros: Array, vision: float = 1000000) -> Node:
 	var mundillo = nodo.get_parent()
 	var mejor: Node = null
@@ -400,7 +409,6 @@ static func mover_hacia_punto(nodo: Node, meta: Vector2, radio: float,
 				var mundo = nodo.get_parent().get_parent()
 				nodo.obj_calle = Data.get_near_calle(mundo, meta, rayo)
 				nodo.next_calle = Data.get_near_calle(mundo, nodo.global_position, rayo)
-				rayo.position = Vector2(0, 0)
 	# como existe una calle a la cual ir
 	else:
 		nodo.velocity = nodo.global_position.direction_to(
@@ -447,7 +455,9 @@ static func is_colision_orillas(inicio: Vector2, rayo: RayCast2D, fin: Vector2) 
 	rayo.global_position = inicio
 	rayo.target_position = fin - inicio
 	rayo.force_raycast_update()
-	return rayo.is_colliding()
+	var res: bool = rayo.is_colliding()
+	rayo.position = Vector2(0, 0)
+	return res
 
 static func get_near_calle(mundo: Node, inicio: Vector2, rayo: RayCast2D) -> Node:
 	var calles = mundo.get_node("Limites/Navegacion").get_children()
@@ -461,9 +471,12 @@ static func get_near_calle(mundo: Node, inicio: Vector2, rayo: RayCast2D) -> Nod
 				mejor = cll
 	return mejor
 
-static func is_punto_free(nodo: Node, punto: Vector2, solidos: Array) -> bool:
+static func is_punto_free(nodo: Node, punto: Vector2, solidos: Array,
+		inicio: Vector2 = Vector2(0, 0)) -> bool:
 	var rayo = nodo.get_node("RayCalles")
-	if Data.is_colision_orillas(nodo.global_position, rayo, punto):
+	if inicio.is_zero_approx():
+		inicio = nodo.global_position
+	if Data.is_colision_orillas(inicio, rayo, punto):
 		return false
 	for sol in solidos:
 		if punto.distance_to(sol.global_position) < sol.get_node("Coli").shape.radius:
@@ -536,3 +549,8 @@ static func crea_hongovapor(new_parent: Node, posicion: Vector2, tipo: int,
 			var ang = i * paso + desf + randf_range(-paso * 0.2, paso * 0.2)
 			var lon = randf_range(rad * 0.8, rad * 1.2)
 			Data.crea_vapor(new_parent, posicion + Vector2(lon, 0).rotated(ang), tipo, vapores)
+
+# informacion textual
+
+static func get_grupo_name(grp: GRUPO) -> String:
+	return GRUPO.keys()[grp]

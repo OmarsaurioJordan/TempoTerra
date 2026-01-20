@@ -1,6 +1,6 @@
 extends Node2D
 
-const TIME_FIN: float = 360
+const TIME_FIN: float = 720
 var time_fin: float = 0
 
 func _ready() -> void:

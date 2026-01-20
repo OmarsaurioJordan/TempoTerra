@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b0juejfxgnjwx"]
+
+[ext_resource type="Shader" uid="uid://sknm3n8mutbx" path="res://Sprites/Shaders/suelo.gdshader" id="1_20rba"]
+
+[resource]
+shader = ExtResource("1_20rba")
+shader_parameter/desert_color = Color(1, 0, 0, 1)
+shader_parameter/dirt_color = Color(0.588235, 0.509804, 0, 1)
+shader_parameter/grass_color = Color(0.25098, 1, 0.25098, 1)
+shader_parameter/snow_color = Color(0.25098, 0.25098, 1, 1)
+shader_parameter/concrete_color = Color(0.501961, 0.501961, 0.501961, 1)
+shader_parameter/fungus_color = Color(0, 0, 0, 1)
+shader_parameter/agua_color = Color(1, 1, 1, 1)
+shader_parameter/color_threshold = 1.0
+shader_parameter/noise_scale = 1500.0
+shader_parameter/blend_strength = 1.0

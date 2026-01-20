@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://iei3wam7xaxm"]
+[gd_scene load_steps=26 format=3 uid="uid://iei3wam7xaxm"]
 
 [ext_resource type="Texture2D" uid="uid://dunep3yumw4lg" path="res://Sprites/Entes/d_golpe_strip2.png" id="1_6e6mr"]
 [ext_resource type="Script" uid="uid://bw16pwdyolf8e" path="res://Scripts/Tools/imagen.gd" id="1_ev13i"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cl74su0pkyhdh" path="res://Sprites/Entes/d_distancia_strip10.png" id="7_2o6qo"]
 [ext_resource type="Texture2D" uid="uid://dd0nvr88qpjmr" path="res://Sprites/Entes/d_secundaria_strip3.png" id="8_no5jd"]
 [ext_resource type="Texture2D" uid="uid://dkubspuc1unir" path="res://Sprites/Entes/d_mele_strip22.png" id="9_1qvrk"]
+[ext_resource type="FontFile" uid="uid://dfhfupgu7dfr2" path="res://Sprites/General/comic_sana.ttf" id="12_it582"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bjll6"]
 radius = 26.4764
@@ -326,6 +327,13 @@ _data = {
 &"hit": SubResource("Animation_8uc8b")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6e6mr"]
+bg_color = Color(0.85098, 0.85098, 0.85098, 0.717647)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="Warrior" type="CharacterBody2D" groups=["entes", "humans", "warrioplayers", "warriors"]]
 collision_layer = 8
 collision_mask = 15
@@ -496,6 +504,20 @@ libraries = {
 &"": SubResource("AnimationLibrary_weq60")
 }
 speed_scale = 1.2
+
+[node name="TxtEst" type="Label" parent="."]
+offset_left = -61.0
+offset_top = -217.0
+offset_right = 61.0
+offset_bottom = -183.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_it582")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_6e6mr")
+text = "est"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="TimPausa" type="Timer" parent="."]
 wait_time = 1.5

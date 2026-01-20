@@ -21,6 +21,21 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+[sub_resource type="Animation" id="Animation_r16fv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Oscuro:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_o8qdi"]
 resource_name = "oscuro"
 length = 0.8
@@ -35,21 +50,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_r16fv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Oscuro:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_05rw0"]
@@ -77,12 +77,28 @@ metadata/_edit_lock_ = true
 offset_left = 11.0
 offset_top = 12.0
 offset_right = 184.0
-offset_bottom = 91.0
+offset_bottom = 101.0
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxEmpty_y5s8j")
 text = "Era"
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="TxtAmmo" type="Label" parent="."]
+offset_left = 967.0
+offset_top = 10.0
+offset_right = 1140.0
+offset_bottom = 102.0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxEmpty_y5s8j")
+text = "0/0
+0"
+horizontal_alignment = 2
 autowrap_mode = 3
 clip_text = true
 metadata/_edit_lock_ = true
@@ -704,7 +720,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "UNITY
 
-..."
+la humanidad ha logrado avanzar a un solo sistema político y religioso, los ciudadanos han sido educados hasta un alto grado de consciencia, curados con ingeniería genética, sus necesidades administradas por inteligencias artificiales robóticas y en general todo se ha fundamentado en el conocimiento científico, son una humanidad"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

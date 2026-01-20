@@ -94,6 +94,10 @@ wait_time = 20.0
 one_shot = true
 autostart = true
 
+[node name="TimEnvejecer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="TimEstadisticas" to="." method="_on_tim_estadisticas_timeout"]
 [connection signal="timeout" from="TimAutomatic" to="." method="_on_tim_automatic_timeout"]
 [connection signal="timeout" from="TimZona" to="." method="_on_tim_zona_timeout"]
+[connection signal="timeout" from="TimEnvejecer" to="." method="_on_tim_envejecer_timeout"]

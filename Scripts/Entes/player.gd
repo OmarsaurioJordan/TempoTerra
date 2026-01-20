@@ -103,23 +103,23 @@ func set_camara_mundo() -> void:
 	linea = get_parent().get_parent().get_node("Limites/Lineas/Linea")
 	match mi_mundo:
 		"MundoFormacion":
-			gui.get_node("TxtEra").text = "Ancient"
+			gui.get_node("TxtEra").text = "Ancient\n14 Ma"
 		"MundoPrehistoria":
-			gui.get_node("TxtEra").text = "Ice Age"
+			gui.get_node("TxtEra").text = "Ice Age\n12000 BEC"
 		"MundoAntiguo":
-			gui.get_node("TxtEra").text = "Tribal"
+			gui.get_node("TxtEra").text = "Tribal\n6000 BEC"
 		"MundoImperial":
-			gui.get_node("TxtEra").text = "Imperial"
+			gui.get_node("TxtEra").text = "Imperial\n0 CE"
 		"MundoMedieval":
-			gui.get_node("TxtEra").text = "Medieval"
+			gui.get_node("TxtEra").text = "Medieval\n1000 CE"
 		"MundoIndustrial":
-			gui.get_node("TxtEra").text = "Industrial"
+			gui.get_node("TxtEra").text = "Industrial\n1800 CE"
 		"MundoModerno":
-			gui.get_node("TxtEra").text = "Modern"
+			gui.get_node("TxtEra").text = "Modern\n2000 CE"
 		"MundoAvanzado":
-			gui.get_node("TxtEra").text = "Futuristic"
+			gui.get_node("TxtEra").text = "Futuristic\n2500 CE"
 		"MundoApocaliptico":
-			gui.get_node("TxtEra").text = "Apocalyptic"
+			gui.get_node("TxtEra").text = "Apocalyptic\n3000 CE"
 
 func set_tiempo(nombre_mundo: String, hongovapor: bool = true) -> void:
 	if nombre_mundo != "":
@@ -149,6 +149,11 @@ func _on_area_tab_area_exited(area: Area2D) -> void:
 
 func go_viaje_temp(is_to_futuro: bool) -> void:
 	if reloj_viaje == 0:
+		var mi_mundo = get_parent().get_parent().name
+		if is_to_futuro and mi_mundo == "MundoApocaliptico":
+			return
+		if not is_to_futuro and mi_mundo == "MundoFormacion":
+			return
 		is_al_futuro = is_to_futuro
 		set_particulas() 
 

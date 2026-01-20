@@ -7,6 +7,10 @@ const VISION: float = 1000 # rango de vision para otros entes o cosas
 
 # metodos generales
 
+func _ready() -> void:
+	if not Data.DEBUG:
+		$TxtEst.queue_free()
+
 func initialize(el_grupo: Data.GRUPO, casa: Node) -> void:
 	vida = VIDA
 	grupo = el_grupo
@@ -21,6 +25,9 @@ func is_alimentable() -> bool:
 	return vida < VIDA
 
 func _physics_process(_delta: float) -> void:
+	if randf() < 0.5:
+		move_and_slide()
+		return
 	var bueno_dale = true
 	if enemigo != null:
 		if is_instance_valid(enemigo):
@@ -96,7 +103,7 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 			else:
 				mision = base.get_mision()
 				if mision == null:
-					var edif = get_tree().get_nodes_in_group("buildings")
+					var edif = Data.get_grupo_local(get_parent(), "buildings")
 					var hogar_grupo = get_hogar_grupo()
 					for i in range(edif.size() -1, -1, -1):
 						if edif[i].get_grupo() == hogar_grupo:
@@ -111,6 +118,8 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 						archienemigos = mision.get_grupo()
 				else:
 					archienemigos = base.get_archienemigos()
+	if Data.DEBUG:
+		$TxtEst.text = Ente.get_est_name(estado)
 
 # estados
 
@@ -124,12 +133,12 @@ func est_libre() -> void:
 				pos = get_postura()
 			match base.get_diplomacia():
 				Data.DIPLOMACIA.NORMAL:
-					if pos == POSTURA.SOBRA:
+					if pos >= POSTURA.SOBRA:
 						set_estado(ESTADO.EXPLORAR)
 					else:
 						$TimEstado.start(randf_range(3, 6))
 				Data.DIPLOMACIA.ATAQUE:
-					if pos == POSTURA.SOBRA:
+					if pos >= POSTURA.SOBRA:
 						set_estado(ESTADO.MISION)
 					else:
 						$TimEstado.start(randf_range(3, 6))
@@ -186,14 +195,14 @@ func est_mision() -> void:
 	if mover_errar:
 		if meta.is_zero_approx():
 			var pp = mision.global_position +\
-				Vector2(randf() * VISION, 0).rotated(randf() * 2 * PI)
-			var solidos = get_tree().get_nodes_in_group("buildings")
-			if Data.is_punto_free(self, pp, solidos):
+				Vector2(randf() * VISION, 0).rotated(randf() * 2.0 * PI)
+			var solidos = Data.get_grupo_local(get_parent(), "buildings")
+			if Data.is_punto_free(self, pp, solidos, mision.global_position):
 				meta = pp
 		elif Data.mover_hacia_punto(self, meta, 75) == Data.RES_MOVE.LLEGO:
 			# llego al punto dado
 			meta = Vector2(0, 0)
-	elif global_position.distance_to(meta) > VISION * 1.5 and not meta.is_zero_approx():
+	elif global_position.distance_to(meta) > VISION * 0.5 and not meta.is_zero_approx():
 		Data.mover_hacia_punto(self, meta, 75)
 	else:
 		velocity = Vector2(0, 0)

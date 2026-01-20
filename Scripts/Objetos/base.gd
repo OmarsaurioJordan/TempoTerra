@@ -17,6 +17,7 @@ var estadistica = {
 }
 
 func _ready() -> void:
+	$TimEnvejecer.start(randf_range(10, 80))
 	$Charla.visible = Data.DEBUG
 	$Imagen.frame = grupo
 
@@ -36,15 +37,20 @@ func get_diplomacia() -> Data.DIPLOMACIA:
 
 func _on_tim_estadisticas_timeout() -> void:
 	$TimEstadisticas.start(randf_range(3, 4))
+	var mi_parent = get_parent()
 	estadistica["casas"] = 0
 	for cas in get_tree().get_nodes_in_group("casas"):
-		if cas.get_grupo() == grupo:
+		if cas.get_parent() != mi_parent:
+			continue
+		if cas.get_grupo() == grupo and cas.get_parent() == mi_parent:
 			estadistica["casas"] += 1
 	var era = Data.grupo_to_era(grupo)
 	estadistica["obreras"] = 0
 	estadistica["capturadas"] = 0
 	estadistica["visitas"] = 0
 	for ent in get_tree().get_nodes_in_group("obreras"):
+		if ent.get_parent() != mi_parent:
+			continue
 		if ent.get_grupo() == grupo:
 			estadistica["obreras"] += 1
 		elif ent.get_hogar_grupo() == grupo:
@@ -56,6 +62,8 @@ func _on_tim_estadisticas_timeout() -> void:
 	estadistica["aliados"] = 0
 	estadistica["refuerzos"] = 0
 	for ent in get_tree().get_nodes_in_group("warriors"):
+		if ent.get_parent() != mi_parent:
+			continue
 		if ent.get_grupo() == grupo:
 			estadistica["warriors"] += 1
 		elif ent.get_hogar_grupo() == grupo:
@@ -67,18 +75,18 @@ func _on_tim_estadisticas_timeout() -> void:
 		$Charla/Texto.text = get_info()
 
 func get_info() -> String:
-	var t = "INFO (" + str(int(position.x)) + "," + str(int(position.y)) + ")\nmision: "
+	var t = "INFO (" + Data.get_grupo_name(grupo) + ")\nmision: "
 	if mision == null:
 		t += "null"
 	else:
-		t += str(int(mision.position.x)) + "," + str(int(mision.position.y))
+		t += Data.get_grupo_name(mision.grupo)
 	t += "\nenemy_base: "
 	if enemy_base == null:
 		t += "null"
 	else:
-		t += str(int(enemy_base.position.x)) + "," + str(int(enemy_base.position.y))
+		t += Data.get_grupo_name(enemy_base.grupo)
 	t += "\ncasas: " + str(estadistica["casas"])
-	t += " - diplomacia: " + str(diplomacia)
+	t += " - diplomacia: " + Data.DIPLOMACIA.keys()[diplomacia]
 	t += "\nobreras: " + str(estadistica["obreras"] +\
 		estadistica["capturadas"] + estadistica["visitas"])
 	t += " - warriors: " + str(estadistica["warriors"] +\
@@ -105,7 +113,7 @@ func set_diplomacia(new_orden: Data.DIPLOMACIA, force_mision: Node = null,
 				mision = force_mision
 				enemy_base = force_enemy_base
 			else:
-				var edif = get_tree().get_nodes_in_group("bases")
+				var edif = Data.get_grupo_local(get_parent(), "bases")
 				edif.erase(self)
 				if edif.is_empty():
 					set_diplomacia(Data.DIPLOMACIA.NORMAL)
@@ -145,7 +153,7 @@ func _on_tim_automatic_timeout() -> void:
 	$TimAutomatic.start(randf_range(60, 120))
 	var fuerza = get_fuerza()
 	# obtener informacion de quien ataca
-	var bases = get_tree().get_nodes_in_group("bases")
+	var bases = Data.get_grupo_local(get_parent(), "bases")
 	bases.erase(self)
 	var meatakan = []
 	for ba in bases:
@@ -166,7 +174,7 @@ func _on_tim_automatic_timeout() -> void:
 			if fuerza < 0.7 and con_obreras():
 				set_diplomacia(Data.DIPLOMACIA.NORMAL)
 		else:
-			var rnd = [Data.DIPLOMACIA.NORMAL, Data.DIPLOMACIA.EXPLORA, diplomacia]
+			var rnd = [Data.DIPLOMACIA.NORMAL, Data.DIPLOMACIA.EXPLORA, diplomacia, diplomacia]
 			if fuerza >= 1 or not con_obreras():
 				rnd = [Data.DIPLOMACIA.GUERRA, Data.DIPLOMACIA.ATAQUE, diplomacia]
 			set_diplomacia(rnd.pick_random())
@@ -179,7 +187,7 @@ func _on_tim_zona_timeout() -> void:
 	$TimZona.start(randf_range(5, 10))
 	# verifica que dos bases en guerra mutua elijan un lugar para pelear, sino que se crucen
 	if diplomacia == Data.DIPLOMACIA.GUERRA:
-		var bases = get_tree().get_nodes_in_group("bases")
+		var bases = Data.get_grupo_local(get_parent(), "bases")
 		bases.erase(self)
 		var meatakan = []
 		for ba in bases:
@@ -200,3 +208,15 @@ func _on_tim_zona_timeout() -> void:
 		elif mision != enemy_base:
 			# forzar que la base atacada sea atacada, no que una anterior calle lo sea
 			set_diplomacia(Data.DIPLOMACIA.GUERRA, enemy_base, enemy_base)
+
+func _on_tim_envejecer_timeout() -> void:
+	$TimEnvejecer.start(randf_range(50, 70))
+	envejecer("obreras")
+	envejecer("warriors")
+
+func envejecer(grup_name: String) -> void:
+	var entes = Data.get_grupo_local(get_parent(), grup_name)
+	entes.shuffle()
+	for ent in entes:
+		if ent.envejecer(grupo):
+			break

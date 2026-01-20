@@ -13,6 +13,10 @@ const INCUBACION: float = 60 # tiempo para crear nuevo individuo
 
 # metodos generales
 
+func _ready() -> void:
+	if not Data.DEBUG:
+		$TxtEst.queue_free()
+
 func initialize(el_grupo: Data.GRUPO, casa: Node) -> void:
 	is_obrera = true
 	vida = int(VIDA / 2)
@@ -31,6 +35,9 @@ func is_alimentable() -> bool:
 	return vida < VIDA / 2
 
 func _physics_process(_delta: float) -> void:
+	if randf() < 0.5:
+		move_and_slide()
+		return
 	if $TimPausa.is_stopped():
 		match estado:
 			ESTADO.LIBRE:
@@ -93,6 +100,8 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 				set_estado(ESTADO.LIBRE)
 			else:
 				objetivo = ext_info
+	if Data.DEBUG:
+		$TxtEst.text = Ente.get_est_name(estado)
 
 # estados
 
