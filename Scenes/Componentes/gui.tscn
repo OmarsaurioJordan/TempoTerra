@@ -440,7 +440,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "GREEK
 
-..."
+tienen uno de los sistemas politeístas más extensos, con muchas historias de semidioses que van de lo teatral a lo místico, son un conjunto de polis muy organizadas, con foros para política ciudadana, leyes y juicios bien establecidos, escuelas de filosofía, campañas militares con adiestramiento por servicio militar, juegos olímpicos y erotismo"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -460,7 +460,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "EGYPTIAN
 
-..."
+un gran río irriga el desierto dándole fertilidad a esta milenaria civilización, comandada por los faraónes que de la mano del sacerdocio toman las deciciónes, su politeísmo esconde una mística muy simbólica, con deidades con cabezas de animales, sus ritos funerarios incluyen la momificación, ellos celebran grandes fiestas sexuales"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -540,7 +540,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "LATIN
 
-..."
+sociedad sostenida en el monoteísmo cristiano, los reyes son la autoridad máxima y cada cual controla su terreno feudal, en el mismo viven las familias campesinas, las cuáles deben obedecer la moral impuesta por el sacerdocio, las diferencias sociales son muy grandes entre la nobleza y los plebeyos, los caballeros luchan en guerras santas"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -560,7 +560,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "ARABIAN
 
-..."
+se alza en los desiertos de medio oriente una cultura sostenida en el monoteísmo islámico, los ancianos líderes espirituales gobiernan imponiendo la moral y castigos, los hombres compiten por ejercer poder y demostrar riqueza, con lo que pueden conseguir hasta más de una esposa, las mujeres están altamente sometidas a la obediencia"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -580,7 +580,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "VIKING
 
-..."
+reino de múltiples pueblos habilidosos en el comercio y la guerra, unidos por una identidad religiosa politeísta, con grandes exploradores que aspiran ir más allá de sus congeladas tierras del norte, creen que morir en lucha es el acto más honorable, les gusta beber hidromiel, tienen brujos y brujas visionarios y mujeres guerreras"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -600,7 +600,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "ORIENTAL
 
-..."
+esta cultura ha crecido con fuertes principios de honor, disciplina, respeto a la autoridad jerárquica e introspección, sus emperadores gobiernan con el consejo de sabios filósofos, su sistema religiosos politeísta se enlaza con las prácticas budistas de espiritualidad, los guerreros practican complejas artes marciales bajo la figura del dragón"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -620,7 +620,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "VICTORIAN
 
-..."
+imperio tecnológico y económico, con sólidos bancos e inversión en investigación, se han levantado como un pilar del nuevo mundo, llevan a sus tierras conquistadas, las ideas de la ilustración, inventiva y filosofía, como banderas de su aparente altruismo, lo cuál contrasta con su expansionismo, explotación de recursos e imposicion religiosa"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -640,7 +640,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "FASCIST
 
-..."
+los habitantes de esta sociedad tienen una fuerte convicción de nacionalismo, creen que su bandera y cultura son superiores a otras, que incluso su raza es superior y no debe ser mezclada con la extranjera, esta nación está dispuesta a la lucha por defender sus ideales y limpiar las impurezas internas, se han levantado como potencia tecnológica"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -660,7 +660,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "COLONY
 
-..."
+una sociedad fundada por colonos de otra sociedad más grande, antigua e imperial, pero esta expansión se ha independizado luchando por su libertad, es una cultura mixta producto del mestizaje, tiene el desafío de salir de la pobreza, establecer una tecnología y economía propias, educando a sus rancheros que son rebeldes, pícaros y pistoleros"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -680,7 +680,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "CAPITALIST
 
-..."
+el dinero es el motor de la sociedad, cada individuo estudia y luego trabaja para conseguirlo, entre más tenga, podrá vivir con más lujos, mejores servicios básicos y acceso a experiencias de vida exclusivas, ser incapaz de producirlo implica ser inservible, y ser capaz de crear grandes empresas implica formar parte de la élite dominante"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -700,7 +700,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "COMMUNIST
 
-..."
+aquí no existe la propiedad privada ni la empresa privada, todo es administrado por el estado bajo un gobierno autoritario, tampoco hay dinero, los ciudadanos tienen acceso total a la salud, educación, seguridad y demás servicios básicos, son educados en instituciónes que indicarán según rendimiento académico, a qué oficio serán asignados"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
