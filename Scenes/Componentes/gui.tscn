@@ -82,7 +82,8 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxEmpty_y5s8j")
-text = "Era"
+text = "Era
+0 DC"
 autowrap_mode = 3
 clip_text = true
 metadata/_edit_lock_ = true
@@ -102,6 +103,22 @@ horizontal_alignment = 2
 autowrap_mode = 3
 clip_text = true
 metadata/_edit_lock_ = true
+
+[node name="TxtVida" type="Label" parent="."]
+offset_left = 966.0
+offset_top = 545.0
+offset_right = 1139.0
+offset_bottom = 637.0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxEmpty_y5s8j")
+text = "100%
+-----|||||"
+horizontal_alignment = 2
+vertical_alignment = 2
+autowrap_mode = 3
+clip_text = true
 
 [node name="Informacion" type="Control" parent="."]
 layout_mode = 3
@@ -129,10 +146,10 @@ metadata/_edit_lock_ = true
 
 [node name="Info1" type="Label" parent="Informacion"]
 layout_mode = 0
-offset_left = 85.0
-offset_top = 376.0
-offset_right = 231.0
-offset_bottom = 472.0
+offset_left = 73.0
+offset_top = 360.0
+offset_right = 219.0
+offset_bottom = 456.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
@@ -148,17 +165,55 @@ metadata/_edit_lock_ = true
 
 [node name="Info8" type="Label" parent="Informacion"]
 layout_mode = 0
-offset_left = 136.0
-offset_top = 69.0
-offset_right = 259.0
-offset_bottom = 162.0
+offset_left = 165.0
+offset_top = 170.0
+offset_right = 286.0
+offset_bottom = 263.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "Tab
-interact"
+continue"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Info10" type="Label" parent="Informacion"]
+layout_mode = 0
+offset_left = 853.0
+offset_top = 74.0
+offset_right = 974.0
+offset_bottom = 167.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "Enter
+speed"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Info9" type="Label" parent="Informacion"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 67.0
+offset_right = 281.0
+offset_bottom = 160.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "Escape
+exit"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -167,10 +222,10 @@ metadata/_edit_lock_ = true
 
 [node name="Info2" type="Label" parent="Informacion"]
 layout_mode = 0
-offset_left = 139.0
-offset_top = 490.0
-offset_right = 297.0
-offset_bottom = 586.0
+offset_left = 120.0
+offset_top = 473.0
+offset_right = 278.0
+offset_bottom = 569.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
@@ -186,17 +241,17 @@ metadata/_edit_lock_ = true
 
 [node name="Info6" type="Label" parent="Informacion"]
 layout_mode = 0
-offset_left = 843.0
-offset_top = 480.0
-offset_right = 1020.0
-offset_bottom = 576.0
+offset_left = 297.0
+offset_top = 493.0
+offset_right = 495.0
+offset_bottom = 589.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "Space
-select beings"
+text = "L-clic, Space
+main shot / hit"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -205,16 +260,16 @@ metadata/_edit_lock_ = true
 
 [node name="Info7" type="Label" parent="Informacion"]
 layout_mode = 0
-offset_left = 906.0
-offset_top = 329.0
-offset_right = 1083.0
-offset_bottom = 456.0
+offset_left = 854.0
+offset_top = 447.0
+offset_right = 1031.0
+offset_bottom = 574.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "N,M
+text = "Shift
 change tools
 here in base"
 horizontal_alignment = 1
@@ -225,17 +280,17 @@ metadata/_edit_lock_ = true
 
 [node name="Info3" type="Label" parent="Informacion"]
 layout_mode = 0
-offset_left = 319.0
-offset_top = 501.0
-offset_right = 464.0
-offset_bottom = 597.0
+offset_left = 919.0
+offset_top = 333.0
+offset_right = 1095.0
+offset_bottom = 428.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "L-clic
-main shot"
+text = "F
+select beign"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -244,10 +299,10 @@ metadata/_edit_lock_ = true
 
 [node name="Info5" type="Label" parent="Informacion"]
 layout_mode = 0
-offset_left = 644.0
-offset_top = 503.0
-offset_right = 813.0
-offset_bottom = 599.0
+offset_left = 662.0
+offset_top = 492.0
+offset_right = 831.0
+offset_bottom = 588.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
@@ -263,17 +318,17 @@ metadata/_edit_lock_ = true
 
 [node name="Info4" type="Label" parent="Informacion"]
 layout_mode = 0
-offset_left = 482.0
-offset_top = 510.0
-offset_right = 620.0
-offset_bottom = 606.0
+offset_left = 510.0
+offset_top = 493.0
+offset_right = 648.0
+offset_bottom = 619.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "M-clic, R
-reload"
+reload / weapon"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -298,9 +353,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "SAVAGE
+text = "SALVAJES
 
-..."
+en una zona cálida este grupo de humanos primitivos se ha juntado para armar la primera civilización, una tan antigua que aún no cuenta con una idea clara de su existencia, su centro urbano es un montón de rocas, ellos tienen un alta mortalidad y luchan a diario contra las criaturas salvajes, las que los cazan y de las que ellos se alimentan"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -318,9 +373,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "TIGER
+text = "TIGRES
 
-..."
+tribu del desierto, el tigre les da la fortaleza para luchar e imponerse ante otras tribus, el lugar en la sociedad se gana mediante el honor y la conquista, por lo que sus líderes son los más fuertes guerreros, tienen buenas habilidades de caza que son entrenadas mediante el juego físico como entrenamiento, desprecian la debilidad en todas sus formas"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -338,9 +393,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "EAGLE
+text = "ÁGUILAS
 
-..."
+tribu de las montañas y bosques de árboles altos, el águila les enseña a ser observadores del entorno, visionarios planificando las cosas a futuro, les llama la atención el conocimiento místico alcanzado mediante consumo de plantas, sus líderes son los ancianos sabios y los videntes que profetizan el porvenir, ven a otras tribus como menos capaces"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -358,9 +413,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "FISH
+text = "PECES
 
-..."
+tribu de las costas y mares, son altamente nómadas, con sociedades descentralizadas, ya que el pez les provee fluidez, adaptabilidad y alimento, ellos se reúnen cada tanto a contar sus historias oralmente, con lo que logran reivindicarse como una sola tribu, sus vestimentas son muy simples por la cercanía al agua y las arenosas playas"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -378,9 +433,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "BULL
+text = "TOROS
 
-..."
+tribu de las llanuras y tundras, el toro simboliza asentamiento, protección y fuerza, son una comunidad unida que resiste a otras tribus y al clima, les gusta mucho seguir sus tradiciones ancestrales, reivindicarse mediante el trabajo duro, los animales del llano además les proveen de los hongos mágicos que les brindan conocimiento"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -398,9 +453,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "SNAKE
+text = "SERPIENTES
 
-..."
+tribu del bosque profundo, son perspicaces, saben que nada es lo que parece, ven a la serpiente como un dador de sabiduría pero también como un ente del mundo de los muertos, tienen cultos a las almas y seres de la noche, sus habitantes son ambiciosos y manipuladores a la hora de hacer negocios, como lo son trueques o pactos de palabra"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -420,7 +475,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
 text = "MANTIS
 
-..."
+tribu inspirada en los insectos, sus miembros se organizan en castas y la sociedad funciona si cada quién entiende su función, el logro se alcanza mediante la disciplina, lo colectivo prima sobre lo individual, sus personalidades son frías y meditativas, prefieren tomarse las cosas con calma, sus deciciónes giran en torno a la eficiencia y órden"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -438,9 +493,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "GREEK
+text = "GRIEGOS
 
-tienen uno de los sistemas politeístas más extensos, con muchas historias de semidioses que van de lo teatral a lo místico, son un conjunto de polis muy organizadas, con foros para política ciudadana, leyes y juicios bien establecidos, escuelas de filosofía, campañas militares con adiestramiento por servicio militar, juegos olímpicos y erotismo"
+tienen uno de los sistemas politeístas más extensos, con muchas historias de semidioses que van de lo teatral a lo místico, son un conjunto de polis muy organizadas, con foros para política ciudadana, leyes y juicios bien establecidos, escuelas de filosofía, campañas militares con adiestramiento por servicio militar, juegos olímpicos y hedonismo"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -458,9 +513,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "EGYPTIAN
+text = "EGIPCIOS
 
-un gran río irriga el desierto dándole fertilidad a esta milenaria civilización, comandada por los faraónes que de la mano del sacerdocio toman las deciciónes, su politeísmo esconde una mística muy simbólica, con deidades con cabezas de animales, sus ritos funerarios incluyen la momificación, ellos celebran grandes fiestas sexuales"
+un gran río irriga el desierto dándole fertilidad a esta milenaria civilización, comandada por los faraónes que de la mano del sacerdocio toman las deciciónes, su politeísmo esconde una mística muy simbólica, con deidades con cabezas de animales, sus ritos funerarios incluyen la momificación, y sus fiestas giran en torno a la fertilidad"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -478,9 +533,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "MAYAN
+text = "MAYAS
 
-..."
+grandes ciudades indígenas rodeadas de densos bosques, se interesan mucho por los astros, el calendario preciso, la escritura y la muerte, esta última forma parte fundamental de su cosmogonía, llevan a cabo rituales de sacrificios humanos usualmente con miembros de tribus menores contiguas, poseen gran conexión con la naturaleza que les rodea"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -498,9 +553,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "AFRICAN
+text = "AFRICANOS
 
-..."
+diferentes culturas componen a esta civilización del desierto, aquí prosperan varias estructuras matriarcales, donde las mujeres ocupan altos rangos sociales y seleccionan a su o sus parejas, gran parte de la economía prospera por la explotación de recursos valiosos como el oro, marfil y diamantes, aún así son poco conexos"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -518,9 +573,9 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "BABYLONIAN
+text = "PERSAS
 
-..."
+gran imperio de medio oriente, sus antecesores establecieron la astrología y un sistema rígido de leyes y castigos, luego ellos administran territorios conquistados bajo tolerancia cultural, construyen caminos y sistema de correos, pagan tributos, se rigen por la filosofía dicotómica del bien vs el mal, muy buenos en la logística urbana y militar"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -538,7 +593,7 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "LATIN
+text = "LATINOS
 
 sociedad sostenida en el monoteísmo cristiano, los reyes son la autoridad máxima y cada cual controla su terreno feudal, en el mismo viven las familias campesinas, las cuáles deben obedecer la moral impuesta por el sacerdocio, las diferencias sociales son muy grandes entre la nobleza y los plebeyos, los caballeros luchan en guerras santas"
 horizontal_alignment = 1
@@ -558,7 +613,7 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "ARABIAN
+text = "ÁRABES
 
 se alza en los desiertos de medio oriente una cultura sostenida en el monoteísmo islámico, los ancianos líderes espirituales gobiernan imponiendo la moral y castigos, los hombres compiten por ejercer poder y demostrar riqueza, con lo que pueden conseguir hasta más de una esposa, las mujeres están altamente sometidas a la obediencia"
 horizontal_alignment = 1
@@ -578,7 +633,7 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "VIKING
+text = "VIKINGOS
 
 reino de múltiples pueblos habilidosos en el comercio y la guerra, unidos por una identidad religiosa politeísta, con grandes exploradores que aspiran ir más allá de sus congeladas tierras del norte, creen que morir en lucha es el acto más honorable, les gusta beber hidromiel, tienen brujos y brujas visionarios y mujeres guerreras"
 horizontal_alignment = 1
@@ -598,7 +653,7 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "ORIENTAL
+text = "ORIENTALES
 
 esta cultura ha crecido con fuertes principios de honor, disciplina, respeto a la autoridad jerárquica e introspección, sus emperadores gobiernan con el consejo de sabios filósofos, su sistema religiosos politeísta se enlaza con las prácticas budistas de espiritualidad, los guerreros practican complejas artes marciales bajo la figura del dragón"
 horizontal_alignment = 1
@@ -618,7 +673,7 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "VICTORIAN
+text = "VICTORIANOS
 
 imperio tecnológico y económico, con sólidos bancos e inversión en investigación, se han levantado como un pilar del nuevo mundo, llevan a sus tierras conquistadas, las ideas de la ilustración, inventiva y filosofía, como banderas de su aparente altruismo, lo cuál contrasta con su expansionismo, explotación de recursos e imposicion religiosa"
 horizontal_alignment = 1
@@ -638,7 +693,7 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "FASCIST
+text = "FASCISTAS
 
 los habitantes de esta sociedad tienen una fuerte convicción de nacionalismo, creen que su bandera y cultura son superiores a otras, que incluso su raza es superior y no debe ser mezclada con la extranjera, esta nación está dispuesta a la lucha por defender sus ideales y limpiar las impurezas internas, se han levantado como potencia tecnológica"
 horizontal_alignment = 1
@@ -658,7 +713,7 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "COLONY
+text = "COLONOS
 
 una sociedad fundada por colonos de otra sociedad más grande, antigua e imperial, pero esta expansión se ha independizado luchando por su libertad, es una cultura mixta producto del mestizaje, tiene el desafío de salir de la pobreza, establecer una tecnología y economía propias, educando a sus rancheros que son rebeldes, pícaros y pistoleros"
 horizontal_alignment = 1
@@ -678,7 +733,7 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "CAPITALIST
+text = "CAPITALISTAS
 
 el dinero es el motor de la sociedad, cada individuo estudia y luego trabaja para conseguirlo, entre más tenga, podrá vivir con más lujos, mejores servicios básicos y acceso a experiencias de vida exclusivas, ser incapaz de producirlo implica ser inservible, y ser capaz de crear grandes empresas implica formar parte de la élite dominante"
 horizontal_alignment = 1
@@ -698,7 +753,7 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "COMMUNIST
+text = "COMUNISTAS
 
 aquí no existe la propiedad privada ni la empresa privada, todo es administrado por el estado bajo un gobierno autoritario, tampoco hay dinero, los ciudadanos tienen acceso total a la salud, educación, seguridad y demás servicios básicos, son educados en instituciónes que indicarán según rendimiento académico, a qué oficio serán asignados"
 horizontal_alignment = 1
@@ -718,9 +773,457 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("2_2whkw")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
-text = "UNITY
+text = "UNITARIOS
 
 la humanidad ha logrado avanzar a un solo sistema político y religioso, los ciudadanos han sido educados hasta un alto grado de consciencia, curados con ingeniería genética, sus necesidades administradas por inteligencias artificiales robóticas y en general todo se ha fundamentado en el conocimiento científico, son una humanidad"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="Datas" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_lock_ = true
+
+[node name="G0" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1214.0
+offset_top = -438.0
+offset_right = 1750.0
+offset_bottom = -36.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "SAVAGES
+
+in a warm region, this group of primitive humans has gathered to form the first civilization, one so ancient that it still lacks a clear sense of its own existence, their urban center is a pile of rocks, they suffer high mortality and fight daily against wild creatures that hunt them and that they also feed upon"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G1" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1216.0
+offset_top = 21.0
+offset_right = 1752.0
+offset_bottom = 423.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "TIGERS
+
+desert tribe, the tiger grants them strength to fight and impose themselves over other tribes, one’s place in society is earned through honor and conquest, so their leaders are the strongest warriors, they train hunting skills through physical play and despise weakness in all its forms"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G2" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1775.0
+offset_top = 23.0
+offset_right = 2311.0
+offset_bottom = 425.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "EAGLES
+
+tribe of mountains and tall forests, the eagle teaches them to observe their surroundings and plan far into the future, they value mystical knowledge gained through plant consumption, their leaders are wise elders and seers who prophesize what is to come, they see other tribes as less capable"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G3" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 2334.0
+offset_top = 17.0
+offset_right = 2870.0
+offset_bottom = 419.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "FISH
+
+tribe of coasts and seas, highly nomadic, with decentralized societies, as the fish grants them fluidity, adaptability, and food, they gather from time to time to share stories orally, reaffirming themselves as a single tribe, their clothing is very simple due to water and sandy beaches"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G4" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 2896.0
+offset_top = 11.0
+offset_right = 3432.0
+offset_bottom = 413.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "BULLS
+
+tribe of plains and tundras, the bull symbolizes settlement, protection, and strength, they are a united community that resists other tribes and harsh climates, they strongly follow ancestral traditions and value hard work, the animals of the plains also provide magical fungi that grant knowledge"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G5" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 3453.0
+offset_top = 9.0
+offset_right = 3989.0
+offset_bottom = 411.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "SNAKES
+
+tribe of the deep forest, they are perceptive and know that nothing is what it seems, they see the serpent as a giver of wisdom and as an entity from the world of the dead, they worship souls and nocturnal beings, their people are ambitious and manipulative in trade and verbal pacts"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G6" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 4004.0
+offset_top = 9.0
+offset_right = 4540.0
+offset_bottom = 411.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "MANTIS
+
+insect-inspired tribe, its members are organized into castes, and society functions only if each understands their role, achievement is reached through discipline, the collective comes before the individual, their personalities are cold and contemplative, preferring calm decisions focused on efficiency and order"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G7" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1209.0
+offset_top = 457.0
+offset_right = 1745.0
+offset_bottom = 859.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "GREEKS
+
+they have one of the most extensive polytheistic systems, with many stories of demigods ranging from theatrical to mystical, they are a set of highly organized city states, with forums for civic politics, well established laws and trials, schools of philosophy, military campaigns with service based training, olympic games and hedonism"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G8" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1781.0
+offset_top = 461.0
+offset_right = 2317.0
+offset_bottom = 863.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "EGYPTIANS
+
+a great river irrigates the desert, granting fertility to this millenary civilization, ruled by pharaohs who alongside the priesthood make decisions, their polytheism hides a deeply symbolic mysticism, with animal headed deities, funerary rites include mummification, and their festivals revolve around fertility"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G9" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 2338.0
+offset_top = 455.0
+offset_right = 2874.0
+offset_bottom = 857.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "MAYA
+
+large indigenous cities surrounded by dense forests, they are deeply interested in the stars, precise calendars, writing and death, the latter being a fundamental part of their worldview, they perform human sacrifice rituals usually involving members of neighboring minor tribes, they maintain a strong bond with the surrounding nature"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G10" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 2902.0
+offset_top = 457.0
+offset_right = 3438.0
+offset_bottom = 859.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "AFRICANS
+
+different cultures compose this desert civilization, where several matriarchal structures flourish, women hold high social ranks and choose one or multiple partners, much of the economy thrives on the exploitation of valuable resources such as gold, ivory and diamonds, even so they remain loosely connected"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G11" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 3457.0
+offset_top = 459.0
+offset_right = 3993.0
+offset_bottom = 861.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "PERSIANS
+
+a great middle eastern empire, whose predecessors established astrology and a rigid system of laws and punishments, later they administer conquered territories through cultural tolerance, they build roads and courier systems, collect tributes, follow a dualistic philosophy of good versus evil, and excel in urban and military logistics"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G12" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1204.0
+offset_top = 892.0
+offset_right = 1740.0
+offset_bottom = 1294.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "LATINS
+
+a society sustained by christian monotheism, kings are the supreme authority and each controls their feudal land, within it live peasant families who must obey the morality imposed by the priesthood, social differences between nobility and commoners are vast, and knights fight in holy wars"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G13" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1778.0
+offset_top = 896.0
+offset_right = 2314.0
+offset_bottom = 1298.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "ARABIANS
+
+rising in the deserts of the middle east is a culture sustained by islamic monotheism, elder spiritual leaders govern by enforcing morality and punishments, men compete to gain power and display wealth, allowing them to take multiple wives, women are heavily subjected to obedience"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G14" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 2346.0
+offset_top = 894.0
+offset_right = 2882.0
+offset_bottom = 1296.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "VIKINGS
+
+a kingdom of many peoples skilled in trade and war, united by a polytheistic religious identity, with great explorers who seek to go beyond their frozen northern lands, they believe dying in battle is the most honorable act, they enjoy drinking mead, and have visionary shamans and warrior women"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G15" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 2905.0
+offset_top = 896.0
+offset_right = 3441.0
+offset_bottom = 1298.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "ORIENTALS
+
+this culture has grown around strong principles of honor, discipline, respect for hierarchical authority and introspection, emperors rule with the counsel of wise philosophers, their polytheistic religion blends with buddhist spiritual practices, warriors train complex martial arts under the symbol of the dragon"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G16" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1205.0
+offset_top = 1327.0
+offset_right = 1741.0
+offset_bottom = 1729.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "VICTORIANS
+
+a technological and economic empire, with strong banking systems and heavy investment in research, they rise as a pillar of the new world, spreading ideas of enlightenment, invention and philosophy into conquered lands as banners of apparent altruism, which contrasts with their expansionism, resource exploitation and religious imposition"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G17" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1779.0
+offset_top = 1333.0
+offset_right = 2315.0
+offset_bottom = 1735.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "FASCISTS
+
+the people of this society hold a strong nationalist conviction, believing their flag and culture are superior to others, even claiming their race is superior and must not mix with foreigners, this nation is willing to fight to defend its ideals and cleanse internal impurities, rising as a technological power"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G18" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 2343.0
+offset_top = 1339.0
+offset_right = 2879.0
+offset_bottom = 1741.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "SETTLERS
+
+a society founded by colonists from a larger ancient imperial power, but this expansion has gained independence through struggle, it is a mixed culture born from miscegenation, facing the challenge of escaping poverty, building its own technology and economy, educating ranchers who are rebellious, cunning and gunslingers"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G19" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1211.0
+offset_top = 1763.0
+offset_right = 1747.0
+offset_bottom = 2165.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "CAPITALISTS
+
+money is the driving force of society, each individual studies and then works to obtain it, the more one has, the greater the access to luxury, better basic services, and exclusive life experiences, being unable to produce it means being useless, while creating large companies grants elite status"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G20" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1783.0
+offset_top = 1772.0
+offset_right = 2319.0
+offset_bottom = 2174.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "COMMUNISTS
+
+there is no private property or private enterprise, everything is managed by the state under an authoritarian government, there is no money, citizens have full access to healthcare, education, security, and basic services, they are educated in institutions that assign professions based on academic performance"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_lock_ = true
+
+[node name="G21" type="Label" parent="Datas"]
+layout_mode = 0
+offset_left = 1215.0
+offset_top = 2196.0
+offset_right = 1751.0
+offset_bottom = 2598.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("2_2whkw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_2whkw")
+text = "UNITARIANS
+
+humanity has advanced into a single political and religious system, citizens are educated to a high level of consciousness, healed through genetic engineering, and their needs are managed by robotic artificial intelligences, everything is based on scientific knowledge, they are a unified humanity"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

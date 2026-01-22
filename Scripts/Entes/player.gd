@@ -24,6 +24,7 @@ func _ready() -> void:
 	call_deferred("set_camara_mundo")
 	gui.get_node("Informacion").visible = false
 	gui.get_node("Datos").visible = false
+	gui.get_node("Datas").visible = false
 	$PartiUp.visible = false
 	$PartiDown.visible = false
 
@@ -64,8 +65,12 @@ func _physics_process(delta: float) -> void:
 		elif not area_tab.is_empty():
 			gui.get_node("Informacion").visible = true
 			var base = area_tab[0].get_parent()
-			gui.get_node("Informacion/Texto").text =\
-				gui.get_node("Datos/G" + str(base.get_grupo())).text
+			if Data.is_spanish():
+				gui.get_node("Informacion/Texto").text =\
+					gui.get_node("Datos/G" + str(base.get_grupo())).text
+			else:
+				gui.get_node("Informacion/Texto").text =\
+					gui.get_node("Datas/G" + str(base.get_grupo())).text
 	# disparar
 	if Input.is_action_pressed("ui_disparo"):
 		if municion + cargador > 0:
@@ -109,7 +114,7 @@ func set_camara_mundo() -> void:
 		"MundoAntiguo":
 			gui.get_node("TxtEra").text = "Tribal\n6000 BEC"
 		"MundoImperial":
-			gui.get_node("TxtEra").text = "Imperial\n0 CE"
+			gui.get_node("TxtEra").text = "Imperial\n300 BEC"
 		"MundoMedieval":
 			gui.get_node("TxtEra").text = "Medieval\n1000 CE"
 		"MundoIndustrial":
@@ -120,6 +125,9 @@ func set_camara_mundo() -> void:
 			gui.get_node("TxtEra").text = "Futuristic\n2500 CE"
 		"MundoApocaliptico":
 			gui.get_node("TxtEra").text = "Apocalyptic\n3000 CE"
+	if Data.is_spanish():
+		gui.get_node("TxtEra").text = gui.get_node("TxtEra").text.\
+			replace("BEC", "AC").replace("CE", "DC")
 
 func set_tiempo(nombre_mundo: String, hongovapor: bool = true) -> void:
 	if nombre_mundo != "":

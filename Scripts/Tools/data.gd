@@ -552,5 +552,8 @@ static func crea_hongovapor(new_parent: Node, posicion: Vector2, tipo: int,
 
 # informacion textual
 
+static func is_spanish() -> bool:
+	return OS.get_locale_language() == "es"
+
 static func get_grupo_name(grp: GRUPO) -> String:
 	return GRUPO.keys()[grp]

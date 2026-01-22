@@ -1,0 +1,91 @@
+[gd_scene load_steps=9 format=3 uid="uid://cg7mx08wwwe0t"]
+
+[ext_resource type="Script" uid="uid://bw16pwdyolf8e" path="res://Scripts/Tools/imagen.gd" id="1_kc466"]
+[ext_resource type="Texture2D" uid="uid://dgc4pg2bqr06b" path="res://Sprites/Entes/d_pies_strip12.png" id="2_jbchm"]
+[ext_resource type="Texture2D" uid="uid://cudpblcjwc20s" path="res://Sprites/Entes/d_cuerpo_strip44.png" id="3_ak2na"]
+[ext_resource type="Texture2D" uid="uid://bcpqm6locv2hf" path="res://Sprites/Entes/d_cabeza_strip44.png" id="4_iflr5"]
+[ext_resource type="Texture2D" uid="uid://dxy3eeidmweif" path="res://Sprites/Entes/d_escudo_strip22.png" id="5_lrgen"]
+[ext_resource type="Texture2D" uid="uid://cl74su0pkyhdh" path="res://Sprites/Entes/d_distancia_strip10.png" id="6_ity4h"]
+[ext_resource type="Texture2D" uid="uid://dd0nvr88qpjmr" path="res://Sprites/Entes/d_secundaria_strip3.png" id="7_ho8uo"]
+[ext_resource type="Texture2D" uid="uid://dkubspuc1unir" path="res://Sprites/Entes/d_mele_strip22.png" id="8_dpuyo"]
+
+[node name="Monigote" type="Node2D"]
+metadata/_edit_lock_ = true
+
+[node name="Imagen" type="Node2D" parent="."]
+script = ExtResource("1_kc466")
+metadata/_edit_lock_ = true
+
+[node name="PieD" type="Sprite2D" parent="Imagen"]
+position = Vector2(19, -14)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_jbchm")
+hframes = 12
+frame = 7
+metadata/_edit_lock_ = true
+
+[node name="PieI" type="Sprite2D" parent="Imagen"]
+position = Vector2(-18, -15)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_jbchm")
+flip_h = true
+hframes = 12
+frame = 7
+metadata/_edit_lock_ = true
+
+[node name="Cuerpo" type="Sprite2D" parent="Imagen"]
+position = Vector2(1, -80)
+texture = ExtResource("3_ak2na")
+hframes = 44
+frame = 25
+metadata/_edit_lock_ = true
+
+[node name="Cabeza" type="Sprite2D" parent="Imagen"]
+position = Vector2(0, -157)
+texture = ExtResource("4_iflr5")
+hframes = 44
+frame = 20
+metadata/_edit_lock_ = true
+
+[node name="Escudo" type="Sprite2D" parent="Imagen"]
+position = Vector2(-41, -95)
+texture = ExtResource("5_lrgen")
+hframes = 22
+frame = 14
+metadata/_edit_lock_ = true
+
+[node name="Municion" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(-23, -76)
+texture = ExtResource("6_ity4h")
+offset = Vector2(-10, -70)
+hframes = 10
+frame = 1
+metadata/_edit_lock_ = true
+
+[node name="Secundaria" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(-32, -79)
+rotation = -0.127409
+texture = ExtResource("7_ho8uo")
+offset = Vector2(-5, -20)
+hframes = 3
+metadata/_edit_lock_ = true
+
+[node name="Arma" type="Sprite2D" parent="Imagen"]
+position = Vector2(28, -88)
+rotation = 0.261799
+texture = ExtResource("8_dpuyo")
+offset = Vector2(20, -55)
+hframes = 22
+frame = 18
+metadata/_edit_lock_ = true
+
+[node name="Distancia" type="Sprite2D" parent="Imagen"]
+visible = false
+position = Vector2(50, -78)
+texture = ExtResource("6_ity4h")
+offset = Vector2(-10, -70)
+hframes = 10
+frame = 5
+metadata/_edit_lock_ = true

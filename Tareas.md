@@ -1,11 +1,15 @@
 # Tareas
 
-- no se están asignando o navegando bien hacia los lugares de mision o ataque
+- solo puede obtener armas en su base aliada, debe tomar pan de su era futurista, ahí lo lleva a obrera para aliarse, una alianza posible por era, tiene tiempo limitado para entregar el pan o desaparece, también se cura en base futurista
+...
 - viajeros tiempo reloj para no envejecer tan rapido, como un seguro momentáneo, y obrera capt igual, y recién nacido
 - solo atacar obrera si no modo conquista ya
-- ataque ataca a explorador
 - obrera habla con cualquier otra de otro grupo
 - mosekte pasar a mele si enemigo cerca con mele, y pasar a moskete si enemigo lejos y munición
+- poner pausa cuando mensajes o textos
+- cambiar velocidad de ejecución según poder player
+- si centro unico, nunca guerra ni ataque, quizás defensa si enemigos en torno a centro
+- reloj envejecimiento fallo con modernos, mucho respawn, hacer que reloj más rápido si hubo death
 ...
 - crear explosivos, falta poner lanzador en ente
 - daño hecho por proyectil
@@ -22,8 +26,6 @@
 - deseleccionar entes si estan muy lejos
 - hacer que entes seleccionados sigan, solo si aliados
 - cambiar de era a los entes
-- envejecerlos y kill si sobrepasan limite
-- dibujar sprites de salvajes y su centro
 ...
 - insectos errar
 - player ataque mele

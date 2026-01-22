@@ -18,6 +18,7 @@ func _ready() -> void:
 		$TxtEst.queue_free()
 
 func initialize(el_grupo: Data.GRUPO, casa: Node) -> void:
+	parent_mundo = get_parent().get_parent()
 	is_obrera = true
 	vida = int(VIDA / 2)
 	grupo = el_grupo
@@ -35,7 +36,7 @@ func is_alimentable() -> bool:
 	return vida < VIDA / 2
 
 func _physics_process(_delta: float) -> void:
-	if randf() < 0.5:
+	if evade_ciclo():
 		move_and_slide()
 		return
 	if $TimPausa.is_stopped():

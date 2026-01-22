@@ -43,6 +43,9 @@ var prepunteria: Vector2 = Vector2(0, 0) # posicion de enemigo para disparo pre 
 var is_player: bool = false # para poder manejar cosas manualmente
 var lanzo_explosivo: int = 0 # 0:ninguno, 1:fuego, 2:granada
 
+# para optimizacion
+var parent_mundo: Node = null
+
 # para obtener informacion general
 
 func is_libre() -> bool:
@@ -133,6 +136,7 @@ func _on_tim_errar_timeout() -> void:
 	$TimErrar.start(randf_range(1, 7))
 	mover_errar = not mover_errar
 	huida_giro = randf_range(-PI * 0.25, PI * 0.25)
+	parent_mundo = get_parent().get_parent()
 
 # para ser golpeado
 
@@ -201,6 +205,11 @@ func envejecer(el_grupo: Data.GRUPO) -> bool:
 			death()
 			return true
 	return false
+
+func evade_ciclo() -> bool:
+	if parent_mundo.visible:
+		return false
+	return randf() < 0.5 # 0 continuo siempre activo, 1 desactivado
 
 # obtener informacion de ataque y lucha
 

@@ -8,10 +8,11 @@ func _ready() -> void:
 func initialize() -> void:
 	var pareja = [load("res://Scenes/Entes/warrior.tscn"), load("res://Scenes/Entes/obrera.tscn")]
 	for ca in get_tree().get_nodes_in_group("casas"):
-		for par in pareja:
-			var aux = par.instantiate()
-			ca.get_parent().add_child(aux)
-			aux.position = ca.position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
+		for _r in range(2):
+			for par in pareja:
+				var aux = par.instantiate()
+				ca.get_parent().add_child(aux)
+				aux.position = ca.position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
 	var bases = get_tree().get_nodes_in_group("bases")
 	var casas = get_tree().get_nodes_in_group("casas")
 	for ent in get_tree().get_nodes_in_group("humans"):
