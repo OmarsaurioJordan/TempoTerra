@@ -17,7 +17,7 @@ var vida: int
 
 # para agrupamiento
 var grupo: Data.GRUPO = Data.GRUPO.SOLO # pertenencia original segun vestimenta
-var hogar: Node = null # pertenencia ideologia o a donde se ha unido
+var hogar: Node = null # casa, pertenencia ideologia o a donde se ha unido
 var is_obrera: bool = false
 
 # para navegacion y automata
@@ -167,8 +167,14 @@ func post_hit() -> void:
 
 func death() -> void:
 	# Tarea limpiar enemigo y seguimiento en todos
-	if is_player: # Tarea quitar
-		return
+	if is_player:
+		var entes = get_tree().get_nodes_in_group("entes")
+		for ent in entes:
+			if ent == self:
+				continue
+			ent.set_envisto(false)
+			ent.set_seleccionado(false)
+		return # Tarea quitar
 	var deaths = get_tree().get_nodes_in_group("deaths")
 	Data.crea_death(self, deaths)
 	queue_free()
@@ -345,7 +351,48 @@ func set_seleccionado(is_seleccionado: bool) -> void:
 	$Select.visible = is_seleccionado
 
 func get_seleccionado() -> bool:
+	if is_player:
+		return false
 	return $Select.visible
+
+func set_tiempo(nombre_mundo: String, hongovapor: bool = true) -> void:
+	if nombre_mundo != "":
+		var mundo = get_parent().get_parent().get_parent().get_node(nombre_mundo)
+		var pos = position
+		get_parent().remove_child(self)
+		mundo.get_node("Objetos").add_child(self)
+		position = pos
+		if is_player:
+			call_deferred("set_camara_mundo")
+		else:
+			estado = ESTADO.LIBRE
+			reset_cosas()
+			$TimEstado.start(randf_range(3, 6))
+			base_cambiotiempo()
+		if hongovapor:
+			var vapores = get_tree().get_nodes_in_group("vapores")
+			var parent = get_parent()
+			if is_player:
+				Data.crea_hongovapor(parent, global_position, 0, 3, 64, vapores)
+			else:
+				Data.crea_hongovapor(parent, global_position, 0, 2, 64, vapores)
+
+func base_cambiotiempo() -> void:
+	# esto se ejecuta cuando viaja en el tiempo y tiene que decir a que grupo pertenece
+	$TimNoVejez.start()
+	var casas = Data.get_grupo_local(get_parent(), "casas")
+	casas.shuffle()
+	for cas in casas:
+		if cas.get_grupo() == grupo:
+			hogar = cas
+			return
+	hogar = null
+
+func no_seleccionado(el_player: Node) -> void:
+	# funcion ejecutada cuando se quiera verificar si conserva el estado seleccionado
+	if $Select.visible:
+		if el_player.global_position.distance_to(global_position) > DIST_SEGUIR_PLAYER:
+			$Select.visible = false
 
 # informacion textual
 

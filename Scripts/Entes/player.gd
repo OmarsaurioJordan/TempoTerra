@@ -129,19 +129,6 @@ func set_camara_mundo() -> void:
 		gui.get_node("TxtEra").text = gui.get_node("TxtEra").text.\
 			replace("BEC", "AC").replace("CE", "DC")
 
-func set_tiempo(nombre_mundo: String, hongovapor: bool = true) -> void:
-	if nombre_mundo != "":
-		var mundo = get_parent().get_parent().get_parent().get_node(nombre_mundo)
-		var pos = position
-		get_parent().remove_child(self)
-		mundo.get_node("Objetos").add_child(self)
-		position = pos
-		call_deferred("set_camara_mundo")
-		if hongovapor:
-			var vapores = get_tree().get_nodes_in_group("vapores")
-			var parent = get_parent()
-			Data.crea_hongovapor(parent, global_position, 0, 3, 64, vapores)
-
 # automaticos para detecciones especiales
 
 func _on_area_tab_area_entered(area: Area2D) -> void:
@@ -182,10 +169,15 @@ func step_particulas(delta: float) -> void:
 		reloj_viaje = min(reloj_viaje + delta, TIME_VIAJE)
 		if reloj_viaje == TIME_VIAJE:
 			is_viaje_ida = false
+			var nxt: String
 			if is_al_futuro:
-				set_tiempo(Data.get_next_mundo(self, get_tree().get_nodes_in_group("mundos")))
+				nxt = Data.get_next_mundo(self, get_tree().get_nodes_in_group("mundos"))
 			else:
-				set_tiempo(Data.get_prev_mundo(self, get_tree().get_nodes_in_group("mundos")))
+				nxt = Data.get_prev_mundo(self, get_tree().get_nodes_in_group("mundos"))
+			set_tiempo(nxt)
+			for ent in get_tree().get_nodes_in_group("entes"):
+				if ent.get_seleccionado():
+					ent.set_tiempo(nxt)
 		elif ant < TIME_VIAJE - 0.4 and reloj_viaje >= TIME_VIAJE - 0.4:
 			gui.get_node("Anima").play("oscuro")
 	else:
@@ -218,3 +210,4 @@ func _on_tim_enmira_timeout() -> void:
 		if ent == self:
 			continue
 		ent.set_envisto(ent == cercano)
+		ent.no_seleccionado(self)

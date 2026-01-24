@@ -15,7 +15,7 @@
 - daño hecho por proyectil
 - daño hecho por mele
 - daño hecho por explosivo
-- bailewar agregar aleatoriedad en comportamiento mele, estan muy trompos
+- bailewar agregar aleatoriedad en comportamiento mele, estan muy trompos, si golpeado no puede golpear
 - ir a recargar municion
 - ir a recargar vida
 - poner en obrera modo de huida cuando sea atacada
@@ -23,9 +23,9 @@
 - al tener objetivo a atacar, este auto contraataca si no tiene otro objetivo
 - al ser atacado recluta aliado cercano, help, sea obrera o warrior
 - respawn de player con animacion
-- deseleccionar entes si estan muy lejos
 - hacer que entes seleccionados sigan, solo si aliados
-- cambiar de era a los entes
+- verificar eliminación de entes que no tengan base en un tiempo que no sea el suyo
+- caminan lento cuando recargando
 ...
 - insectos errar
 - player ataque mele

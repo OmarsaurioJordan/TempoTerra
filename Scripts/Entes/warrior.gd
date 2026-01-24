@@ -280,3 +280,8 @@ func _on_tim_ver_timeout() -> void:
 func base_cambia_diplomacia(base: Node) -> void:
 	if base == get_base():
 		set_estado(ESTADO.LIBRE)
+
+func _on_tim_recarga_casa_timeout() -> void:
+	$TimRecargaCasa.start(randf_range(3, 6))
+	var tech = Data.distancia_to_tech($Imagen/Distancia.frame)
+	
