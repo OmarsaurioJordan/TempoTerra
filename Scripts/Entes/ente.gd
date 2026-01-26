@@ -142,21 +142,49 @@ func _on_tim_errar_timeout() -> void:
 
 func hit_proyectil(ind_tech: int, dir_empuje: Vector2) -> void:
 	retroceso = dir_empuje * Data.RETROCESO * 0.5
-	# Tarea hacer esto bien
-	vida -= 10
-	post_hit()
+	var damage = Data.get_damage_distancia(ind_tech)
+	var arm_esc = get_armor_escudo(ind_tech, false)
+	if randf() > arm_esc[1]:
+		vida -= damage * (1.0 - arm_esc[0])
+		post_hit()
+	else:
+		$Imagen/Hit.play("escudo")
 
 func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
 	retroceso = dir_empuje * Data.RETROCESO
-	# Tarea hacer esto bien
-	vida -= 20
-	post_hit()
+	var damage = Data.get_damage_mele(ind_tech)
+	var arm_esc = get_armor_escudo(ind_tech, true)
+	if randf() > arm_esc[1]:
+		vida -= damage * (1.0 - arm_esc[0])
+		post_hit()
+	else:
+		$Imagen/Hit.play("escudo")
 
 func hit_explosion(is_granada: bool, dir_empuje: Vector2) -> void:
 	retroceso = dir_empuje * Data.RETROCESO * 0.75
-	# Tarea hacer esto bien
-	vida -= 40
-	post_hit()
+	var damage = Data.get_damage_distancia()
+	if not is_granada:
+		damage *= 0.5
+	var arm_esc = get_armor_escudo(-1, false)
+	if randf() > arm_esc[1]:
+		vida -= damage * (1.0 - arm_esc[0])
+		post_hit()
+	else:
+		$Imagen/Hit.play("escudo")
+
+func get_armor_escudo(ind_tech: int, is_for_mele: bool) -> Array:
+	var my_tech = Data.era_to_tech(Data.grupo_to_era(grupo))
+	var armadura: float = 0
+	var escudo: float = get_escudo()
+	if is_obrera:
+		armadura = Data.get_armadura_obrera(my_tech)
+	elif is_for_mele:
+		armadura = Data.get_armadura_mele(my_tech)
+		escudo *= Data.get_escudo_mele(ind_tech)
+	else:
+		armadura = Data.get_armadura_distancia(my_tech)
+		escudo *= Data.get_escudo_distancia(ind_tech)
+	return [armadura, escudo]
 
 func post_hit() -> void:
 	$Imagen/Hit.play("hit")
@@ -174,7 +202,7 @@ func death() -> void:
 				continue
 			ent.set_envisto(false)
 			ent.set_seleccionado(false)
-		return # Tarea quitar
+		return # Tarea activar respawn player
 	var deaths = get_tree().get_nodes_in_group("deaths")
 	Data.crea_death(self, deaths)
 	queue_free()
@@ -227,6 +255,17 @@ func get_dist_tech() -> int:
 
 func get_archienemigo_grupo() -> Data.GRUPO:
 	return archienemigos
+
+func get_escudo() -> int:
+	if is_obrera:
+		return 0
+	if $Imagen/Escudo.visible:
+		var fr = $Imagen/Escudo.frame
+		if fr >= 7 and fr <= 11:
+			return 2
+		elif fr >= 12 and fr <= 15:
+			return 1
+	return 0
 
 # acciones de ataque y lucha
 
