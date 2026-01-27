@@ -37,7 +37,6 @@
 - menú principal, juego nuevo o continuar
 - pausa, opciónes sonido y salir
 - construir todos los mundos, diseño de nivel
-- borrar lineas basura sprites
 
 # Comportamiento
 
