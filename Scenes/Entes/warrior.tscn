@@ -597,11 +597,6 @@ wait_time = 180.0
 one_shot = true
 autostart = true
 
-[node name="TimRecargaCasa" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-autostart = true
-
 [node name="Shots" type="Node" parent="."]
 
 [node name="TimShotDistance" type="Timer" parent="Shots"]
@@ -626,6 +621,5 @@ one_shot = true
 [connection signal="timeout" from="TimErrar" to="." method="_on_tim_errar_timeout"]
 [connection signal="timeout" from="TimReubicar" to="." method="_on_tim_reubicar_timeout"]
 [connection signal="timeout" from="TimVer" to="." method="_on_tim_ver_timeout"]
-[connection signal="timeout" from="TimRecargaCasa" to="." method="_on_tim_recarga_casa_timeout"]
 [connection signal="timeout" from="Shots/TimShotCargador" to="." method="_on_tim_shot_cargador_timeout"]
 [connection signal="timeout" from="Shots/TimShotGo" to="." method="_on_tim_shot_go_timeout"]

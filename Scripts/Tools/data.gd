@@ -417,6 +417,8 @@ static func get_nearest_obreras(nodo: Node, otros: Array, vision: float = 100000
 	for ot in otros:
 		if ot == nodo:
 			continue
+		if ot.estado == ot.ESTADO.SEGUIR:
+			continue
 		if ot.get_parent() != mundillo:
 			continue
 		if ot.get_hogar_grupo() == hogar_grupo:
@@ -441,6 +443,20 @@ static func get_nearest_obreras(nodo: Node, otros: Array, vision: float = 100000
 				mejor[i] = ot
 				mejor[i + 2] = dec
 	return mejor
+
+static func get_obrera_casa(hogar: Node, otros: Array) -> Node:
+	var bolsa: Array = []
+	for ot in otros:
+		if ot.hogar == hogar:
+			bolsa.append(ot)
+	if bolsa.is_empty():
+		var hogar_grupo = hogar.get_grupo()
+		for ot in otros:
+			if ot.get_hogar_grupo() == hogar_grupo:
+				bolsa.append(ot)
+	if not bolsa.is_empty():
+		return bolsa.pick_random()
+	return null
 
 # funciones de obtencion de informacion de la era y mundo
 

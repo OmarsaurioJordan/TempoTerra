@@ -2,10 +2,11 @@ extends Ente
 
 const CERCANO: float = 200
 
-const VIDA: int = 200
+const VIDA: float = 200
 const SPEED: float = 300
 const ALIMENTO: int = 20
 const TIME_VIAJE: float = 4
+const COMBUSTIBLE: int = 10
 
 @onready var gui: Node = get_tree().get_nodes_in_group("gui")[0]
 var area_tab: Array = []
@@ -14,6 +15,7 @@ var linea: Line2D = null
 var is_al_futuro: bool = true # dice si viaja al futuro o pasado
 var is_viaje_ida: bool = true # para saber si particulas aparecen o desaparecen
 var reloj_viaje: float = 0 # para ejecutar teleportacion
+var combustible: int = 5 # para poder hacer viajes
 
 # metodos generales
 
@@ -62,8 +64,10 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_dialogos"):
 		if gui.get_node("Informacion").visible:
 			gui.get_node("Informacion").visible = false
+			Engine.time_scale = gui.get_parent().clock_speed
 		elif not area_tab.is_empty():
 			gui.get_node("Informacion").visible = true
+			Engine.time_scale = 0
 			var base = area_tab[0].get_parent()
 			if Data.is_spanish():
 				gui.get_node("Informacion/Texto").text =\
@@ -71,6 +75,15 @@ func _physics_process(delta: float) -> void:
 			else:
 				gui.get_node("Informacion/Texto").text =\
 					gui.get_node("Datas/G" + str(base.get_grupo())).text
+	# cambiar velocidad de ejecucion
+	if Input.is_action_just_pressed("ui_speed"):
+		if $TimPausa.is_stopped():
+			$TimPausa.start()
+			gui.get_parent().clock_speed = 1 if gui.get_parent().clock_speed != 1 else 2
+			if Engine.time_scale != 0:
+				Engine.time_scale = gui.get_parent().clock_speed
+				var vapores = get_tree().get_nodes_in_group("vapores")
+				Data.crea_hongovapor(get_parent(), global_position, 0, 2, 64, vapores)
 	# disparar
 	if Input.is_action_pressed("ui_disparo"):
 		if municion + cargador > 0:
@@ -89,6 +102,12 @@ func _physics_process(delta: float) -> void:
 	# particulas viaje tiempo
 	if $PartiUp.visible:
 		step_particulas(delta)
+	# estadisticas en interfaz
+	gui.get_node("TxtAmmo").text = str(cargador) + "/" + str(municion) + "\n" + str(especial)
+	var cmbst = ""
+	for i in range(COMBUSTIBLE):
+		cmbst += "-" if i < combustible else "|"
+	gui.get_node("TxtVida").text = str(int((vida / VIDA) * 100.0)) + "%\n" + cmbst
 
 # metodos para viajar en el tiempo
 

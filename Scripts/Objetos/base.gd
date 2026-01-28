@@ -210,13 +210,15 @@ func _on_tim_zona_timeout() -> void:
 			set_diplomacia(Data.DIPLOMACIA.GUERRA, enemy_base, enemy_base)
 
 func _on_tim_envejecer_timeout() -> void:
-	$TimEnvejecer.start(randf_range(50, 70))
-	envejecer("obreras")
-	envejecer("warriors")
+	if envejecer("obreras") or envejecer("warriors"):
+		$TimEnvejecer.start(randf_range(5, 7))
+	else:
+		$TimEnvejecer.start(randf_range(50, 70))
 
-func envejecer(grup_name: String) -> void:
+func envejecer(grup_name: String) -> bool:
 	var entes = Data.get_grupo_local(get_parent(), grup_name)
 	entes.shuffle()
 	for ent in entes:
 		if ent.envejecer(grupo):
-			break
+			return true
+	return false

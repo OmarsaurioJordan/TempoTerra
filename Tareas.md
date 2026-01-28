@@ -2,27 +2,23 @@
 
 - solo puede obtener armas en su base aliada, debe tomar pan de su era futurista, ahí lo lleva a obrera para aliarse, una alianza posible por era, tiene tiempo limitado para entregar el pan o desaparece desligando bases si hay más de una y mostrando el mensaje correspondiente ante cualquier cambio, también se cura en base futurista
 ...
-- viajeros tiempo reloj para no envejecer tan rapido, como un seguro momentáneo, y obrera capt igual, y recién nacido
-- solo atacar obrera si no modo conquista o seguimiento
-- obrera habla con cualquier otra de otro grupo
-- mosekte pasar a mele si enemigo cerca con mele, y pasar a moskete si enemigo lejos y munición
-- poner pausa cuando mensajes o textos
-- cambiar velocidad de ejecución según poder player
 - si centro unico, nunca guerra ni ataque, quizás defensa si enemigos en torno a centro
-- reloj envejecimiento fallo con modernos, mucho respawn, hacer que reloj más rápido si hubo death
+- si guerra y otro no tiene soldados, terminarla.
 ...
 - crear explosivos, falta poner lanzador en ente
 - bailewar agregar aleatoriedad en comportamiento mele, estan muy trompos, si golpeado o escudo no puede golpear
-- ir a recargar municion
 - ir a recargar vida
 - poner en obrera modo de huida cuando sea atacada
-- nuevos seres se crean sin ninguna municion ni arma
 - al tener objetivo a atacar, este auto contraataca si no tiene otro objetivo
 - al ser atacado recluta aliado cercano, help, sea obrera o warrior
 - respawn de player con animacion
 - hacer que entes seleccionados sigan, solo si aliados
 - verificar eliminación de entes que no tengan base en un tiempo que no sea el suyo, timer global
 - caminan lento cuando recargando
+- tiempo de recarga puede aumentarse para demora cuando toman municion de sus bases
+- cavernicolas aparecen mele sin mazo
+- obreras correr cuando alimentan warrior
+- escudo x2 es medieval no imperial
 ...
 - insectos errar
 - player ataque mele
@@ -37,6 +33,8 @@
 - menú principal, juego nuevo o continuar
 - pausa, opciónes sonido y salir
 - construir todos los mundos, diseño de nivel
+...
+- hay una escena Monigote, para vestirle
 
 # Comportamiento
 

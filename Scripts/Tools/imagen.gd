@@ -42,6 +42,10 @@ func set_texto(texto: String = "") -> void:
 	$Charla.visible = texto != ""
 	if $Charla.visible:
 		$Charla/Texto.text = texto
+		Engine.time_scale = 0
+	else:
+		var mundo = get_parent().get_parent().get_parent().get_parent()
+		Engine.time_scale = mundo.clock_speed
 
 func initialize_obrera(grupo: Data.GRUPO) -> void:
 	$Cuerpo.frame = grupo * 2 + 1
@@ -60,12 +64,12 @@ func initialize_warrior(grupo: Data.GRUPO) -> void:
 	$PieI.frame = Data.era_to_tech(era) * 2
 	set_armas(grupo)
 
-func set_armas(grupo: Data.GRUPO) -> void:
+func set_armas(grupo: Data.GRUPO, force_distancia: bool = false) -> void:
 	var era = Data.grupo_to_era(grupo)
 	var tech = Data.era_to_tech(era)
 	set_armas_base(grupo)
 	# 0:antiguo 1:imperial 2:medieval 3:industrial 4:moderno 5:avanzado
-	if (tech == 0 or tech == 2) and randf() < 0.5:
+	if (tech == 0 or tech == 2) and randf() < 0.5 and not force_distancia:
 		set_mele()
 	else:
 		set_distancia()
@@ -97,6 +101,10 @@ func set_mele() -> void:
 	# arma mele
 	$Escudo.visible = $Escudo.frame >= 7 and $Escudo.frame <= 15
 	$Arma.visible = true
+	# activar o desactivar relojes
+	var timShots = get_parent().get_node("Shots")
+	for tim in timShots.get_children():
+		tim.stop()
 
 func set_distancia() -> void:
 	# invisibilizar
@@ -105,10 +113,18 @@ func set_distancia() -> void:
 	# distancia
 	$Municion.visible = $Municion.frame == 1 or $Municion.frame == 3
 	$Distancia.visible = true
-	if $Municion.visible:
-		$Escudo.visible = false
+	# activar o desactivar relojes
+	var timShots = get_parent().get_node("Shots")
+	for tim in timShots.get_children():
+		tim.stop()
 	# rellenar
 	var nodo = get_parent()
-	var tech = nodo.get_dist_tech()
-	nodo.get_node("Shots/TimShotCargador").start(Data.RECARGAS[tech])
-	$Anima.play("recharge")
+	if nodo.cargador == 0 and nodo.municion > 0:
+		var tech = nodo.get_dist_tech()
+		nodo.get_node("Shots/TimShotCargador").start(Data.RECARGAS[tech])
+		$Anima.play("recharge")
+	# quitar cosas
+	if nodo.municion + nodo.cargador <= 1:
+		$Municion.visible = false
+	if $Municion.visible:
+		$Escudo.visible = false

@@ -1,8 +1,10 @@
 extends Node2D
 
+var clock_speed: float = 1
+
 func _ready() -> void:
 	randomize()
-	Engine.time_scale = 1.0
+	Engine.time_scale = clock_speed
 	call_deferred("initialize")
 
 func initialize() -> void:

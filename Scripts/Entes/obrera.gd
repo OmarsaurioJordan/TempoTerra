@@ -3,7 +3,7 @@ extends Ente
 const WARRIOR = preload("res://Scenes/Entes/warrior.tscn")
 const OBRERA = preload("res://Scenes/Entes/obrera.tscn")
 
-const VIDA: int = 100 # cantidad de puntos de impacto
+const VIDA: float = 100 # cantidad de puntos de impacto
 const VISION_MAIZ: float = 500 # radio minimo, se incrementara multiplicandolo en un ciclo
 const VISION_MAIZ_MULT: int = 5 # multiplicador maximo para buscar maiz dada la distancia base
 const VISION: float = 1000 # rango de vision para otros entes o cosas
@@ -76,10 +76,8 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 				var entes = get_tree().get_nodes_in_group("obreras")
 				var envista = Data.get_envista(self, entes, VISION)
 				if not envista.is_empty():
-					var mi_hogar_grupo = get_hogar_grupo()
 					for i in range(envista.size() - 1, -1, -1):
-						if envista[i].get_hogar_grupo() != mi_hogar_grupo or\
-								not envista[i].is_libre():
+						if not envista[i].is_libre():
 							envista.remove_at(i)
 				if envista.is_empty():
 					set_estado(ESTADO.LIBRE)
@@ -232,4 +230,5 @@ func est_seguir() -> void:
 			if not objetivo.is_player: # warrior
 				if Data.mover_hacia_punto(self, objetivo.meta, 150) == Data.RES_MOVE.LLEGO:
 					hogar = objetivo.hogar
+					$TimNoVejez.start()
 					set_estado(ESTADO.LIBRE)

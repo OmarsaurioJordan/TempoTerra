@@ -13,7 +13,7 @@ enum ESTADO {
 var estado: ESTADO = ESTADO.LIBRE
 
 # fundamentales para existir
-var vida: int
+var vida: float
 
 # para agrupamiento
 var grupo: Data.GRUPO = Data.GRUPO.SOLO # pertenencia original segun vestimenta
@@ -234,10 +234,11 @@ func _on_tim_reubicar_timeout() -> void:
 				break
 
 func envejecer(el_grupo: Data.GRUPO) -> bool:
-	if get_hogar_grupo() == el_grupo:
-		if get_postura() == POSTURA.VIEJO:
-			death()
-			return true
+	if $TimNoVejez.is_stopped():
+		if get_hogar_grupo() == el_grupo:
+			if get_postura() == POSTURA.VIEJO:
+				death()
+				return true
 	return false
 
 func evade_ciclo() -> bool:
@@ -271,18 +272,31 @@ func get_escudo() -> int:
 
 func est_bailewar(is_mele_mode: bool, vision: float, velocidad: float) -> void:
 	# funcion llamada solo si enemigo ha sido verificado
-	# moverse bailando cerca a enemigo
+	# acercarse a enemigo ya que es mele, pero alejarse un poco si no esta listo el ataque
 	if is_mele_mode:
 		if not $Shots/TimShotMele.is_stopped() and $Shots/TimShotGo.is_stopped():
 			Data.seguir_punto(self, enemigo.global_position, 150, 100)
 		else:
 			Data.seguir_punto(self, enemigo.global_position, 10, 0)
+	# alejarse mientras esta recargando municion
 	elif not $Shots/TimShotCargador.is_stopped():
 		Data.seguir_punto(self, enemigo.global_position, vision * 0.9, vision * 0.8)
+	# alejarse un poco mientras esta en espacio de recarga de tiro, cadencia
 	elif not $Shots/TimShotDistance.is_stopped():
 		Data.seguir_punto(self, enemigo.global_position, vision * 0.7, vision * 0.5)
+	# mantenerse a una distancia media para apuntar bien
 	else:
 		Data.seguir_punto(self, enemigo.global_position, vision * 0.6, vision * 0.4)
+	# en caso de usar rifle antiguo, evalua posibilidades de cambio de arma
+	if Data.go_estocastico():
+		if get_dist_tech() == 3:
+			var dis = global_position.distance_to(enemigo.global_position)
+			if is_mele_mode:
+				if dis > vision * 0.5 and cargador + municion > 0:
+					$Imagen.set_distancia()
+			elif dis < vision * 0.3:
+				$Imagen.set_mele()
+	# para evitar que se quede quieto en la franja permitida
 	if velocity.is_zero_approx():
 		velocity = dir_baile_rebote * velocidad
 	else:

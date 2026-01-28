@@ -1,9 +1,10 @@
 extends Ente
 
-const VIDA: int = 150 # cantidad de puntos de impacto
+const VIDA: float = 150 # cantidad de puntos de impacto
 const SPEED: float = 150 # velocidad de desplazamiento
-const ALIMENTO: int = 20 # en cuanto aumenta su vida al ser alimentado
+const ALIMENTO: int = 50 # en cuanto aumenta su vida al ser alimentado
 const VISION: float = 1000 # rango de vision para otros entes o cosas
+const VIDA_RETIRADA_PORC: float = 0.25 # porcentaje de la vida para huir
 
 # metodos generales
 
@@ -29,6 +30,16 @@ func _physics_process(_delta: float) -> void:
 	if evade_ciclo():
 		move_and_slide()
 		return
+	# el flechero medieval debe recargar si o si, o todos recargan vida
+	if Data.go_estocastico():
+		if estado != ESTADO.RECARGAR:
+			if cargador + municion == 0:
+				if get_dist_tech() == 2:
+					set_estado(ESTADO.RECARGAR)
+		if estado != ESTADO.RECARGAR:
+			if vida < VIDA * VIDA_RETIRADA_PORC:
+				set_estado(ESTADO.RECARGAR)
+	# alcanzar enemigo para luchar
 	var bueno_dale = true
 	if enemigo != null:
 		if is_instance_valid(enemigo):
@@ -45,6 +56,7 @@ func _physics_process(_delta: float) -> void:
 					velocity = dir.normalized() * SPEED
 		else:
 			enemigo = null
+	# ir al ultimo lugar que vio enemigo
 	if bueno_dale:
 		if not seguimiento.is_zero_approx():
 			match estado:
@@ -53,6 +65,12 @@ func _physics_process(_delta: float) -> void:
 					if Data.mover_hacia_punto(self, seguimiento, 80, true) == Data.RES_MOVE.LLEGO:
 						seguimiento = Vector2(0, 0)
 	if bueno_dale:
+		# intenta recargar municion y vida
+		if Data.go_estocastico():
+			if estado != ESTADO.RECARGAR and cargador + municion == 0:
+				if get_dist_tech() in [4, 5]:
+					set_estado(ESTADO.RECARGAR)
+		# continuar con la maquina de estados
 		if $TimPausa.is_stopped():
 			match estado:
 				ESTADO.LIBRE:
@@ -96,7 +114,12 @@ func set_estado(new_estado: ESTADO, ext_info=null) -> void:
 				meta = hogar.global_position
 				objetivo = ext_info
 		ESTADO.RECARGAR:
-			pass
+			var base = get_base()
+			if base == null:
+				set_estado(ESTADO.LIBRE)
+			elif vida < VIDA * VIDA_RETIRADA_PORC and cargador + municion != 0:
+				if not base.con_obreras():
+					set_estado(ESTADO.LIBRE)
 		ESTADO.MISION:
 			var base = get_base()
 			if base == null:
@@ -129,6 +152,11 @@ func est_libre() -> void:
 	if $TimEstado.is_stopped():
 		var base = get_base()
 		if base != null:
+			# ver si debe recargar municion
+			if cargador + municion == 0 and get_dist_tech() != 0:
+				set_estado(ESTADO.RECARGAR)
+				return
+			# continuar con las opciones diplomaticas
 			var pos = POSTURA.SOBRA
 			if base.con_obreras():
 				pos = get_postura()
@@ -190,7 +218,29 @@ func est_conquistar() -> void:
 					set_estado(ESTADO.LIBRE)
 
 func est_recargar() -> void:
-	pass
+	var tech = get_dist_tech()
+	if cargador + municion == 0 and tech != 0:
+		# ir por la municion
+		if hogar != null:
+			var base = get_base()
+			if Data.mover_hacia_punto(self, base.global_position, 250) == Data.RES_MOVE.LLEGO:
+				$Imagen.set_armas(base.get_grupo(), true)
+		elif tech != 2:
+			set_estado(ESTADO.LIBRE)
+		else:
+			errar(VISION)
+	elif vida < VIDA:
+		# ir por la vida
+		if Data.seguir_objetivo(self, 150, 0) == Data.RES_MOVE.NULO:
+			if hogar != null:
+				var obreras = Data.get_grupo_local(get_parent(), "obreras")
+				objetivo = Data.get_obrera_casa(hogar, obreras)
+				if objetivo == null:
+					set_estado(ESTADO.LIBRE)
+			else:
+				set_estado(ESTADO.LIBRE)
+	else:
+		set_estado(ESTADO.LIBRE)
 
 func est_mision() -> void:
 	if mover_errar:
@@ -280,8 +330,3 @@ func _on_tim_ver_timeout() -> void:
 func base_cambia_diplomacia(base: Node) -> void:
 	if base == get_base():
 		set_estado(ESTADO.LIBRE)
-
-func _on_tim_recarga_casa_timeout() -> void:
-	$TimRecargaCasa.start(randf_range(3, 6))
-	var tech = Data.distancia_to_tech($Imagen/Distancia.frame)
-	
