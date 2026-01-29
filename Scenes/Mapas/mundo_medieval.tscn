@@ -78,6 +78,10 @@ metadata/_edit_lock_ = true
 
 [node name="Limites" parent="." instance=ExtResource("5_4cxhi")]
 
+[node name="Sombras" type="Node2D" parent="."]
+y_sort_enabled = true
+metadata/_edit_lock_ = true
+
 [node name="Objetos" type="Node2D" parent="."]
 y_sort_enabled = true
 metadata/_edit_lock_ = true

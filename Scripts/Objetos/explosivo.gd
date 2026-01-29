@@ -1,7 +1,6 @@
 extends Area2D
 
 const SPEED: float = 500
-const RADIO: float = 64 # varios radios, esta es la distancia del minimo que se multiplicara
 
 var grupo: Data.GRUPO = Data.GRUPO.SOLO
 var direccion: Vector2 = Vector2(0, 0)
@@ -38,10 +37,13 @@ func explotar() -> void:
 	var parent = get_parent()
 	var tipo = 2 if $Imagen.frame == 0 else 1
 	var radios = 3 + $Imagen.frame
-	Data.crea_hongovapor(parent, global_position, tipo, radios, RADIO, vapores)
+	Data.crea_hongovapor(parent, global_position, tipo, radios, Data.RADIO_EXPLO, vapores)
+	# crear ceniza
+	var cenizas = get_tree().get_nodes_in_group("cenizas")
+	Data.crea_ceniza(self, cenizas)
 	# golpear a los entes
 	var entes = get_tree().get_nodes_in_group("entes")
-	var vistos = Data.get_envista(self, entes, RADIO * (radios - 1.5))
+	var vistos = Data.get_envista_vision(self, entes, Data.RADIO_EXPLO * (radios - 1.5))
 	for vis in vistos:
 		var dir = global_position.direction_to(vis.global_position)
 		vis.hit_explosion($Imagen.frame == 1, dir)

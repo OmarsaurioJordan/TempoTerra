@@ -32,7 +32,8 @@ func _ready() -> void:
 
 func initialize(_grp=0, _csa=null) -> void:
 	grupo = Data.GRUPO.CYBORG
-	$Imagen.initialize_warrior(grupo)
+	#$Imagen.set_armas(grupo)
+	$Imagen.set_armas(Data.GRUPO.GRINGO)
 
 func alimentar() -> void:
 	vida = min(vida + ALIMENTO, VIDA)
@@ -78,24 +79,19 @@ func _physics_process(delta: float) -> void:
 	# cambiar velocidad de ejecucion
 	if Input.is_action_just_pressed("ui_speed"):
 		if $TimPausa.is_stopped():
-			$TimPausa.start()
+			$TimPausa.start(1.5)
 			gui.get_parent().clock_speed = 1 if gui.get_parent().clock_speed != 1 else 2
 			if Engine.time_scale != 0:
 				Engine.time_scale = gui.get_parent().clock_speed
 				var vapores = get_tree().get_nodes_in_group("vapores")
 				Data.crea_hongovapor(get_parent(), global_position, 0, 2, 64, vapores)
-	# disparar
+	# disparar y recargar
 	if Input.is_action_pressed("ui_disparo"):
-		if municion + cargador > 0:
-			if cargador == 0 and $Shots/TimShotCargador.is_stopped():
-				$Shots/TimShotCargador.start(Data.RECARGAS[get_dist_tech()])
-				$Imagen/Anima.play("recharge")
-			elif $Shots/TimShotDistance.is_stopped() and $Shots/TimShotCargador.is_stopped():
-				$Shots/TimShotGo.start()
-				$Shots/TimShotDistance.start(Data.CADENCIA[get_dist_tech()])
-				$Imagen/Anima.play("shot")
-				$TimPausa.start(0.5)
-				cargador -= 1
+		disparar(get_global_mouse_position())
+	elif Input.is_action_pressed("ui_especial"):
+		lanza_explosivo(get_global_mouse_position())
+	elif Input.is_action_pressed("ui_recarga"):
+		recargar()
 	# seleccion
 	if Input.is_action_just_pressed("ui_seleccionar"):
 		seleccionar()

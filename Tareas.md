@@ -5,9 +5,6 @@
 - si centro unico, nunca guerra ni ataque, quizás defensa si enemigos en torno a centro
 - si guerra y otro no tiene soldados, terminarla.
 ...
-- crear explosivos, falta poner lanzador en ente
-- bailewar agregar aleatoriedad en comportamiento mele, estan muy trompos, si golpeado o escudo no puede golpear
-- ir a recargar vida
 - poner en obrera modo de huida cuando sea atacada
 - al tener objetivo a atacar, este auto contraataca si no tiene otro objetivo
 - al ser atacado recluta aliado cercano, help, sea obrera o warrior
@@ -16,9 +13,10 @@
 - verificar eliminación de entes que no tengan base en un tiempo que no sea el suyo, timer global
 - caminan lento cuando recargando
 - tiempo de recarga puede aumentarse para demora cuando toman municion de sus bases
-- cavernicolas aparecen mele sin mazo
-- obreras correr cuando alimentan warrior
-- escudo x2 es medieval no imperial
+- cargar municion no debe cambiar mele por obsoleta, ni escudo ni explosivos, excepto player
+- si luchando y obrera muy cerca, dejar de seguir obrera para recuperar vida
+- las particulas cambio era blancas se están abriendo cada vez más
+- no quieren recargar explosivo aunque bobean cerca a la base
 ...
 - insectos errar
 - player ataque mele

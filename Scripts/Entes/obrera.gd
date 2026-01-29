@@ -125,7 +125,7 @@ func est_recoleccion() -> void:
 			objetivo = hogar
 			if Data.mover_hacia_objetivo(self, 125) == Data.RES_MOVE.LLEGO:
 				$Imagen/Alimento.frame = 1
-				$TimPausa.start()
+				$TimPausa.start(1.5)
 		else:
 			set_estado(ESTADO.ALIMENTACION)
 	elif objetivo == null:
@@ -143,13 +143,13 @@ func est_recoleccion() -> void:
 			set_estado(ESTADO.LIBRE)
 		else:
 			objetivo = los_mios.pick_random()
-			$TimPausa.start()
+			$TimPausa.start(1.5)
 	# ir por el maiz que ya vio
 	elif Data.mover_hacia_objetivo(self, 50) == Data.RES_MOVE.LLEGO:
 		if objetivo.set_cosecha():
 			$Imagen/Alimento.visible = true
 			$Imagen/Alimento.frame = 0
-			$TimPausa.start()
+			$TimPausa.start(1.5)
 		objetivo = null
 	elif Data.go_estocastico():
 		if not objetivo.get_listo():
@@ -199,6 +199,8 @@ func est_alimentacion() -> void:
 				objetivo.alimentar()
 				set_estado(ESTADO.LIBRE)
 			objetivo = null
+		if objetivo != null and Data.go_estocastico():
+			objetivo.aquietar(1)
 	else:
 		errar(VISION)
 		# cada tanto buscar aliado que requiera ayuda

@@ -59,9 +59,9 @@ func initialize_obrera(grupo: Data.GRUPO) -> void:
 func initialize_warrior(grupo: Data.GRUPO) -> void:
 	$Cuerpo.frame = grupo * 2
 	$Cabeza.frame = grupo * 2
-	var era = Data.grupo_to_era(grupo)
-	$PieD.frame = Data.era_to_tech(era) * 2
-	$PieI.frame = Data.era_to_tech(era) * 2
+	var tech = Data.era_to_tech(Data.grupo_to_era(grupo))
+	$PieD.frame = tech * 2
+	$PieI.frame = tech * 2
 	set_armas(grupo)
 
 func set_armas(grupo: Data.GRUPO, force_distancia: bool = false) -> void:
@@ -105,6 +105,7 @@ func set_mele() -> void:
 	var timShots = get_parent().get_node("Shots")
 	for tim in timShots.get_children():
 		tim.stop()
+	$AniShot.play("RESET")
 
 func set_distancia() -> void:
 	# invisibilizar
@@ -117,12 +118,13 @@ func set_distancia() -> void:
 	var timShots = get_parent().get_node("Shots")
 	for tim in timShots.get_children():
 		tim.stop()
+	$AniShot.play("RESET")
 	# rellenar
 	var nodo = get_parent()
 	if nodo.cargador == 0 and nodo.municion > 0:
 		var tech = nodo.get_dist_tech()
 		nodo.get_node("Shots/TimShotCargador").start(Data.RECARGAS[tech])
-		$Anima.play("recharge")
+		$AniShot.play("recharge")
 	# quitar cosas
 	if nodo.municion + nodo.cargador <= 1:
 		$Municion.visible = false

@@ -9,6 +9,7 @@ const VIDA_RETIRADA_PORC: float = 0.25 # porcentaje de la vida para huir
 # metodos generales
 
 func _ready() -> void:
+	$TimIntentoExplo.start(randf_range(5, 15))
 	if not Data.DEBUG:
 		$TxtEst.queue_free()
 
@@ -65,7 +66,7 @@ func _physics_process(_delta: float) -> void:
 					if Data.mover_hacia_punto(self, seguimiento, 80, true) == Data.RES_MOVE.LLEGO:
 						seguimiento = Vector2(0, 0)
 	if bueno_dale:
-		# intenta recargar municion y vida
+		# intenta recargar municion cada que no tiene enemigo en mira
 		if Data.go_estocastico():
 			if estado != ESTADO.RECARGAR and cargador + municion == 0:
 				if get_dist_tech() in [4, 5]:
@@ -152,8 +153,15 @@ func est_libre() -> void:
 	if $TimEstado.is_stopped():
 		var base = get_base()
 		if base != null:
-			# ver si debe recargar municion
-			if cargador + municion == 0 and get_dist_tech() != 0:
+			# ver si debe recargar municion o explosivos
+			var tech = get_dist_tech()
+			if cargador + municion < Data.MUNICION[tech] / 2 and tech != 0:
+				if cargador + municion == 0 or\
+						tech <= Data.era_to_tech(Data.grupo_to_era(get_hogar_grupo())):
+					set_estado(ESTADO.RECARGAR)
+					return
+			if especial == 0 and Data.is_grupo_explosivos(grupo) and\
+					Data.is_grupo_explosivos(get_hogar_grupo()):
 				set_estado(ESTADO.RECARGAR)
 				return
 			# continuar con las opciones diplomaticas
@@ -330,3 +338,20 @@ func _on_tim_ver_timeout() -> void:
 func base_cambia_diplomacia(base: Node) -> void:
 	if base == get_base():
 		set_estado(ESTADO.LIBRE)
+
+func _on_tim_intento_explo_timeout() -> void:
+	$TimIntentoExplo.start(randf_range(5, 15))
+	if enemigo != null:
+		var explo = get_explosivo()
+		if explo in [0, 1] and is_instance_valid(enemigo):
+			var entes = get_tree().get_nodes_in_group("humans")
+			var radios = 3 + explo
+			var vistos = Data.get_envista_vision(enemigo, entes, Data.RADIO_EXPLO * (radios - 0.5))
+			var hagale = true
+			var hogar_grupo = get_hogar_grupo()
+			for vis in vistos:
+				if vis.get_hogar_grupo() == hogar_grupo:
+					hagale = false
+					break
+			if hagale:
+				lanza_explosivo(enemigo.global_position)

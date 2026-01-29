@@ -148,7 +148,7 @@ func hit_proyectil(ind_tech: int, dir_empuje: Vector2) -> void:
 		vida -= damage * (1.0 - arm_esc[0])
 		post_hit()
 	else:
-		$Imagen/Hit.play("escudo")
+		$Imagen/AniEscudo.play("escudo")
 
 func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
 	retroceso = dir_empuje * Data.RETROCESO
@@ -158,7 +158,7 @@ func hit_mele(ind_tech: int, dir_empuje: Vector2) -> void:
 		vida -= damage * (1.0 - arm_esc[0])
 		post_hit()
 	else:
-		$Imagen/Hit.play("escudo")
+		$Imagen/AniEscudo.play("escudo")
 
 func hit_explosion(is_granada: bool, dir_empuje: Vector2) -> void:
 	retroceso = dir_empuje * Data.RETROCESO * 0.75
@@ -170,7 +170,7 @@ func hit_explosion(is_granada: bool, dir_empuje: Vector2) -> void:
 		vida -= damage * (1.0 - arm_esc[0])
 		post_hit()
 	else:
-		$Imagen/Hit.play("escudo")
+		$Imagen/AniEscudo.play("escudo")
 
 func get_armor_escudo(ind_tech: int, is_for_mele: bool) -> Array:
 	var my_tech = Data.era_to_tech(Data.grupo_to_era(grupo))
@@ -187,7 +187,7 @@ func get_armor_escudo(ind_tech: int, is_for_mele: bool) -> Array:
 	return [armadura, escudo]
 
 func post_hit() -> void:
-	$Imagen/Hit.play("hit")
+	$Imagen/AniHit.play("hit")
 	if estado == ESTADO.CONQUISTAR:
 		objetivo = null
 	if vida <= 0:
@@ -246,6 +246,9 @@ func evade_ciclo() -> bool:
 		return false
 	return randf() < 0.5 # 0 continuo siempre activo, 1 desactivado
 
+func aquietar(segundos: float) -> void:
+	$TimPausa.start(segundos)
+
 # obtener informacion de ataque y lucha
 
 func is_mele() -> bool:
@@ -257,16 +260,24 @@ func get_dist_tech() -> int:
 func get_archienemigo_grupo() -> Data.GRUPO:
 	return archienemigos
 
-func get_escudo() -> int:
+func get_escudo(check_if_ready: bool = true) -> int:
 	if is_obrera:
+		return 0
+	if check_if_ready and $Imagen/AniEscudo.is_playing():
 		return 0
 	if $Imagen/Escudo.visible:
 		var fr = $Imagen/Escudo.frame
 		if fr >= 7 and fr <= 11:
-			return 2
+			return Data.ESCUDO_MULT[0]
 		elif fr >= 12 and fr <= 15:
-			return 1
+			return Data.ESCUDO_MULT[1]
 	return 0
+
+func get_explosivo() -> int:
+	# 0:fuego 1:granada 2:control -1:nada
+	if especial != 0 and $Imagen/Secundaria.visible:
+		return $Imagen/Secundaria.frame
+	return -1
 
 # acciones de ataque y lucha
 
@@ -306,10 +317,10 @@ func recargar() -> void:
 	var tech = get_dist_tech()
 	if cargador < Data.CARGADOR[tech] and municion > 0 and $Shots/TimShotCargador.is_stopped():
 		$Shots/TimShotCargador.start(Data.RECARGAS[tech])
-		$Imagen/Anima.play("recharge")
+		$Imagen/AniShot.play("recharge")
 
 func disparar(lugar: Vector2) -> void:
-	if municion + cargador > 0:
+	if municion + cargador > 0 and $Shots/TimShotGo.is_stopped():
 		if cargador == 0:
 			recargar()
 		elif $Shots/TimShotDistance.is_stopped() and $Shots/TimShotCargador.is_stopped():
@@ -319,25 +330,36 @@ func disparar_forzado(lugar: Vector2) -> void:
 	# forzado porque no verifica si los temporizadores estan listos o si hay municion
 	$Shots/TimShotGo.start()
 	$Shots/TimShotDistance.start(Data.CADENCIA[get_dist_tech()])
-	$Imagen/Anima.play("shot")
-	$TimPausa.start(0.333)
+	$Imagen/AniShot.play("shot")
+	$TimPausa.start(0.5)
 	lanzo_explosivo = 0
 	prepunteria = lugar
 	cargador -= 1
 
+func lanza_explosivo(lugar: Vector2) -> void:
+	var explo = get_explosivo()
+	if $Shots/TimShotEspecial.is_stopped() and explo in [0, 1]:
+		$Shots/TimShotGo.start()
+		$Shots/TimShotEspecial.start(3)
+		$Imagen/AniEspecial.play("lanza")
+		$TimPausa.start(1)
+		lanzo_explosivo = explo + 1
+		prepunteria = lugar
+		especial -= 1
+
 func golpear(nodo_enemy: Node = null) -> void:
-	if $Shots/TimShotMele.is_stopped():
+	if $Shots/TimShotMele.is_stopped() and $Shots/TimShotGo.is_stopped():
 		if nodo_enemy == null:
 			$Shots/TimShotGo.start()
 			$Shots/TimShotMele.start(Data.AGILIDAD[get_dist_tech()])
-			$Imagen/Anima.play("hit")
+			$Imagen/AniShot.play("hit")
 			lanzo_explosivo = 0
 			return
 		for bdy in cuerpos_golpeables:
 			if bdy == nodo_enemy:
 				$Shots/TimShotGo.start()
 				$Shots/TimShotMele.start(Data.AGILIDAD[get_dist_tech()])
-				$Imagen/Anima.play("hit")
+				$Imagen/AniShot.play("hit")
 				lanzo_explosivo = 0
 				break
 
@@ -380,17 +402,23 @@ func _on_tim_shot_cargador_timeout() -> void:
 	while cargador < Data.CARGADOR[tech] and municion > 0:
 		cargador += 1
 		municion -= 1
-	$Imagen/Anima.play("RESET")
+	$Imagen/AniShot.play("RESET")
 	if municion + cargador <= 1:
 		$Imagen/Municion.visible = false
 
-func _on_anima_animation_finished(anim_name: StringName) -> void:
+func _on_ani_shot_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"shot":
 			if cargador == 0 and municion > 0:
 				recargar()
 			elif municion + cargador == 0 and $Imagen/Distancia.frame != 4: # arco
 				$Imagen.set_mele()
+
+func _on_ani_especial_animation_finished(anim_name: StringName) -> void:
+	match anim_name:
+		"lanza":
+			if not get_explosivo() in [0, 1]:
+				$Imagen/Secundaria.visible = false
 
 # seleccion
 

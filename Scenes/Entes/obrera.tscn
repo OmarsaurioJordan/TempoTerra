@@ -202,7 +202,7 @@ texture = ExtResource("11_cksku")
 offset = Vector2(8, -130)
 metadata/_edit_lock_ = true
 
-[node name="Hit" type="AnimationPlayer" parent="Imagen"]
+[node name="AniHit" type="AnimationPlayer" parent="Imagen"]
 libraries = {
 &"": SubResource("AnimationLibrary_weq60")
 }
@@ -223,7 +223,6 @@ vertical_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="TimPausa" type="Timer" parent="."]
-wait_time = 1.5
 one_shot = true
 
 [node name="TimErrar" type="Timer" parent="."]

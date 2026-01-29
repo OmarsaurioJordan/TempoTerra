@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy0v4ibu62bcf"]
+
+[ext_resource type="Script" uid="uid://dg4kt4yatbf5o" path="res://Scripts/Componentes/ceniza.gd" id="1_2ilop"]
+[ext_resource type="Texture2D" uid="uid://bogt0knjsa1yq" path="res://Sprites/General/d_ceniza.png" id="2_xsbkp"]
+
+[node name="Ceniza" type="Node2D" groups=["cenizas"]]
+script = ExtResource("1_2ilop")
+metadata/_edit_lock_ = true
+
+[node name="Sombra" type="Sprite2D" parent="."]
+position = Vector2(2.27374e-13, 1)
+scale = Vector2(3.76, 2.01866)
+texture = ExtResource("2_xsbkp")
+metadata/_edit_lock_ = true

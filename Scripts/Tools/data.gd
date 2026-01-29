@@ -7,17 +7,20 @@ const PROYECTIL = preload("res://Scenes/Objetos/proyectil.tscn")
 const EXPLOSIVO = preload("res://Scenes/Objetos/explosivo.tscn")
 const VAPOR = preload("res://Scenes/Componentes/vapor.tscn")
 const DEATH = preload("res://Scenes/Componentes/death.tscn")
+const CENIZA = preload("res://Scenes/Componentes/ceniza.tscn")
 
 const ESTOCASTICO: float = 0.5 # 0 calculo continuo - 1 extremadamente lento desperdicio loop
 const RADIO_CALLE: float = 40 # para detectar cuando llego a una calle
 const RETROCESO: float = 400 # velocidad aplicada al empujarlos
+const RADIO_EXPLO: float = 64 # para radio base de explosiones o vapores multi capa
+const ESCUDO_MULT: Array = [1.5, 1.0] # multiplo cobertura: imperiales, medievales, ej: 1,2
 
 # tecnologias: 0:ant 1:imp 2:med 3:ind 4:mod 5:fut
-const MUNICION = [10, 1, 20, 12, 200, 300]
+const MUNICION = [10, 1, 20, 12, 50, 60]
 const CARGADOR = [10, 1, 20, 1, 10, 20] # municion puesta en mano o arma
-const CADENCIA = [3.0, 3.0, 4.0, 1.0, 1.0, 1.0] # tiempo entre disparos
-const RECARGAS = [1.0, 1.0, 1.0, 10.0, 5.0, 10.0] # tiempo de recarga
-const ESPECIAL = [0, 0, 0, 1, 3, 1] # municion de especial
+const CADENCIA = [3.0, 1.0, 4.0, 1.0, 1.0, 1.0] # tiempo entre disparos
+const RECARGAS = [5.0, 5.0, 8.0, 10.0, 5.0, 10.0] # tiempo de recarga
+const ESPECIAL = [0, 0, 0, 1, 3, 0] # municion de especial
 const AGILIDAD = [2.0, 2.0, 2.0, 2.0, 2.0, 2.0] # tiempo entre golpes mele
 
 enum DIPLOMACIA {
@@ -153,6 +156,9 @@ static func distancia_to_tech(ind: int) -> int:
 			return 5
 	return 0
 
+static func is_grupo_explosivos(grupo: GRUPO) -> bool:
+	return grupo in [GRUPO.INGLES, GRUPO.ALEMAN, GRUPO.COLONO, GRUPO.GRINGO, GRUPO.RUSO]
+
 # informacion de lucha
 
 static func get_damage_mele(tech: int = -1) -> float:
@@ -175,15 +181,15 @@ static func get_damage_distancia(tech: int = -1) -> float:
 		0: # piedra
 			return 7
 		1: # lanza
-			return 50
+			return 45
 		2: # flecha
-			return 25
+			return 20
 		3, 4: # bala
-			return 75
+			return 55
 		5: # rayo
-			return 100
+			return 75
 	# explosion
-	return 120
+	return 80
 
 static func get_armadura_obrera(tech: int = -1) -> float:
 	match tech:
@@ -236,13 +242,15 @@ static func get_escudo_mele(tech: int = -1) -> float:
 	# debe ser < 0.5
 	match tech:
 		0: # palo madera
-			return 0.3
+			return 0.4
 		1: # mazo puas
-			return 0.25
-		2, 3, 4: # espadas
-			return 0.2
+			return 0.35
+		2: #espadotas
+			return 0.3
+		3, 4: # espadas
+			return 0.35
 		5: # cierra
-			return 0.1
+			return 0.2
 	# mordida
 	return 0.4
 
@@ -252,13 +260,13 @@ static func get_escudo_distancia(tech: int = -1) -> float:
 		0: # piedra
 			return 0.4
 		1: # lanza
-			return 0.2
+			return 0.25
 		2: # flecha
-			return 0.3
+			return 0.35
 		3, 4: # bala
-			return 0.1
+			return 0.15
 		5: # rayo
-			return 0.05
+			return 0.1
 	# explosion
 	return 0.0
 
@@ -609,6 +617,18 @@ static func is_punto_free(nodo: Node, punto: Vector2, solidos: Array,
 	return true
 
 # crear cosas
+
+static func crea_ceniza(nodo: Node, cenizas: Array = []) -> Node:
+	var new_parent = nodo.get_parent().get_parent().get_node("Sombras")
+	var pos = nodo.global_position
+	for pry in cenizas:
+		if not pry.visible:
+			pry.initialize(new_parent, pos)
+			return pry
+	var pry = CENIZA.instantiate()
+	new_parent.add_child(pry)
+	pry.initialize(new_parent, pos)
+	return pry
 
 static func crea_death(nodo: Node, deaths: Array = []) -> Node:
 	var new_parent = nodo.get_parent()
